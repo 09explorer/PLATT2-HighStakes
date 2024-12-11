@@ -61,6 +61,8 @@ def startLink(robotData):
         writeString = addToWriteString(robotData, writeString, 'c', data.CLAMP.value)
         writeString = addToWriteString(robotData, writeString, 'w', data.WALLSTAKE.value)
         writeString = addToWriteString(robotData, writeString, 's', data.COLORSORT.value)
+        writeString = addToWriteString(robotData, writeString, 'i', data.INTAKE.value)
+        writeString = addToWriteString(robotData, writeString, 'o', data.HOOKS.value)
         
 
         

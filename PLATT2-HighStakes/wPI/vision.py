@@ -1,6 +1,11 @@
+from enum import Enum
 import math
 import cv2
 import numpy as np
+
+class color(Enum):
+    RED = 1
+    BLUE = 2
 
 class vision:
 
@@ -24,23 +29,23 @@ class vision:
 
         self.kernal = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
 
-    def getObjectOffest(self, color):
+    def getObjectOffest(self, wantedColor):
         
         _, img = self.cam.read()
         image = cv2.cvtColor(img, cv2.COLOR_BGR2HSV) 
 
-        if color == 1:
-            lower_blue = np.array([95,100,100]) 
-            upper_blue = np.array([105,255,255]) 
 
-            mask = cv2.inRange(image, lower_blue, upper_blue) 
- 
-        else:
-            lower_red = np.array([0,100,100]) 
-            upper_red = np.array([5,255,255]) 
+        match wantedColor:
 
-            mask = cv2.inRange(image, lower_red, upper_red) 
-            
+            case color.RED:
+                lower_color = np.array([95,100,100]) 
+                upper_color = np.array([105,255,255]) 
+
+            case color.BLUE:
+                lower_color = np.array([0,100,100]) 
+                upper_color = np.array([5,255,255]) 
+
+        mask = cv2.inRange(image, lower_color, upper_color)   
         mask = cv2.bitwise_and(image, image, mask = mask)
 
         mask = cv2.cvtColor(mask, cv2.COLOR_HSV2BGR) 
