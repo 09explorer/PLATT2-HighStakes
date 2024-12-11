@@ -1,5 +1,5 @@
 #include "vex.h"
-#include "PLATT2/subsystems/piCom.h"
+#include "PLATT2/robot_config/subsystems/piCom.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <iostream>

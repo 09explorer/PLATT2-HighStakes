@@ -96,6 +96,7 @@ class Hal
      * @return The motor group containing the right drivetrain motors.
      */
     vex::motor_group getRightDrive();
+
 };
 
 #endif

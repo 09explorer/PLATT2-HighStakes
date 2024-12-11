@@ -3,6 +3,7 @@
 
 #include "vex.h"
 #include "PLATT2\robot_config\hal.h"
+#include "PLATT2\robot_config\subsystems\ringsort.h"
 
 /**
  * @brief Enumeration to represent the 2 different robot configurations with a default option.
@@ -66,6 +67,11 @@ class Robot
      */
     Hal& hal;
 
+    /**
+     * @brief Reference to the ring sort subsystem.
+     */
+    RingSort& ringSort;
+
     public:
 
     Robot(Hal& hal);
@@ -105,6 +111,8 @@ class Robot
      * @return The current autonomous routine ID.
      */
     AutonConfig getAutonID();
+
+
 };
 
 #endif

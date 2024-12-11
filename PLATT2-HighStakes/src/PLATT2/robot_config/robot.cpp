@@ -1,7 +1,8 @@
 #include "PLATT2\robot_config\robot.h"
 
 Robot::Robot(Hal& hal):
-hal{hal}
+hal{hal},
+ringSort()
 {
     robotID = NO_ROBOT;
     allianceID = NO_ALLIANCE;
