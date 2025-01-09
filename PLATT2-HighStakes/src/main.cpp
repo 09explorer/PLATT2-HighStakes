@@ -10,8 +10,7 @@
 #include "vex.h"
 #include "PLATT2\robot_config\robot.h"
 
-Hal hal;
-Robot robot(hal);
+Robot robot;
 
 using namespace vex;
 
@@ -63,7 +62,7 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
-
+  robot.runDriveControl();
 }
 
 //
