@@ -8,15 +8,13 @@
 /*----------------------------------------------------------------------------*/
 
 #include "vex.h"
-#include "PLATT2\robot_config\robot.h"
-
-Robot robot;
+#include "PLATT2/robot_config/robot.h"
 
 using namespace vex;
 
 // A global instance of competition
 competition Competition;
-
+Robot robot;
 
 
 /*---------------------------------------------------------------------------*/

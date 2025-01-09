@@ -2,7 +2,8 @@
 #define DRIVECONTROL_H
 
 #include "vex.h"
-#include "PLATT2\robot_config\robot.h"
+#include "PLATT2\robot_config\subsystems\piCom.h"
+#include "PLATT2\robot_config\subsystems\ringsort.h"
 
 class DriveControl
 {

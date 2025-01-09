@@ -133,7 +133,7 @@ double piCom::getLeftVel(){
 void piCom::setRightVel(double rightVel){
     this->rightVel = rightVel;
 }
-double piCom::getLeftVel(){
+double piCom::getRightVel(){
     return this->rightVel;
 }
 

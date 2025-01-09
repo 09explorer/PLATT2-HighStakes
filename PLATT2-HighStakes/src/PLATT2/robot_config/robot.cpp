@@ -1,4 +1,4 @@
-#include "PLATT2\robot_config\robot.h"
+#include "PLATT2/robot_config/robot.h"
 
 Robot::Robot():
 leftDrive1(vex::PORT1, vex::gearSetting::ratio6_1, false),

@@ -67,7 +67,7 @@ class RingSort
 
     void setRing(RingColor desiredColor);
 
-        std::atomic<RingColor> desiredRing;
+        RingColor desiredRing;
 };
 
 /// @brief Extern to the global ringController object.

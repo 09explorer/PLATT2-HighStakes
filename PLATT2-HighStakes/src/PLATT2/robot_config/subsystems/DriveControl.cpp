@@ -24,3 +24,13 @@ void DriveControl::TestControl()
     vex::this_thread::sleep_for(20); // Sleep the task for a short amount of time
     }
 }
+
+void DriveControl::PinkDriveControl()
+{
+
+}
+
+void DriveControl::PurpleDriveControl()
+{
+  
+}
