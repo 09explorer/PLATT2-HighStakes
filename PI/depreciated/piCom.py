@@ -2,7 +2,7 @@ import serial
 import time
 from enum import Enum
 
-class data(Enum):
+class label(Enum):
     
     FLAG = 1
     RIGHTVEL = 2
@@ -49,22 +49,21 @@ def startLink(robotData):
                     break
         
         #get and assign data to the shared buffer 
-        robotData[data.FLAG.value] = getSubString(rawRead, 'f') #status
-        robotData[data.XPOS.value] = getSubString(rawRead, 'x') #odomX
-        robotData[data.YPOS.value] = getSubString(rawRead, 'y') #odomY
-        robotData[data.HEADING.value] = getSubString(rawRead, 'h') #odomH
+        robotData[label.FLAG.value] = getSubString(rawRead, 'f') #status
+        robotData[label.XPOS.value] = getSubString(rawRead, 'x') #odomX
+        robotData[label.YPOS.value] = getSubString(rawRead, 'y') #odomY
+        robotData[label.HEADING.value] = getSubString(rawRead, 'h') #odomH
         
         #get data from shared buffer to write 
         writeString = ''
-        writeString = addToWriteString(robotData, writeString, 'r', data.RIGHTVEL.value)
-        writeString = addToWriteString(robotData, writeString, 'l', data.LEFTVEL.value)
-        writeString = addToWriteString(robotData, writeString, 'c', data.CLAMP.value)
-        writeString = addToWriteString(robotData, writeString, 'w', data.WALLSTAKE.value)
-        writeString = addToWriteString(robotData, writeString, 's', data.COLORSORT.value)
-        writeString = addToWriteString(robotData, writeString, 'i', data.INTAKE.value)
-        writeString = addToWriteString(robotData, writeString, 'o', data.HOOKS.value)
-        
-
+        writeString = addToWriteString(robotData, writeString, 'r', label.RIGHTVEL.value)
+        writeString = addToWriteString(robotData, writeString, 'l', label.LEFTVEL.value)
+        writeString = addToWriteString(robotData, writeString, 'c', label.CLAMP.value)
+        writeString = addToWriteString(robotData, writeString, 'w', label.WALLSTAKE.value)
+        writeString = addToWriteString(robotData, writeString, 's', label.COLORSORT.value)
+        writeString = addToWriteString(robotData, writeString, 'i', label.INTAKE.value)
+        writeString = addToWriteString(robotData, writeString, 'o', label.HOOKS.value)
+    
         
         #wait needed for stability 
         time.sleep(0.001)

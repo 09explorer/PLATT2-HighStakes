@@ -1,0 +1,25 @@
+brain ---> Pi
+
+one time data 
+    --->
+        name of bot 
+        selected auton 
+        alliance color
+
+    <---
+        acknowledgement of recived data
+
+repeted data
+    --->
+        heading      // subject to change with introduction of electro-optical sensor  
+        x Position   // subject to change with introduction of electro-optical sensor
+        y Position   // subject to change with introduction of electro-optical sensor
+    
+    <---
+        rightVel 
+        leftVel
+        clamp
+        wallstake
+        colorSort
+        intake
+        hooks
