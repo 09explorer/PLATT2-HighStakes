@@ -185,6 +185,8 @@ class Robot
     void runAutonControl();
     
     void runDriveControl();
+
+    piCom getPi();
 };
 
 #endif

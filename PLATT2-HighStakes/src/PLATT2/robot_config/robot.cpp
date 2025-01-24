@@ -84,3 +84,7 @@ void Robot::runAutonControl(){
     driveControl.autonControl();
 
 }
+
+piCom Robot::getPi(){
+    return pi;
+}
