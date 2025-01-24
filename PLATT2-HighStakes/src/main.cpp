@@ -17,7 +17,7 @@ using namespace vex;
 // A global instance of competition
 competition Competition;
 Robot robot;
-piCom pi = robot.getPi();
+piCom& pi = robot.getPi();
 
 
 

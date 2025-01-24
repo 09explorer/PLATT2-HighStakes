@@ -183,10 +183,10 @@ class Robot
     AutonConfig getAutonID();
     
     void runAutonControl();
-    
+
     void runDriveControl();
 
-    piCom getPi();
+    piCom& getPi();
 };
 
 #endif

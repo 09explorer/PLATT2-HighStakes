@@ -2,7 +2,7 @@
 //#include "vex.h"
 
 
-
+vex::brain Brain;
 
 DriveControl::DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom):
 leftDrive{leftD},
@@ -44,9 +44,9 @@ void DriveControl::autonControl(){
   pi.setValue(FLAG, 1);
 
   while (true){
-    //Brain.Screen.clearScreen();
-    //Brain.Screen.setCursor(3,1);
-    //Brain.Screen.print((double)pi.getValue(FLAG));
+    Brain.Screen.clearScreen();
+    Brain.Screen.setCursor(3,1);
+    Brain.Screen.print((double)pi.getValue(LEFTVEL));
 
     leftDrive.setVelocity(pi.getValue(LEFTVEL), vex::percent);
     rightDrive.setVelocity(pi.getValue(RIGHTVEL), vex::percent);

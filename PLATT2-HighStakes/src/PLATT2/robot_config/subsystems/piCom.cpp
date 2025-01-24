@@ -8,7 +8,7 @@
 #include <atomic>
 #include <sstream> 
 
-vex::brain Brain;
+
 
 std::string piCom::toString(double input){
 
@@ -50,9 +50,9 @@ void piCom::startPiCom(){
     char buf[1];
 
     writeString = "";
-    addToWriteString("n", name);
-    addToWriteString("u", auton);
-    addToWriteString("a", alliance);
+    addToWriteString("n", this->name);
+    addToWriteString("u", this->auton);
+    addToWriteString("a", this->alliance);
     writeString = writeString + "/";
     
     //send the string to the pi
@@ -66,16 +66,12 @@ void piCom::startPiCom(){
         //each data point has a single letter prefix for id and is ended by a semicolin
         //the entire write string is ended by a back slash 
 
-        Brain.Screen.clearScreen();
-        Brain.Screen.setCursor(3,1);
-        Brain.Screen.print((double)flag);
-
 
         writeString = "";
-        addToWriteString("f", flag);
-        addToWriteString("h", heading);
-        addToWriteString("x", xPos);
-        addToWriteString("y", yPos);
+        addToWriteString("f", this->flag);
+        addToWriteString("h", this->heading);
+        addToWriteString("x", this->xPos);
+        addToWriteString("y", this->yPos);
         writeString = writeString + "/";
         
         //send the string to the pi

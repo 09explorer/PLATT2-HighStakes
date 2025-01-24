@@ -85,6 +85,6 @@ void Robot::runAutonControl(){
 
 }
 
-piCom Robot::getPi(){
+piCom& Robot::getPi(){
     return pi;
 }
