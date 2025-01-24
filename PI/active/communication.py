@@ -16,8 +16,9 @@ class label(Enum):
     YPOS = 9 
     INTAKE = 10
     HOOKS = 11   
-    AUTON = 13
-    ALLIANCE = 12
+    AUTON = 12
+    ALLIANCE = 13
+    FLAG = 14
 
 def getSubString(rawRead, prefix):
     
@@ -33,14 +34,17 @@ def addToWriteString(robotData, writeString, prefix, data):
     return writeString
 
 
-def holdForInit():
+def startLink(robotData):
     
-    if platform.system() == "Windows":
-        portName = '' #need correct COM port for Brain Comuications
-    else:
-        portName = '/dev/ttyACM0'
-    
-    readPort  = serial.Serial(portName, timeout=0)
+    #open serial ports on PI 
+
+    #print("hello", flush= True)
+
+    readName = '/dev/ttyACM0'
+    writeName = '/dev/ttyACM1'
+
+    readPort  = serial.Serial(readName, timeout=0)
+    writePort = serial.Serial(writeName)
 
     rawRead = ''
 
@@ -51,29 +55,14 @@ def holdForInit():
             if '/' in rawRead:
                 break
         time.sleep(0.01)
-    
-    name    = getSubString(rawRead, 'x') #odomX
-    auton   = getSubString(rawRead, 'y') #odomY
-    alliance = getSubString(rawRead, 'h') #odomH
+    print(rawRead,flush=True)
+    robotData[label.NAME.value]     = getSubString(rawRead, 'n') #odomX
+    robotData[label.AUTON.value]    = getSubString(rawRead, 'u') #odomY
+    robotData[label.ALLIANCE.value] = getSubString(rawRead, 'a') #odomH
 
-    readPort.close()
-
-    return name, auton, alliance
-
-def startLink(robotData):
-    
-    #open serial ports on PI 
-    if platform.system() == "Windows":
-        readName = ''
-        writeName = '' #need correct COM port for Brain Comuications
-    else:
-        readName = '/dev/ttyACM0'
-        writeName = '/dev/ttyACM1'
-
-
-    readPort  = serial.Serial(readName, timeout=0)
-    writePort = serial.Serial(writeName)
      
+    #print("hello", flush= True)
+
     while True:
 
         #capture incoming serial data until the stop bit is read 
@@ -85,11 +74,15 @@ def startLink(robotData):
                 if '/' in rawRead:
                     break
         
+        print(rawRead,flush=True)
+        
         #get and assign data to the shared buffer 
-        robotData[label.FLAG.value] = getSubString(rawRead, 'f') #status
-        robotData[label.XPOS.value] = getSubString(rawRead, 'x') #odomX
-        robotData[label.YPOS.value] = getSubString(rawRead, 'y') #odomY
+        robotData[label.FLAG.value]    = getSubString(rawRead, 'f') #status
+        #print(robotData[label.FLAG.value],flush=True)
         robotData[label.HEADING.value] = getSubString(rawRead, 'h') #odomH
+        robotData[label.XPOS.value]    = getSubString(rawRead, 'x') #odomX
+        robotData[label.YPOS.value]    = getSubString(rawRead, 'y') #odomY
+        
         
         #get data from shared buffer to write 
         writeString = ''

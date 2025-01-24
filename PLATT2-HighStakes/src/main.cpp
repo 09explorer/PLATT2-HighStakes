@@ -9,12 +9,18 @@
 
 #include "vex.h"
 #include "PLATT2/robot_config/robot.h"
+#include "PLATT2/robot_config/subsystems/piCom.h"
+
 
 using namespace vex;
 
 // A global instance of competition
 competition Competition;
 Robot robot;
+piCom pi;
+
+
+
 
 
 /*---------------------------------------------------------------------------*/
@@ -31,6 +37,19 @@ void pre_auton(void) {
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+
+  //auton selector 
+  pi.setValue(NAME, 1);
+  pi.setValue(ALLIANCE, 1);
+  pi.setValue(AUTON, 1);
+
+  // odometry
+
+
+  //picom
+  auto comRun = [](void) {pi.startPiCom();};
+  thread comThread = thread(comRun);
+
 }
 
 /*---------------------------------------------------------------------------*/
@@ -47,6 +66,9 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
+  robot.runAutonControl();
+
+
 }
 
 /*---------------------------------------------------------------------------*/
@@ -60,7 +82,8 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
-  robot.runDriveControl();
+  //robot.runDriveControl();
+  robot.runAutonControl();
 }
 
 //

@@ -33,6 +33,10 @@ class DriveControl
     void PurpleDriveControl();
 
     void TestControl();
+
+    void autonControl();
+
+
 };
 
 #endif

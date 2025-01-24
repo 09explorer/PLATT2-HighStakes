@@ -24,11 +24,11 @@ driveControl(leftDrive, rightDrive, ringSort, controller, pi)
     allianceID = NO_ALLIANCE;
     autonID = NO_AUTON;
 
-    // Calibrate IMU
-    inert.calibrate();
-    while(inert.isCalibrating()){
-        vex::this_thread::sleep_for(100);
-    }
+    //// Calibrate IMU
+    //inert.calibrate();
+    //while(inert.isCalibrating()){
+    //    vex::this_thread::sleep_for(100);
+    //}
 }
 
 void Robot::setAllianceID(AllianceConfig newID)
@@ -78,4 +78,9 @@ void Robot::runDriveControl()
             driveControl.PurpleDriveControl();
         }
     }
+}
+void Robot::runAutonControl(){
+
+    driveControl.autonControl();
+
 }

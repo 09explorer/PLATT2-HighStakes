@@ -1,0 +1,4 @@
+name              purple           pink
+
+pyserial                            X
+setproctitle                        X

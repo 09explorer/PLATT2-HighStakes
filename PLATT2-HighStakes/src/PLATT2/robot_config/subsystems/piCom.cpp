@@ -8,6 +8,8 @@
 #include <atomic>
 #include <sstream> 
 
+vex::brain Brain;
+
 std::string piCom::toString(double input){
 
     std::ostringstream s; 
@@ -46,7 +48,17 @@ void piCom::startPiCom(){
 
     int byteRead = 0;
     char buf[1];
+
+    writeString = "";
+    addToWriteString("n", name);
+    addToWriteString("u", auton);
+    addToWriteString("a", alliance);
+    writeString = writeString + "/";
     
+    //send the string to the pi
+    write(writePort, writeString.c_str(), writeString.size());
+    vex::this_thread::sleep_for(100);
+
     while (true){
         
         
@@ -54,8 +66,13 @@ void piCom::startPiCom(){
         //each data point has a single letter prefix for id and is ended by a semicolin
         //the entire write string is ended by a back slash 
 
+        Brain.Screen.clearScreen();
+        Brain.Screen.setCursor(3,1);
+        Brain.Screen.print((double)flag);
+
+
         writeString = "";
-        addToWriteString("s", flag);
+        addToWriteString("f", flag);
         addToWriteString("h", heading);
         addToWriteString("x", xPos);
         addToWriteString("y", yPos);
@@ -82,10 +99,13 @@ void piCom::startPiCom(){
         
         //picks apart the read string to find the id characters and the data that they indicate
 
-        rightVel = getSubString("r");
-        leftVel = getSubString("l");
-        clamp = getSubString("c");
-        wallStake = getSubString("w");
+        this->rightVel  = getSubString("r");
+        this->leftVel   = getSubString("l");
+        this->clamp     = getSubString("c");
+        this->wallStake = getSubString("w");
+        this->colorSort = getSubString("s");
+        this->intake    = getSubString("i");
+        this->hooks     = getSubString("o");
 
         //delay to alow other threads to run 
         //has to be located at this point in the program in order to prevent missing incoming data strings       
@@ -95,81 +115,130 @@ void piCom::startPiCom(){
 
 }
 
-void piCom::setStatus(int flag){
-    this->flag = flag;
-}
-int piCom::getStatus(){
-    return this->flag;
-}
 
-void piCom::setHeading(int heading){
-    this->heading = heading;
-}
-double piCom::getHeading(){
-    return this->heading;
-}
 
-void piCom::setXPos(double xPos){
-    this->xPos = xPos;
-}
-double piCom::getXPos(){
-    return this->xPos;
-}
+double piCom::getValue(dataLabel dataType){
 
-void piCom::setYPos(double yPos){
-    this->yPos = yPos;
+    switch(dataType){
+        
+        case FLAG:{
+            return this->flag;
+            break;
+        }
+        case RIGHTVEL:{
+            return this->rightVel;
+            break;
+        }
+        case LEFTVEL:{
+            return this->leftVel;
+            break;
+        }
+        case CLAMP:{
+            return this->clamp;
+            break;
+        }
+        case WALLSTAKE:{
+            return this->wallStake;
+            break;
+        }
+        case COLORSORT:{
+            return this->colorSort;
+            break;
+        }
+        case HEADING:{
+            return this->heading;
+            break;
+        }
+        case XPOS:{
+            return this->xPos;
+            break;
+        }
+        case YPOS:{
+            return this->yPos;
+            break;
+        }
+        case INTAKE:{
+            return this->intake;
+            break;
+        }
+        case HOOKS:{
+            return this->hooks;
+            break;
+        }
+        case NAME:{
+            return this->name;
+            break;
+        }
+        case AUTON:{
+            return this->auton;
+            break;
+        }
+        case ALLIANCE:{
+            return this->alliance;
+            break;
+        }
+    }
 }
-double piCom::getYPos(){
-    return this->yPos;
-}
+void piCom::setValue(dataLabel dataType, double value){
 
-void piCom::setLeftVel(double leftVel){
-    this->leftVel = leftVel;
+    switch(dataType){
+        
+        case FLAG:{
+            this->flag = value;
+            break;
+        }
+        case RIGHTVEL:{
+            this->rightVel = value;
+            break;
+        }
+        case LEFTVEL:{
+            this->leftVel = value;
+            break;
+        }
+        case CLAMP:{
+            this->clamp = value;
+            break;
+        }
+        case WALLSTAKE:{
+            this->wallStake = value;
+            break;
+        }
+        case COLORSORT:{
+            this->colorSort = value;
+            break;
+        }
+        case HEADING:{
+            this->heading = value;
+            break;
+        }
+        case XPOS:{
+            this->xPos = value;
+            break;
+        }
+        case YPOS:{
+            this->yPos = value;
+            break;
+        }
+        case INTAKE:{
+            this->intake = value;
+            break;
+        }
+        case HOOKS:{
+            this->hooks = value;
+            break;
+        }
+            case NAME:{
+            this->name = value;
+            break;
+        }
+        case AUTON:{
+            this->auton = value;
+            break;
+        }
+        case ALLIANCE:{
+            this->alliance = value;
+            break;
+        }
+    }
 }
-double piCom::getLeftVel(){
-    return this->leftVel;
-}
-
-void piCom::setRightVel(double rightVel){
-    this->rightVel = rightVel;
-}
-double piCom::getRightVel(){
-    return this->rightVel;
-}
-
-void piCom::setWallStake(int wallStake){
-    this->wallStake = wallStake;
-}
-int piCom::getWallStake(){
-    return this->wallStake;
-}
-
-void piCom::setClamp(int clamp){
-    this->clamp = clamp;
-}
-int piCom::getClamp(){
-    return this->clamp;
-}
-
-void piCom::setColorSort(int colorSort){
-    this->colorSort = colorSort;
-}
-int piCom::getcolorSort(){
-    return this->colorSort;
-}
-
-void piCom::setIntake(int intake){
-    this->intake = intake;
-}
-int piCom::getIntake(){
-    return this->intake;
-}
-
-void piCom::setHooks(int hooks){
-    this->hooks = hooks;
-}
-int piCom::getHooks(){
-    return this->hooks;
-}
-
 

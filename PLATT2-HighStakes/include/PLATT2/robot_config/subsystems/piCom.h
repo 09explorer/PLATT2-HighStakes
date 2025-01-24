@@ -7,11 +7,30 @@
 /// @brief A class to communicate and control the peripheral raspberry pi.
 /// @author Logan Wolf
 
+enum dataLabel
+{
+    FLAG = 0,
+    RIGHTVEL = 1,
+    LEFTVEL = 2,
+    CLAMP = 3, 
+    WALLSTAKE = 4,
+    COLORSORT = 5, 
+    HEADING = 6,
+    XPOS = 7, 
+    YPOS = 8,
+    INTAKE = 9,
+    HOOKS = 10,
+    NAME = 11,
+    AUTON = 12, 
+    ALLIANCE = 13
+    
+};
+
 class piCom { 
     
     private:
         /// @brief Current status of the Pi.
-        int flag;
+        double flag;
 
         /// @brief Right drivetrain velocity.
         double rightVel;
@@ -20,12 +39,12 @@ class piCom {
         double leftVel;
 
         /// @brief Wether or not the clamp is enabled or disabled.
-        int clamp;
+        double clamp;
 
         ///@brief desired wall stake mech position
-        int wallStake;
+        double wallStake;
 
-        int colorSort;
+        double colorSort;
 
         double heading;
 
@@ -33,9 +52,15 @@ class piCom {
 
         double yPos;
 
-        int intake;
+        double intake;
 
-        int hooks;
+        double hooks;
+
+        double name;
+
+        double auton;
+
+        double alliance;
 
         std::string writeString;
         
@@ -52,44 +77,10 @@ class piCom {
         /// @brief Starts the communication link between the V5 brain and the Pi.
         void startPiCom();
  
-        /// @brief Sets the status of the Pi link.
-        /// @param status Status to set to. -1 for off, 1 for on.
-        void setStatus(int flag);
-
-        /// @brief Gets the current status of the link.
-        /// @return Current status of the link.
-        int  getStatus();
-
-        void setHeading(int heading);
-        double getHeading();
-
-        void setXPos(double xPos);
-        double getXPos();
-        
-        void setYPos(double yPos);
-        double getYPos();
-
-        void setLeftVel(double leftVel);
-        double getLeftVel();
-
-        void setRightVel(double rightVel);
-        double getRightVel();   
-
-        void setClamp(int clamp);
-        int getClamp();
-
-        void setWallStake(int wallStake);
-        int getWallStake();
-
-        void setColorSort(int colorSort);
-        int getcolorSort();
-        
-        void setIntake(int intake);
-        int getIntake();
-
-        void setHooks(int hooks);
-        int getHooks();
- 
+        double getValue(dataLabel);
+        void   setValue(dataLabel, double);
+       
+     
 };
 
 #endif

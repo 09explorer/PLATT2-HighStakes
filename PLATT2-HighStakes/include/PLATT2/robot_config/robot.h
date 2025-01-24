@@ -11,9 +11,10 @@
  */
 enum RobotConfig
 {
+    NO_ROBOT = 0,
     PINK = 1,
-    PURPLE = 2,
-    NO_ROBOT = 3
+    PURPLE = 2
+    
 };
 
 /**
@@ -21,9 +22,10 @@ enum RobotConfig
  */
 enum AllianceConfig
 {
+    NO_ALLIANCE = 0,
     RED = 1,
-    BLUE = 2,
-    NO_ALLIANCE = 3
+    BLUE = 2
+    
 };
 
 /**
@@ -31,13 +33,11 @@ enum AllianceConfig
  */
 enum AutonConfig
 {
-    PINK_RED = 1,
-    PINK_BLUE = 2,
-    PURPLE_RED = 3,
-    PURPLE_BLUE = 4,
-    PINK_SKILLS = 5,
-    PURPLE_SKILLS = 6,
-    NO_AUTON = 7
+
+    NO_AUTON = 0,
+    COMP_1 = 1,
+    SKILLS_1 = 2
+
 };
 
 /**
@@ -181,7 +181,9 @@ class Robot
      * @return The current autonomous routine ID.
      */
     AutonConfig getAutonID();
-
+    
+    void runAutonControl();
+    
     void runDriveControl();
 };
 
