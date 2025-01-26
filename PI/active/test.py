@@ -1,8 +1,13 @@
 
 import time
 
-import setproctitle
-setproctitle.setproctitle('PlattCode')
+from functions import vision
+
+cam = vision.vision()
 
 while True:
-    time.sleep(0.1)
+
+    test = cam.getObjectOffest(vision.color.BLUE)
+    print (test)
+
+    #time.sleep(0.1)

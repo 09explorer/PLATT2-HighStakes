@@ -16,8 +16,9 @@ class vision:
         self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
         params = cv2.SimpleBlobDetector_Params()
-        params.filterByArea = False
-        params.minArea = 100
+        params.filterByArea = True
+        params.minArea = 1500
+        params.maxArea = 1280*720
         params.filterByCircularity = False
         params.filterByConvexity = False
         params.filterByInertia = False
@@ -42,8 +43,8 @@ class vision:
                 upper_color = np.array([105,255,255]) 
 
             case color.BLUE:
-                lower_color = np.array([0,100,100]) 
-                upper_color = np.array([5,255,255]) 
+                lower_color = np.array([95,50,50]) 
+                upper_color = np.array([105,255,255]) 
 
         mask = cv2.inRange(image, lower_color, upper_color)   
         mask = cv2.bitwise_and(image, image, mask = mask)
@@ -51,21 +52,21 @@ class vision:
         mask = cv2.cvtColor(mask, cv2.COLOR_HSV2BGR) 
         mask = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY) 
         
-        blur = cv2.GaussianBlur(mask, (7,7), 0)
-        canny = cv2.Canny(blur, 30, 150, 5)
+        #blur = cv2.GaussianBlur(mask, (11,11), 0)
+        canny = cv2.Canny(mask, 100, 170, 5)
         
-        dialate = cv2.dilate(canny, self.kernal, iterations=1)
-        
+        dialate = cv2.dilate(canny, self.kernal, iterations=2)
+        #dialate = canny
         #close = cv2.morphologyEx(dialate, cv2.MORPH_CLOSE, (7,7), iterations=8) 
     
-        th, thresh = cv2.threshold(dialate, 127, 255, cv2.THRESH_BINARY)
+        #th, thresh = cv2.threshold(dialate, 127, 255, cv2.THRESH_BINARY)
 
         # Copy the thresholded image
-        im_floodfill = thresh.copy()
+        im_floodfill = dialate.copy()
 
         ## Mask used to flood filling.
         ## NOTE: the size needs to be 2 pixels bigger on each side than the input image
-        h, w = thresh.shape[:2]
+        h, w = dialate.shape[:2]
         size = np.zeros((h+2, w+2), np.uint8)
 
         cv2.floodFill(im_floodfill, size, (0,0), 255)
@@ -73,16 +74,15 @@ class vision:
 
         im_floodfill_inv = cv2.bitwise_not(im_floodfill)
 
-        im_out = thresh | im_floodfill_inv
+        im_out = dialate | im_floodfill_inv
 
         keypoints = self.detector.detect(im_out)
 
-        im_out = cv2.drawKeypoints(im_out, keypoints, np.array([]), (0, 0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-
-        cv2.imshow("BlobDetection", im_out)
-
-        if cv2.waitKey(1) == ord('q'):
-            cv2.destroyWindow("BlobDetection")
+        #im_out = cv2.drawKeypoints(im_out, keypoints, np.array([]), (0, 0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        #cv2.imshow("BlobDetection", im_out)
+        #
+        #if cv2.waitKey(1) == ord('q'):
+        #    cv2.destroyWindow("BlobDetection")
             
 
         targetList = []

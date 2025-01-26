@@ -29,9 +29,9 @@ def getSubString(rawRead, prefix):
 
 def addToWriteString(robotData, writeString, prefix, data):
 
-    writeString = prefix + ':' + str(robotData[data]) + ';'
+    newString = writeString + prefix + ':' + str(robotData[data]) + ';'
 
-    return writeString
+    return newString
 
 
 def startLink(robotData):
@@ -55,7 +55,7 @@ def startLink(robotData):
             if '/' in rawRead:
                 break
         time.sleep(0.01)
-    print(rawRead,flush=True)
+    #print(rawRead,flush=True)
     robotData[label.NAME.value]     = getSubString(rawRead, 'n') #odomX
     robotData[label.AUTON.value]    = getSubString(rawRead, 'u') #odomY
     robotData[label.ALLIANCE.value] = getSubString(rawRead, 'a') #odomH
@@ -74,7 +74,7 @@ def startLink(robotData):
                 if '/' in rawRead:
                     break
         
-        print(rawRead,flush=True)
+        #print(rawRead,flush=True)
         
         #get and assign data to the shared buffer 
         robotData[label.FLAG.value]    = getSubString(rawRead, 'f') #status
@@ -100,6 +100,8 @@ def startLink(robotData):
         
         #create write string 
         writeString = writeString + '/'
+        #print (writeString, flush=True)
+        #print(writeString,flush=True)
         
         #send write string 
         writePort.write(writeString.encode())

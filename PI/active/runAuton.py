@@ -1,7 +1,10 @@
 import multiprocessing
 import time
+import autons.red.pink.comp1.comp1Start
 import communication
 import setproctitle
+import functions.vision as vision
+import autons.red.pink.comp1.comp1Start
 
 def start():
     
@@ -17,34 +20,24 @@ def start():
     while robotData[communication.label.FLAG.value] == 0:
         time.sleep(0.01)
     
-    print("recived flag")
+    print("recived flag", flush=True)
     
     #pink
     if robotData[communication.label.NAME.value] == 1: 
         
-        #Blue
+        #Red
         if robotData[communication.label.ALLIANCE.value] == 1:
             
             #Comp1
             if robotData[communication.label.AUTON.value] == 1:
-                print("at data", flush=True)
-                robotData[communication.label.LEFTVEL.value] = 20
-                robotData[communication.label.RIGHTVEL.value] = 20
-                print(robotData[communication.label.LEFTVEL.value], flush=True)
-                time.sleep(1)
+                
 
-
-                robotData[communication.label.LEFTVEL.value] = 0
-                robotData[communication.label.RIGHTVEL.value] = 0
-
-                print("finished", flush=True)
-
-
+                autons.red.pink.comp1.comp1Start.comp1Start(robotData)
 
                 pass
             
             #Skills
-            elif robotData[communication.label.AUTON.value] == 2:
+            elif robotData[communication.label.AUTON.value] == 2:   
                 
                 pass
         

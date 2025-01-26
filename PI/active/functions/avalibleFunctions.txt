@@ -1,4 +1,6 @@
 this is a  list of all of the currently avalible functions 
 
-driveToPoint
-    - 
+targetMove()
+    -drives to point()
+turnToHeading()
+getobjectoffset()
