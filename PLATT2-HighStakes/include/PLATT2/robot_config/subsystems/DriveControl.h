@@ -4,6 +4,7 @@
 #include "vex.h"
 #include "PLATT2\robot_config\subsystems\piCom.h"
 #include "PLATT2\robot_config\subsystems\ringsort.h"
+#include "PLATT2\robot_config\subsystems\Odometry.h"
 
 class DriveControl
 {
@@ -22,11 +23,13 @@ class DriveControl
 
     piCom& pi;
 
+    Odometry& odom;
+
     vex::controller& controller1;
 
 
     public:
-    DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom);
+    DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom, Odometry& o);
 
     void PinkDriveControl();
 

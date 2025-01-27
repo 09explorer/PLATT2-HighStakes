@@ -4,12 +4,13 @@
 
 vex::brain Brain;
 
-DriveControl::DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom):
+DriveControl::DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom, Odometry& o):
 leftDrive{leftD},
 rightDrive{rightD},
 ringSort{ringS},
 controller1{con},
-pi{picom}
+pi{picom},
+odom{o}
 {
     leftDrive.setVelocity(0, vex::percent);
     rightDrive.setVelocity(0, vex::percent);

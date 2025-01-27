@@ -10,6 +10,7 @@
 #include "vex.h"
 #include "PLATT2/robot_config/robot.h"
 #include "PLATT2/robot_config/subsystems/piCom.h"
+#include "PLATT2/robot_config/subsystems/Odometry.h"
 
 
 using namespace vex;
@@ -18,6 +19,8 @@ using namespace vex;
 competition Competition;
 Robot robot;
 piCom& pi = robot.getPi();
+Odometry& odom = robot.getOdom();
+
 
 
 

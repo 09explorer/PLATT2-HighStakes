@@ -15,20 +15,17 @@ opticalSensor(vex::PORT10),
 ringsortPiston(brain.ThreeWirePort.A),
 lift1(vex::PORT12, vex::gearSetting::ratio6_1, true),
 lift2(vex::PORT13, vex::gearSetting::ratio6_1, false),
+x_od(vex::PORT14, true),
+y_od(vex::PORT15),
 inert(vex::PORT14),
 ringSort(lift1, lift2, opticalSensor, ringsortPiston, brain),
-driveControl(leftDrive, rightDrive, ringSort, controller, pi)
+driveControl(leftDrive, rightDrive, ringSort, controller, pi),
+odom(brain, x_od, y_od, inert)
 {
     // Set default config
     robotID = NO_ROBOT;
     allianceID = NO_ALLIANCE;
     autonID = NO_AUTON;
-
-    //// Calibrate IMU
-    //inert.calibrate();
-    //while(inert.isCalibrating()){
-    //    vex::this_thread::sleep_for(100);
-    //}
 }
 
 void Robot::setAllianceID(AllianceConfig newID)
@@ -87,4 +84,16 @@ void Robot::runAutonControl(){
 
 piCom& Robot::getPi(){
     return pi;
+}
+
+Odometry& Robot::getOdom(){
+    return odom;
+}
+
+void Robot::initalizeRobot(){
+    //// Calibrate IMU
+    inert.calibrate();
+    while(inert.isCalibrating()){
+        vex::this_thread::sleep_for(100);
+    }
 }

@@ -5,6 +5,7 @@
 #include "PLATT2\robot_config\subsystems\ringsort.h"
 #include "PLATT2\robot_config\subsystems\DriveControl.h"
 #include "PLATT2\robot_config\subsystems\piCom.h"
+#include "PLATT2\robot_config\subsystems\Odometry.h"
 
 /**
  * @brief Enumeration to represent the 2 different robot configurations with a default option.
@@ -138,9 +139,15 @@ class Robot
 
     vex::motor lift2;
 
+    vex::rotation x_od;
+
+    vex::rotation y_od;
+
     DriveControl driveControl;
 
     piCom pi;
+
+    Odometry odom;
 
     public:
     
@@ -187,6 +194,10 @@ class Robot
     void runDriveControl();
 
     piCom& getPi();
+
+    Odometry& getOdom();
+
+    void initalizeRobot();
 };
 
 #endif
