@@ -46,19 +46,18 @@ void DriveControl::autonControl(){
 
   leftDrive.spin(vex::forward, 0, vex::rpm);
   rightDrive.spin(vex::forward, 0, vex::rpm);
-//
-  //leftDrive.setVelocity(40, vex::percent);
-  //rightDrive.setVelocity(40, vex::percent);
-//
-  //vex::this_thread::sleep_for(1000);
-  //
-  //leftDrive.setVelocity(0, vex::percent);
-  //rightDrive.setVelocity(0, vex::percent);
+
+
   while (true){
+    
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(3,1);
-    Brain.Screen.print((double)pi.getValue(LEFTVEL));
-
+    Brain.Screen.print((double)pi.getValue(HEADING));
+    
+    pi.setValue(XPOS, odom.cPos[0]);
+    pi.setValue(YPOS, odom.cPos[1]);
+    pi.setValue(HEADING, odom.heading);
+    
     leftDrive.setVelocity(pi.getValue(LEFTVEL), vex::percent);
     rightDrive.setVelocity(pi.getValue(RIGHTVEL), vex::percent);
 

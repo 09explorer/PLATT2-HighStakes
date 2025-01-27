@@ -18,12 +18,6 @@ void Odometry::tracking(){
     double oldY = 0;
 
     while(true){
-        Brain.Screen.setCursor(1,1);
-        Brain.Screen.print((double)odom.heading);
-        Brain.Screen.setCursor(2,1);
-        Brain.Screen.print((double)odom.cPos[0]);
-        Brain.Screen.setCursor(3,1);
-        Brain.Screen.print((double)odom.cPos[1]);
 
         heading = 360 - inert.heading();
 

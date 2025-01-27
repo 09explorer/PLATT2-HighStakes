@@ -40,7 +40,4 @@ class Odometry {
 
 };
 
-/// @brief Extern to global odometry object.
-extern Odometry odom;
-
 #endif

@@ -8,7 +8,7 @@ def comp1Start(robotData):
     while True:
         #print("running", flush=True)
         offset = cam.getObjectOffest(vision.color.BLUE)
-
+        print(robotData[com.label.HEADING.value], flush=True)
         if offset is None:
             robotData[com.label.LEFTVEL.value] = 0
             robotData[com.label.RIGHTVEL.value] = 0
@@ -17,5 +17,6 @@ def comp1Start(robotData):
         else: 
             robotData[com.label.LEFTVEL.value] =    offset[1]*0.2
             robotData[com.label.RIGHTVEL.value] =  -offset[1]*0.2
-            print(offset, flush=True)
+    
+
     

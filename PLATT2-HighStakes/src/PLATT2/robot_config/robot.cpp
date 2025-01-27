@@ -17,10 +17,11 @@ lift1(vex::PORT12, vex::gearSetting::ratio6_1, true),
 lift2(vex::PORT13, vex::gearSetting::ratio6_1, false),
 x_od(vex::PORT14, true),
 y_od(vex::PORT15),
-inert(vex::PORT14),
+inert(vex::PORT7),
+odom(brain, x_od, y_od, inert),
 ringSort(lift1, lift2, opticalSensor, ringsortPiston, brain),
-driveControl(leftDrive, rightDrive, ringSort, controller, pi),
-odom(brain, x_od, y_od, inert)
+driveControl(leftDrive, rightDrive, ringSort, controller, pi, odom)
+
 {
     // Set default config
     robotID = NO_ROBOT;

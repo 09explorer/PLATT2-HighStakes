@@ -23,9 +23,6 @@ Odometry& odom = robot.getOdom();
 
 
 
-
-
-
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -40,14 +37,15 @@ void pre_auton(void) {
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
-
+  robot.initalizeRobot();
   //auton selector 
   pi.setValue(NAME, 1);
   pi.setValue(ALLIANCE, 1);
   pi.setValue(AUTON, 1);
 
   // odometry
-
+  auto odomRun = [](void) {odom.tracking();};
+  thread odomThread = thread(odomRun);
 
   //picom
   auto comRun = [](void) {pi.startPiCom();};
