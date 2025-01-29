@@ -1,13 +1,26 @@
-
 import time
+import functions.vision as vision
+import cv2
+import numpy as np
 
-from functions import vision
+if __name__ == '__main__':
+    
+    
+    
+    
+    
+ 
+    
+    
+    cam = vision.vision()
 
-cam = vision.vision()
+    target =  cam.getObjectOffest(vision.color.RED)
 
-while True:
+    while target is not None and target[1]>10:
 
-    test = cam.getObjectOffest(vision.color.BLUE)
-    print (test)
+        target = cam.getObjectOffest(vision.color.RED)
 
-    #time.sleep(0.1)
+        
+        
+        
+

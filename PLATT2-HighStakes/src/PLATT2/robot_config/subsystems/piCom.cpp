@@ -105,7 +105,7 @@ void piCom::startPiCom(){
 
         //delay to alow other threads to run 
         //has to be located at this point in the program in order to prevent missing incoming data strings       
-        vex::this_thread::sleep_for(1);
+        vex::this_thread::sleep_for(0.1);
 
     }
 

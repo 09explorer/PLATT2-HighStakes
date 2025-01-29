@@ -26,6 +26,19 @@ enum dataLabel
     
 };
 
+enum nameLabel{
+
+    PINK = 1,
+    PURPLE = 2,
+    RED = 1, 
+    BLUE = 2, 
+    COMP1 = 1, 
+    SKILLS = 2 
+
+};
+
+
+
 class piCom { 
     
     private:

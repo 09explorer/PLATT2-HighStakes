@@ -12,7 +12,8 @@ inert{i}
 };
 
 void Odometry::tracking(){
-     
+    inert.setHeading(270, vex::rotationUnits::deg);
+
     //init variables
     double oldX = 0;
     double oldY = 0;

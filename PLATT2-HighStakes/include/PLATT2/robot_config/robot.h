@@ -135,6 +135,12 @@ class Robot
 
     vex::digital_out ringsortPiston;
 
+    vex::digital_out mogoPistion;
+
+    vex::digital_out intakePiston;
+
+    vex::motor intake;
+
     vex::motor lift1;
 
     vex::motor lift2;

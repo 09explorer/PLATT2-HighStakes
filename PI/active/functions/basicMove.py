@@ -9,7 +9,7 @@ def targetMove(robotData, targetPoint, reverse = False, linVel = 40, lookAheadDi
       
         absTargetAngle = atan2(targetPoint[1] - robotData[com.label.YPOS.value], targetPoint[0] - robotData[com.label.XPOS.value]) * (180/pi)
         scale = 1
-
+        #print(absTargetAngle, flush=True)
         if reverse:
 
             absTargetAngle = absTargetAngle + 180
@@ -24,32 +24,31 @@ def targetMove(robotData, targetPoint, reverse = False, linVel = 40, lookAheadDi
 
             turnError = -1 * copysign(1, turnError) * (360 - abs(turnError))
 
-
-        robotData[com.label.LEFTVEL.value] = (scale * linVel) + (turnError)*2
-        robotData[com.label.RIGHTVEL.value] = (scale * linVel) - (turnError)*2
+        #print(turnError, flush= True)
+        robotData[com.label.LEFTVEL.value] =  (scale * linVel) - (turnError*0.7)
+        robotData[com.label.RIGHTVEL.value] = (scale * linVel) + (turnError*0.7)
         
-        time.sleep(0.01)
     
     robotData[com.label.LEFTVEL.value]  = 0
     robotData[com.label.RIGHTVEL.value] = 0
 
-def turnToHeading(robotData, target, kpTurn = 1):
+def turnToHeading(robotData, target, kpTurn = 0.5):
 
     turnError = 180
-    oldTurnError = 180
+    oldTurnError = 0
     deltaT = abs(oldTurnError-turnError)
 
-    while deltaT > 0.01:
+    while abs(turnError) > 3:
 
         turnError = target - robotData[com.label.HEADING.value]
-        deltaT = abs(oldTurnError-turnError)
+        deltaT = abs(turnError) - abs(oldTurnError)
 
         if turnError > 180 or turnError < -180:
 
             turnError = -1 * copysign(1, turnError) * (360 - abs(turnError))
 
-        robotData[com.label.LEFTVEL.value] =  turnError*kpTurn
-        robotData[com.label.RIGHTVEL.value] = -turnError*kpTurn
+        robotData[com.label.LEFTVEL.value] =  -turnError*kpTurn
+        robotData[com.label.RIGHTVEL.value] = turnError*kpTurn
         
         oldTurnError = turnError
 

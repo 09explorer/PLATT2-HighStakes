@@ -39,9 +39,9 @@ void pre_auton(void) {
   // Example: clearing encoders, setting servo positions, ...
   robot.initalizeRobot();
   //auton selector 
-  pi.setValue(NAME, 1);
-  pi.setValue(ALLIANCE, 1);
-  pi.setValue(AUTON, 1);
+  pi.setValue(NAME, PURPLE);
+  pi.setValue(ALLIANCE, BLUE);
+  pi.setValue(AUTON, SKILLS);
 
   // odometry
   auto odomRun = [](void) {odom.tracking();};
@@ -83,8 +83,8 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
-  //robot.runDriveControl();
-  robot.runAutonControl();
+  robot.runDriveControl();
+  //robot.runAutonControl();
 }
 
 //

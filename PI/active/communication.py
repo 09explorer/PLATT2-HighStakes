@@ -54,7 +54,6 @@ def startLink(robotData):
             rawRead = rawRead + readPort.readall().decode()
             if '/' in rawRead:
                 break
-        time.sleep(0.01)
     #print(rawRead,flush=True)
     robotData[label.NAME.value]     = getSubString(rawRead, 'n') #odomX
     robotData[label.AUTON.value]    = getSubString(rawRead, 'u') #odomY
@@ -96,7 +95,7 @@ def startLink(robotData):
     
         
         #wait needed for stability 
-        time.sleep(0.001)
+        time.sleep(0.0001)
         
         #create write string 
         writeString = writeString + '/'

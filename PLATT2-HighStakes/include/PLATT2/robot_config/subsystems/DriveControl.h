@@ -27,9 +27,15 @@ class DriveControl
 
     vex::controller& controller1;
 
+    vex::digital_out mogo;
+
+    vex::motor& intake;
+
+    vex::digital_out& intakePiston;
+
 
     public:
-    DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom, Odometry& o);
+    DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom, Odometry& o, vex::digital_out& m, vex::motor& i, vex::digital_out& ip);
 
     void PinkDriveControl();
 

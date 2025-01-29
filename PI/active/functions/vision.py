@@ -1,3 +1,4 @@
+import communication as com
 from enum import Enum
 import math
 import cv2
@@ -12,13 +13,16 @@ class vision:
     def __init__(self):
         
         self.cam = cv2.VideoCapture(0)
-        self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-        self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+        self.xsize = 1280
+        self.ysize =  720
+        
+        self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, self.xsize)
+        self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, self.ysize)
 
         params = cv2.SimpleBlobDetector_Params()
         params.filterByArea = True
-        params.minArea = 1500
-        params.maxArea = 1280*720
+        params.minArea = 1500/4
+        params.maxArea = self.xsize*self.ysize
         params.filterByCircularity = False
         params.filterByConvexity = False
         params.filterByInertia = False
@@ -26,7 +30,7 @@ class vision:
 
         self.detector = cv2.SimpleBlobDetector_create(params)
 
-        self.center = [1280/2, 720]
+        self.center = [self.xsize/2, self.ysize]
 
         self.kernal = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
 
@@ -70,7 +74,7 @@ class vision:
         size = np.zeros((h+2, w+2), np.uint8)
 
         cv2.floodFill(im_floodfill, size, (0,0), 255)
-        cv2.floodFill(im_floodfill, size, (1275,715), 255)
+        cv2.floodFill(im_floodfill, size, ((int)(self.xsize-5),(int)(self.ysize-5)), 255)
 
         im_floodfill_inv = cv2.bitwise_not(im_floodfill)
 
@@ -105,3 +109,29 @@ class vision:
             
         else:
             return None
+    
+    def chase(self, robotData, wantedColor, kpLin = 20):
+
+        target = self.getObjectOffest(wantedColor)
+
+        if target is None:
+            return
+        
+        while target[1] < 10 and target is not None:
+
+            robotData[com.label.LEFTVEL.value] = -target[1]*0.5
+            robotData[com.label.RIGHTVEL.value] = target[1]*0.5
+
+            target = self.getObjectOffest(wantedColor)
+        
+        if target is None:
+            return
+
+        while target is not None:
+
+            robotData[com.label.LEFTVEL.value] = -kpLin * target[1]*0.5
+            robotData[com.label.RIGHTVEL.value] = kpLin * target[1]*0.5
+
+            target = self.getObjectOffest(wantedColor)
+        
+

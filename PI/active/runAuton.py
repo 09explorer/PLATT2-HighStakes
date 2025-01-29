@@ -1,15 +1,21 @@
 import multiprocessing
 import time
-import autons.red.pink.comp1.comp1Start
 import communication
 import setproctitle
-import functions.vision as vision
+
 import autons.red.pink.comp1.comp1Start
+import autons.red.pink.skills.skillsStart
+import autons.blue.pink.comp1.comp1Start
+import autons.blue.pink.skills.skillsStart
+import autons.blue.purple.comp1.comp1Start
+import autons.blue.purple.skills.skillsStart
+import autons.red.purple.comp1.comp1Start
+import autons.red.purple.skills.skillsStart
 
 def start():
     
     setproctitle.setproctitle('PlattCode')
-    print("started")
+    print("started", flush=True)
     
     robotData = multiprocessing.Array('f', 20)
 
@@ -39,6 +45,8 @@ def start():
             #Skills
             elif robotData[communication.label.AUTON.value] == 2:   
                 
+                autons.red.pink.skills.skillsStart.skillsStart(robotData)
+
                 pass
         
         #Blue
@@ -46,12 +54,16 @@ def start():
             
             #Comp1
             if robotData[communication.label.AUTON.value] == 1:
+
+                autons.blue.pink.comp1.comp1Start.comp1Start(robotData)
                 
                 pass
            
             #Skills
             elif robotData[communication.label.AUTON.value] == 2:
                 
+                autons.blue.pink.skills.skillsStart.skillsStart(robotData)
+
                 pass
     
     #purple
@@ -63,11 +75,15 @@ def start():
             #comp1 
             if robotData[communication.label.AUTON.value] == 1:
                
+               autons.red.purple.comp1.comp1Start.comp1Start(robotData)
+               
                pass
 
             #skills
             elif robotData[communication.label.AUTON.value] == 2:
                 
+                autons.red.purple.skills.skillsStart.skillsStart(robotData)
+
                 pass
 
         #Blue    
@@ -76,11 +92,15 @@ def start():
             #comp1 
             if robotData[communication.label.AUTON.value] == 1:
                
-               pass
+                autons.blue.purple.comp1.comp1Start.comp1Start(robotData)
+
+                pass
 
             #skills
             elif robotData[communication.label.AUTON.value] == 2:
                 
+                autons.blue.purple.skills.skillsStart.skillsStart(robotData)
+
                 pass
 
 
