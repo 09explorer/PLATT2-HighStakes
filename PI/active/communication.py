@@ -2,6 +2,9 @@ import serial
 import platform
 import time
 from enum import Enum
+import qwiic_otos # type: ignore
+import sys
+import time
 
 class label(Enum):
     
@@ -59,8 +62,12 @@ def startLink(robotData):
     robotData[label.AUTON.value]    = getSubString(rawRead, 'u') #odomY
     robotData[label.ALLIANCE.value] = getSubString(rawRead, 'a') #odomH
 
-     
-    #print("hello", flush= True)
+    odom = qwiic_otos.QwiicOTOS()
+    odom.begin()
+    odom.calibrateImu()
+    odom.resetTracking()
+    offset = qwiic_otos.Pose2D(0, 0, 90)
+    odom.setOffset(offset)
 
     while True:
 
@@ -75,14 +82,20 @@ def startLink(robotData):
         
         #print(rawRead,flush=True)
         
+        cPos = odom.getPosition()
+
         #get and assign data to the shared buffer 
         robotData[label.FLAG.value]    = getSubString(rawRead, 'f') #status
-        #print(robotData[label.FLAG.value],flush=True)
-        robotData[label.HEADING.value] = getSubString(rawRead, 'h') #odomH
-        robotData[label.XPOS.value]    = getSubString(rawRead, 'x') #odomX
-        robotData[label.YPOS.value]    = getSubString(rawRead, 'y') #odomY
+         
+        heading = cPos.h % 360
         
-        
+        if heading < 0:
+            heading = heading + 360
+
+        robotData[label.HEADING.value] =  heading #odomH
+        robotData[label.XPOS.value]    =  cPos.x #odomX
+        robotData[label.YPOS.value]    =  cPos.y #odomY
+    
         #get data from shared buffer to write 
         writeString = ''
         writeString = addToWriteString(robotData, writeString, 'r', label.RIGHTVEL.value)
@@ -95,7 +108,7 @@ def startLink(robotData):
     
         
         #wait needed for stability 
-        time.sleep(0.0001)
+        time.sleep(0.001)
         
         #create write string 
         writeString = writeString + '/'

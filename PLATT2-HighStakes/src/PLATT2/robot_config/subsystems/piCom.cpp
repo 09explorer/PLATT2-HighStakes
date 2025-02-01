@@ -69,9 +69,9 @@ void piCom::startPiCom(){
 
         writeString = "";
         addToWriteString("f", this->flag);
-        addToWriteString("h", this->heading);
-        addToWriteString("x", this->xPos);
-        addToWriteString("y", this->yPos);
+        //addToWriteString("h", this->heading);
+        //addToWriteString("x", this->xPos);
+        //addToWriteString("y", this->yPos);
         writeString = writeString + "/";
         
         //send the string to the pi
@@ -105,7 +105,7 @@ void piCom::startPiCom(){
 
         //delay to alow other threads to run 
         //has to be located at this point in the program in order to prevent missing incoming data strings       
-        vex::this_thread::sleep_for(0.1);
+        vex::this_thread::sleep_for(1);
 
     }
 
@@ -139,18 +139,6 @@ double piCom::getValue(dataLabel dataType){
         }
         case COLORSORT:{
             return this->colorSort;
-            break;
-        }
-        case HEADING:{
-            return this->heading;
-            break;
-        }
-        case XPOS:{
-            return this->xPos;
-            break;
-        }
-        case YPOS:{
-            return this->yPos;
             break;
         }
         case INTAKE:{
@@ -201,18 +189,6 @@ void piCom::setValue(dataLabel dataType, double value){
         }
         case COLORSORT:{
             this->colorSort = value;
-            break;
-        }
-        case HEADING:{
-            this->heading = value;
-            break;
-        }
-        case XPOS:{
-            this->xPos = value;
-            break;
-        }
-        case YPOS:{
-            this->yPos = value;
             break;
         }
         case INTAKE:{

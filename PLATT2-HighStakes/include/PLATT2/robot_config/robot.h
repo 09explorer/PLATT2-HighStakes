@@ -5,7 +5,7 @@
 #include "PLATT2\robot_config\subsystems\ringsort.h"
 #include "PLATT2\robot_config\subsystems\DriveControl.h"
 #include "PLATT2\robot_config\subsystems\piCom.h"
-#include "PLATT2\robot_config\subsystems\Odometry.h"
+#include "PLATT2\robot_config\subsystems\WallStake.h"
 
 /**
  * @brief Enumeration to represent the 2 different robot configurations with a default option.
@@ -131,8 +131,6 @@ class Robot
 
     vex::optical opticalSensor;
 
-    vex::inertial inert;
-
     vex::digital_out ringsortPiston;
 
     vex::digital_out mogoPistion;
@@ -145,15 +143,15 @@ class Robot
 
     vex::motor lift2;
 
-    vex::rotation x_od;
+    vex::motor wallstake1;
+    vex::motor wallstake2;
+    vex::motor wallstake3;
 
-    vex::rotation y_od;
+    wallStakeController wallstakeControl;
 
     DriveControl driveControl;
 
     piCom pi;
-
-    Odometry odom;
 
     public:
     
@@ -201,7 +199,7 @@ class Robot
 
     piCom& getPi();
 
-    Odometry& getOdom();
+    wallStakeController& getWall();
 
     void initalizeRobot();
 };

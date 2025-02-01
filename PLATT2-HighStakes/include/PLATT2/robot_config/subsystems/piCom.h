@@ -15,25 +15,22 @@ enum dataLabel
     CLAMP = 3, 
     WALLSTAKE = 4,
     COLORSORT = 5, 
-    HEADING = 6,
-    XPOS = 7, 
-    YPOS = 8,
-    INTAKE = 9,
-    HOOKS = 10,
-    NAME = 11,
-    AUTON = 12, 
-    ALLIANCE = 13
+    INTAKE = 6,
+    HOOKS = 7,
+    NAME = 8,
+    AUTON = 9, 
+    ALLIANCE = 10
     
 };
 
 enum nameLabel{
 
-    PINK = 1,
-    PURPLE = 2,
-    RED = 1, 
-    BLUE = 2, 
-    COMP1 = 1, 
-    SKILLS = 2 
+    PI_PINK = 1,
+    PI_PURPLE = 2,
+    PI_RED = 1, 
+    PI_BLUE = 2, 
+    PI_COMP1 = 1, 
+    PI_SKILLS = 2 
 
 };
 
@@ -58,12 +55,6 @@ class piCom {
         double wallStake;
 
         double colorSort;
-
-        double heading;
-
-        double xPos;
-
-        double yPos;
 
         double intake;
 

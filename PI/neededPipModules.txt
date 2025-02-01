@@ -1,5 +1,6 @@
 name              purple           pink
 
-pyserial                            X
-setproctitle                        X
-opencv-python                       X
+pyserial                            
+setproctitle                        
+opencv-python                       
+qwiic_otos    

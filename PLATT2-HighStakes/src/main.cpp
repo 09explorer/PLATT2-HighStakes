@@ -10,8 +10,6 @@
 #include "vex.h"
 #include "PLATT2/robot_config/robot.h"
 #include "PLATT2/robot_config/subsystems/piCom.h"
-#include "PLATT2/robot_config/subsystems/Odometry.h"
-
 
 using namespace vex;
 
@@ -19,7 +17,7 @@ using namespace vex;
 competition Competition;
 Robot robot;
 piCom& pi = robot.getPi();
-Odometry& odom = robot.getOdom();
+wallStakeController& wallstakeControl = robot.getWall();
 
 
 
@@ -39,13 +37,12 @@ void pre_auton(void) {
   // Example: clearing encoders, setting servo positions, ...
   robot.initalizeRobot();
   //auton selector 
-  pi.setValue(NAME, PURPLE);
-  pi.setValue(ALLIANCE, BLUE);
-  pi.setValue(AUTON, SKILLS);
+  pi.setValue(NAME, PI_PURPLE);
+  pi.setValue(ALLIANCE, PI_BLUE);
+  pi.setValue(AUTON, PI_COMP1);
 
-  // odometry
-  auto odomRun = [](void) {odom.tracking();};
-  thread odomThread = thread(odomRun);
+  auto wallRun = [](void) {wallstakeControl.moveToPosition();};
+  thread wallThread = thread(wallRun);
 
   //picom
   auto comRun = [](void) {pi.startPiCom();};

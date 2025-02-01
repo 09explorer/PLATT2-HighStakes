@@ -16,14 +16,14 @@ ringsortPiston(brain.ThreeWirePort.C),
 intakePiston(brain.ThreeWirePort.B),
 intake(vex::PORT3, vex::gearSetting::ratio6_1, true),
 mogoPistion(brain.ThreeWirePort.A),
-lift1(vex::PORT12, vex::gearSetting::ratio6_1, true),
+lift1(vex::PORT4, vex::gearSetting::ratio6_1, false),
 lift2(vex::PORT13, vex::gearSetting::ratio6_1, false),
-x_od(vex::PORT14, true),
-y_od(vex::PORT15),
-inert(vex::PORT7),
-odom(brain, x_od, y_od, inert),
 ringSort(lift1, lift2, opticalSensor, ringsortPiston, brain),
-driveControl(leftDrive, rightDrive, ringSort, controller, pi, odom, mogoPistion, intake, intakePiston)
+wallstake1(vex::PORT19, vex::gearSetting::ratio6_1, true),
+wallstake2(vex::PORT19, vex::gearSetting::ratio6_1, true),
+wallstake3(vex::PORT19, vex::gearSetting::ratio6_1, true),
+wallstakeControl(wallstake1,wallstake2,wallstake3),
+driveControl(leftDrive, rightDrive, ringSort, controller, pi, mogoPistion, intake, intakePiston, lift1)
 
 {
     // Set default config
@@ -91,21 +91,17 @@ piCom& Robot::getPi(){
     return pi;
 }
 
-Odometry& Robot::getOdom(){
-    return odom;
+wallStakeController& Robot::getWall(){
+    return wallstakeControl;
+
 }
 
 void Robot::initalizeRobot(){
-    //// Calibrate IMU
-    odom.cPos[0] = 46;
-    odom.cPos[1] = 18;
     
     leftDrive.setStopping(vex::brake);
     rightDrive.setStopping(vex::brake);
     
-    inert.calibrate();
-    while(inert.isCalibrating()){
-        vex::this_thread::sleep_for(100);
-    }
+    
+
 
 }
