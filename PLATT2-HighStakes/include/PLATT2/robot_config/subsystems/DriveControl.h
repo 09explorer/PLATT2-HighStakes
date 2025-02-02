@@ -5,39 +5,54 @@
 #include "PLATT2\robot_config\subsystems\piCom.h"
 #include "PLATT2\robot_config\subsystems\ringsort.h"
 #include "PLATT2\robot_config\subsystems\wallStake.h"
+#include "PLATT2\HelperFunctions.h"
 
 class DriveControl
 {
     private:
+    HelperFunctions helper;
+
+    vex::motor leftDrive1;
+    vex::motor leftDrive2;
+    vex::motor leftDrive3;
+    vex::motor leftDrive4;
+
+    vex::motor rightDrive1;
+    vex::motor rightDrive2;
+    vex::motor rightDrive3;
+    vex::motor rightDrive4;
+
+
+
      /**
      * @brief Motor group for the left drive motors
      */
-    vex::motor_group& leftDrive;
+    vex::motor_group leftDrive;
 
     /**
      * @brief Motor group for the right drive motors.
      */
-    vex::motor_group& rightDrive;
+    vex::motor_group rightDrive;
     
     RingSort& ringSort;
 
     piCom& pi;
 
-    vex::controller& controller1;
+    vex::controller controller1;
 
     vex::digital_out mogo;
 
-    vex::motor& intake;
+    vex::motor intake;
 
-    vex::digital_out& intakePiston;
+    vex::digital_out intakePiston;
 
-    vex::motor& hooks;
+    vex::motor_group hooks;
 
     wallStakeController& wallStake;
 
 
     public:
-    DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom, vex::digital_out& m, vex::motor& i, vex::digital_out& ip, vex::motor& l, wallStakeController& w);
+    DriveControl(piCom& picom, RingSort& ring, wallStakeController& w);
 
     void PinkDriveControl();
 

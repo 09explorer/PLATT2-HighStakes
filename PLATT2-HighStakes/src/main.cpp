@@ -18,6 +18,7 @@ competition Competition;
 Robot robot;
 piCom& pi = robot.getPi();
 wallStakeController& wallstakeControl = robot.getWall();
+RingSort& ringSort = robot.getRings();
 
 
 /*---------------------------------------------------------------------------*/
@@ -47,6 +48,8 @@ void pre_auton(void) {
   auto comRun = [](void) {pi.startPiCom();};
   thread comThread = thread(comRun);
 
+  auto ringRun = [](void) {ringSort.colorSort();};
+  thread ringThread = thread(ringRun);
 }
 
 /*---------------------------------------------------------------------------*/

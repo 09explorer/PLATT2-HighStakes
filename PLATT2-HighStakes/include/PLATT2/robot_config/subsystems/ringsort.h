@@ -17,11 +17,15 @@ enum RingColor
 class RingSort
 {
     private:
-    vex::motor lift1;
-    vex::motor lift2;
+    vex::motor hook1;
+    vex::motor hook2;
+    vex::motor_group hooks;
+
     vex::optical colorSensor;
     vex::digital_out sortPiston;
     vex::brain brain;
+
+
 
     const double CHAIN_LIFT_MAX_SPEED {600};
     const double CHAIN_LIFT_NORMAL_SPEED {600};
@@ -51,7 +55,7 @@ class RingSort
     /// @param l2 Refrence to lift motor #2.
     /// @param o Refrence to optical sensor.
     /// @param sp Refrence to the solenoid for the sorting piston.
-    RingSort(vex::motor &l1, vex::motor &l2, vex::optical &o, vex::digital_out &sp, vex::brain &brain);
+    RingSort();
 
     /// @brief The algorighim for color sorting.
     void colorSort();
@@ -65,12 +69,11 @@ class RingSort
     /// @brief Helper method to increment through the ring colors to sort.
     void incrementColor();
 
+    void moveHooks(double velocity);
+
     void setRing(RingColor desiredColor);
 
         RingColor desiredRing;
 };
-
-/// @brief Extern to the global ringController object.
-extern RingSort ringController;
 
 #endif

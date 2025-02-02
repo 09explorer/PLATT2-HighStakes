@@ -1,10 +1,19 @@
 #include "PLATT2/robot_config/subsystems/WallStake.h"
 
-
-wallStakeController::wallStakeController(vex::motor &w1,vex::motor &w2, vex::motor &w3) :
-wallStake1{w1}, wallStake2{w2}, wallStake3{w3}
+wallStakeController::wallStakeController() :
+wallStake1(vex::PORT20, vex::gearSetting::ratio6_1, true), 
+wallStake2(vex::PORT9, vex::gearSetting::ratio6_1, false), 
+wallStake3(vex::PORT5, vex::gearSetting::ratio6_1, true)
 {
 
+}
+
+void wallStakeController::setPosition(Position position){
+    this->position = position;
+}
+
+Position wallStakeController::getPosition(){
+    return this->position;
 }
 
 void wallStakeController::moveToPosition(){

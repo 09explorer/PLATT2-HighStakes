@@ -1,29 +1,8 @@
 #include "PLATT2/robot_config/robot.h"
 
 Robot::Robot():
-leftDrive1(vex::PORT1, vex::gearSetting::ratio6_1, false),
-leftDrive2(vex::PORT2, vex::gearSetting::ratio6_1, true),
-leftDrive3(vex::PORT11, vex::gearSetting::ratio6_1, true),
-leftDrive4(vex::PORT13, vex::gearSetting::ratio6_1, false),
-rightDrive1(vex::PORT16, vex::gearSetting::ratio6_1, true),
-rightDrive2(vex::PORT17, vex::gearSetting::ratio6_1, false),
-rightDrive3(vex::PORT18, vex::gearSetting::ratio6_1, false),
-rightDrive4(vex::PORT19, vex::gearSetting::ratio6_1, true),
-leftDrive(leftDrive1, leftDrive2, leftDrive3, leftDrive4),
-rightDrive(rightDrive1, rightDrive2, rightDrive3, rightDrive4),
-opticalSensor(vex::PORT10),
-ringsortPiston(brain.ThreeWirePort.C),
-intakePiston(brain.ThreeWirePort.B),
-intake(vex::PORT3, vex::gearSetting::ratio6_1, true),
-mogoPistion(brain.ThreeWirePort.A),
-lift1(vex::PORT4, vex::gearSetting::ratio6_1, false),
-lift2(vex::PORT13, vex::gearSetting::ratio6_1, false),
-ringSort(lift1, lift2, opticalSensor, ringsortPiston, brain),
-wallstake1(vex::PORT20, vex::gearSetting::ratio6_1, true),
-wallstake2(vex::PORT9, vex::gearSetting::ratio6_1, false),
-wallstake3(vex::PORT5, vex::gearSetting::ratio6_1, true),
-wallstakeControl(wallstake1,wallstake2,wallstake3),
-driveControl(leftDrive, rightDrive, ringSort, controller, pi, mogoPistion, intake, intakePiston, lift1, wallstakeControl)
+wallstakeControl(),
+driveControl(pi, ringSort, wallstakeControl)
 
 {
     // Set default config
@@ -103,12 +82,11 @@ wallStakeController& Robot::getWall(){
 
 }
 
+RingSort& Robot::getRings(){
+    return ringSort;
+
+}
+
 void Robot::initalizeRobot(){
     
-    leftDrive.setStopping(vex::brake);
-    rightDrive.setStopping(vex::brake);
-    
-    
-
-
 }

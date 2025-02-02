@@ -59,23 +59,22 @@ private:
      */
     Position oldPosition;
 
+    std::atomic<Position> position;
 
 public:
-
-    ///@brief Moves the wall stake arm to the desired position based on the current position.
-    wallStakeController(vex::motor &wallStake1,vex::motor &wallStake2, vex::motor &wallStake3);
-
-    /// @brief Moves the wall stake subsystem to the desired position.
+    wallStakeController();
 
     /// @brief Increments through the position presets. Calls the moveToPosition() method after changing the current value.
     void incrementPosHigh();
 
     void incrementPosLow();
 
-    std::atomic<Position> position;
-
     /// @brief Moves the wall stake subsystem to the desired position.
     void moveToPosition();
+
+    void setPosition(Position position);
+
+    Position getPosition();
 
 };
 

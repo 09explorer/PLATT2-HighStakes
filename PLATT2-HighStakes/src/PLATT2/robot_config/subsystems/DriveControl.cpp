@@ -4,16 +4,23 @@
 
 vex::brain Brain;
 
-DriveControl::DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom, vex::digital_out& m, vex::motor& i, vex::digital_out& ip,  vex::motor& l, wallStakeController& w):
-leftDrive{leftD},
-rightDrive{rightD},
-ringSort{ringS},
-controller1{con},
+DriveControl::DriveControl(piCom& picom, RingSort& ring, wallStakeController& w):
+leftDrive1(vex::PORT1, vex::gearSetting::ratio6_1, false),
+leftDrive2(vex::PORT2, vex::gearSetting::ratio6_1, true),
+leftDrive3(vex::PORT11, vex::gearSetting::ratio6_1, true),
+leftDrive4(vex::PORT13, vex::gearSetting::ratio6_1, false),
+rightDrive1(vex::PORT16, vex::gearSetting::ratio6_1, true),
+rightDrive2(vex::PORT17, vex::gearSetting::ratio6_1, false),
+rightDrive3(vex::PORT18, vex::gearSetting::ratio6_1, false),
+rightDrive4(vex::PORT19, vex::gearSetting::ratio6_1, true),
+leftDrive(leftDrive1, leftDrive2, leftDrive3, leftDrive4),
+rightDrive(rightDrive1, rightDrive2, rightDrive3, rightDrive4),
+ringSort{ring},
+controller1(vex::primary),
 pi{picom},
-mogo{m},
-intake{i}, 
-intakePiston{ip},
-hooks{l},
+mogo{Brain.ThreeWirePort.A},
+intake(vex::PORT3, vex::gearSetting::ratio6_1, true), 
+intakePiston{Brain.ThreeWirePort.B},
 wallStake{w}
 {
     leftDrive.setVelocity(0, vex::percent);
@@ -21,6 +28,13 @@ wallStake{w}
 }
 
 void DriveControl::TestControl(){
+    bool mogoOldState;
+    bool mogoNewState;
+    bool mogoCurrentState;
+    bool intakeCurrentState;
+    bool intakeOldState;
+    bool intakeNewState;
+
 
     int leftDrivePower;
     int rightDrivePower;
@@ -40,6 +54,12 @@ void DriveControl::TestControl(){
       leftDrive.setVelocity(leftDrivePower, vex::percent);
       rightDrive.setVelocity(rightDrivePower, vex::percent);
 
+        // Mogo toggle
+      mogoNewState = controller1.ButtonL2.pressing();
+      helper.solenoidToggle(mogoCurrentState, mogoNewState, mogoOldState, mogo);
+
+      intakeNewState = controller1.ButtonRight.pressing();
+      helper.solenoidToggle(intakeOldState,intakeNewState,intakeCurrentState, intakePiston);
 
       vex::this_thread::sleep_for(20); // Sleep the task for a short amount of time
     
@@ -65,7 +85,7 @@ void DriveControl::autonControl(){
   hooks.spin(vex::forward, 0, vex::rpm);
 
   intakePiston.set(true);
-  wallStake.position = HOME;
+  wallStake.setPosition(HOME);
 
 
   while (true){
