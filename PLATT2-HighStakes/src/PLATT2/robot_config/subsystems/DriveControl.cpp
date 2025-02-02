@@ -32,6 +32,10 @@ void DriveControl::TestControl(){
     bool intakeCurrentState = false;
     bool intakeOldState = true;
     bool intakeNewState = true;
+    bool ROldState;
+	  bool RNewState;
+    bool rightWingPos = false;
+    bool wasButtonPressed = false;
 
     int leftDrivePower = 0;
     int rightDrivePower = 0;
@@ -63,14 +67,59 @@ void DriveControl::TestControl(){
       intakeNewState = controller1.ButtonRight.pressing();
       helper.solenoidToggle(intakeOldState,intakeNewState,intakeCurrentState, intakePiston);
 
+      RNewState = controller1.ButtonR1.pressing();
+		
+		if ( RNewState == true and ROldState == false) {
+			
+			rightWingPos = !rightWingPos;
+		
+			ROldState = true;
+			
+			if (rightWingPos == false){
+				ringSort.moveHooks(100);
+				rightWingPos = false;
+				
+			}
+			else{
+				ringSort.moveHooks(0);
+				rightWingPos = true;
+		
+			}
+		   
+		}
+		ROldState = RNewState;
+
       double wallpos = wallStake.getMotor2Position();
       double wall2pos = wallStake.getMotor3Position();
       Brain.Screen.setCursor(1,1);
       Brain.Screen.print("Wall pos: %f", wallpos);
       Brain.Screen.setCursor(2,1);
       Brain.Screen.print("2nd Wall pos: %f", wall2pos);
+
+    // Intake Control
+    if (controller1.ButtonL1.pressing())
+    {
+      intake.setVelocity(100, vex::pct);
+    }
+    else
+    {
+      intake.setVelocity(0, vex::pct);
+    }
+
+
+            // Check the current state of the button
+        bool isButtonPressed = controller1.ButtonDown.pressing();
+
+        // Detect a new press (button transitioning from not pressed to pressed)
+        if (isButtonPressed && !wasButtonPressed) {
+           ringSort.incrementColor();
+        }
+
+        // Update the state for the next iteration
+        wasButtonPressed = isButtonPressed;
+
      vex::this_thread::sleep_for(20); // Sleep the task for a short amount of time
-    
+
     }
 }
 void DriveControl::PinkDriveControl()

@@ -17,19 +17,29 @@ void RingSort::colorSort()
 {
     
     hooks.spin(vex::forward, 0, vex::rpm);
+    colorSensor.setLight(vex::ledState::on);
+    colorSensor.setLightPower(25);
 
     while(true){
-    double currentHue = colorSensor.hue();
     sortPiston.set(false);
-    brain.Screen.printAt(1, 1, "current hue %f", colorSensor.hue());
+
+    vex::optical::rgbc currentRGB = colorSensor.getRgb();
+    double currentR = currentRGB.red;
+    double currentB = currentRGB.blue;
+
+    brain.Screen.setCursor(7,1);
+    brain.Screen.print("current red %f", currentR);
+    brain.Screen.setCursor(8,1);
+    brain.Screen.print("current blue %f", currentB);
+    brain.Screen.setCursor(9,1);
+    brain.Screen.print("Current ring: %d", desiredRing);
+
     switch(desiredRing)
     {
         case RED_RING:
         {
-            double upperBound = RED_RING_HUE + 5;
-            double lowerBound = RED_RING_HUE - 5;
 
-         if(currentHue < upperBound && currentHue > lowerBound)
+         if(currentR > 250)
          {
             hook1.resetPosition();
             hook2.resetPosition();
@@ -48,18 +58,14 @@ void RingSort::colorSort()
         }
         case BLUE_RING:
         {
-
-            double upperBound = BLUE_RING_HUE + 5;
-            double lowerBound = BLUE_RING_HUE - 5;
-
-            if(currentHue > BLUE_RING_HUE)
-         {
+            if(currentB > 200)
+            {
             hook1.resetPosition();
             hook2.resetPosition();
 
             while(hook1.position(vex::rev) < CHAIN_LIFT_ENCODER_TICKS) {
                 sortPiston.set(true);
-                }
+            }
             sortPiston.set(false);
 
          }
