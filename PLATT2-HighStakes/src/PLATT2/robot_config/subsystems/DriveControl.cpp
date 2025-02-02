@@ -4,7 +4,7 @@
 
 vex::brain Brain;
 
-DriveControl::DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom, vex::digital_out& m, vex::motor& i, vex::digital_out& ip,  vex::motor& l):
+DriveControl::DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom, vex::digital_out& m, vex::motor& i, vex::digital_out& ip,  vex::motor& l, wallStakeController& w):
 leftDrive{leftD},
 rightDrive{rightD},
 ringSort{ringS},
@@ -13,7 +13,8 @@ pi{picom},
 mogo{m},
 intake{i}, 
 intakePiston{ip},
-hooks{l}
+hooks{l},
+wallStake{w}
 {
     leftDrive.setVelocity(0, vex::percent);
     rightDrive.setVelocity(0, vex::percent);
@@ -27,6 +28,8 @@ void DriveControl::TestControl(){
     
     leftDrive.spin(vex::forward, 0, vex::rpm);
     rightDrive.spin(vex::forward, 0, vex::rpm);
+
+    //wallStake.position = SCORE;
     
     while(true){
       // Drive velocities
@@ -36,6 +39,7 @@ void DriveControl::TestControl(){
 
       leftDrive.setVelocity(leftDrivePower, vex::percent);
       rightDrive.setVelocity(rightDrivePower, vex::percent);
+
 
       vex::this_thread::sleep_for(20); // Sleep the task for a short amount of time
     
@@ -60,9 +64,8 @@ void DriveControl::autonControl(){
   intake.spin(vex::forward, 0, vex::rpm);
   hooks.spin(vex::forward, 0, vex::rpm);
 
-
   intakePiston.set(true);
-
+  wallStake.position = HOME;
 
 
   while (true){

@@ -72,7 +72,7 @@ class Robot
     /**
      * @brief The robot brain.
      */
-    vex::brain brain;
+    //vex::brain brain;
 
     /**
      * @brief The primary robot controller.
@@ -143,19 +143,22 @@ class Robot
 
     vex::motor lift2;
 
-    vex::motor wallstake1;
-    vex::motor wallstake2;
-    vex::motor wallstake3;
 
     wallStakeController wallstakeControl;
 
     DriveControl driveControl;
 
-    piCom pi;
+    piCom pi;    
+    
+    vex::motor wallstake1;
+    vex::motor wallstake2;
+    vex::motor wallstake3;
+    vex::brain brain;
 
     public:
     
     Robot();
+
 
     /**
      * @brief Sets the current alliance ID.

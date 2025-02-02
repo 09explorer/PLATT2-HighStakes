@@ -79,7 +79,4 @@ public:
 
 };
 
-/// @brief Extern of global instance of the wallStakeController class.
-extern wallStakeController wallStakeMech;
-
 #endif

@@ -20,7 +20,6 @@ piCom& pi = robot.getPi();
 wallStakeController& wallstakeControl = robot.getWall();
 
 
-
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -38,8 +37,8 @@ void pre_auton(void) {
   robot.initalizeRobot();
   //auton selector 
   pi.setValue(NAME, PI_PURPLE);
-  pi.setValue(ALLIANCE, PI_BLUE);
-  pi.setValue(AUTON, PI_COMP1);
+  pi.setValue(ALLIANCE, PI_RED);
+  pi.setValue(AUTON, SKILLS_1);
 
   auto wallRun = [](void) {wallstakeControl.moveToPosition();};
   thread wallThread = thread(wallRun);
@@ -64,6 +63,8 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
+  
+  
   robot.runAutonControl();
 
 

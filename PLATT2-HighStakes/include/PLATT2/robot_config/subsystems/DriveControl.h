@@ -4,6 +4,7 @@
 #include "vex.h"
 #include "PLATT2\robot_config\subsystems\piCom.h"
 #include "PLATT2\robot_config\subsystems\ringsort.h"
+#include "PLATT2\robot_config\subsystems\wallStake.h"
 
 class DriveControl
 {
@@ -32,9 +33,11 @@ class DriveControl
 
     vex::motor& hooks;
 
+    wallStakeController& wallStake;
+
 
     public:
-    DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom, vex::digital_out& m, vex::motor& i, vex::digital_out& ip, vex::motor& l);
+    DriveControl(vex::motor_group& leftD, vex::motor_group& rightD, RingSort& ringS, vex::controller& con, piCom& picom, vex::digital_out& m, vex::motor& i, vex::digital_out& ip, vex::motor& l, wallStakeController& w);
 
     void PinkDriveControl();
 

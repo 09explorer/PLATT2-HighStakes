@@ -25,19 +25,23 @@ def targetMove(robotData, targetPoint, reverse = False, linVel = 40, lookAheadDi
             turnError = -1 * copysign(1, turnError) * (360 - abs(turnError))
 
         #print(turnError, flush= True)
-        robotData[com.label.LEFTVEL.value] =  (scale * linVel) - (turnError*0.7)
-        robotData[com.label.RIGHTVEL.value] = (scale * linVel) + (turnError*0.7)
+        robotData[com.label.LEFTVEL.value] =  (scale * linVel) - (turnError*0.3)
+        robotData[com.label.RIGHTVEL.value] = (scale * linVel) + (turnError*0.3)
+        time.sleep(0.01)
+
+        #print(robotData[com.label.HEADING.value], flush= True)
+
         
     
     robotData[com.label.LEFTVEL.value]  = 0
     robotData[com.label.RIGHTVEL.value] = 0
 
-def turnToHeading(robotData, target, kpTurn = 0.42):
+def turnToHeading(robotData, target, kpTurn = 0.3):
 
     turnError = 180
     avg = [180] * 20
     
-    while abs(turnError) > 3 or sum(avg)/len(avg) > 3:
+    while abs(turnError) > 2 or sum(avg)/len(avg) > 2:
 
         turnError = target - robotData[com.label.HEADING.value]
     

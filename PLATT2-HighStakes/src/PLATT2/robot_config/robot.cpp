@@ -19,11 +19,11 @@ mogoPistion(brain.ThreeWirePort.A),
 lift1(vex::PORT4, vex::gearSetting::ratio6_1, false),
 lift2(vex::PORT13, vex::gearSetting::ratio6_1, false),
 ringSort(lift1, lift2, opticalSensor, ringsortPiston, brain),
-wallstake1(vex::PORT19, vex::gearSetting::ratio6_1, true),
-wallstake2(vex::PORT19, vex::gearSetting::ratio6_1, true),
-wallstake3(vex::PORT19, vex::gearSetting::ratio6_1, true),
+wallstake1(vex::PORT20, vex::gearSetting::ratio6_1, true),
+wallstake2(vex::PORT9, vex::gearSetting::ratio6_1, false),
+wallstake3(vex::PORT5, vex::gearSetting::ratio6_1, true),
 wallstakeControl(wallstake1,wallstake2,wallstake3),
-driveControl(leftDrive, rightDrive, ringSort, controller, pi, mogoPistion, intake, intakePiston, lift1)
+driveControl(leftDrive, rightDrive, ringSort, controller, pi, mogoPistion, intake, intakePiston, lift1, wallstakeControl)
 
 {
     // Set default config
@@ -82,6 +82,13 @@ void Robot::runDriveControl()
     }
 }
 void Robot::runAutonControl(){
+
+   // while (true)
+   // {
+//
+   //     brain.Screen.printAt(1, 20, "in loop, we are at %f",wallstake1.position(vex::rev));
+   // }
+    
 
     driveControl.autonControl();
 

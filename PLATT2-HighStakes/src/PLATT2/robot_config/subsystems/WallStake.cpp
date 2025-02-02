@@ -8,10 +8,16 @@ wallStake1{w1}, wallStake2{w2}, wallStake3{w3}
 }
 
 void wallStakeController::moveToPosition(){
-   
+    
+    //wallStake3.spin(vex::forward, 0, vex::rpm);
+    //wallStake2.spin(vex::forward, 0, vex::rpm);
+    //wallStake1.spin(vex::forward, 0, vex::rpm);
+
+
     double moveVelocity = 3000; // initial value
     
     while(true){
+        
 
         if (position != oldPosition){
         
