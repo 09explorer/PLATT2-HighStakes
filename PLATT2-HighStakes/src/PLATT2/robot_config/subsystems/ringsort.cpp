@@ -1,12 +1,13 @@
 #include "PLATT2\robot_config\subsystems\ringsort.h"
 
 
-RingSort::RingSort() : 
+RingSort::RingSort(vex::brain& b) : 
+brain{b},
 hook1(vex::PORT4, vex::gearSetting::ratio6_1, false),
 hook2(vex::PORT13, vex::gearSetting::ratio6_1, false),
 hooks(hook1, hook2),
-colorSensor(vex::PORT10), 
-sortPiston(brain.ThreeWirePort.C)
+colorSensor(vex::PORT8),
+sortPiston(ThreeWirePort.C)
 {
     this->isToggle = false;
     desiredRing = NO_RING;
@@ -14,6 +15,7 @@ sortPiston(brain.ThreeWirePort.C)
 
 void RingSort::colorSort()
 {
+    
     hooks.spin(vex::forward, 0, vex::rpm);
 
     while(true){

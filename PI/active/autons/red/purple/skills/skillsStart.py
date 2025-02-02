@@ -7,15 +7,16 @@ def skillsStart(robotData):
     robotData[com.label.HEADINGOFFSET.value] = 90
     robotData[com.label.XPOSOFFSET.value] = 48
     robotData[com.label.YPOSOFFSET.value] = 18
-
+    robotData[com.label.COLORSORT.value] = 0
 
     robotData[com.label.INTAKE.value] = 100
+    robotData[com.label.WALLSTAKE.value] = 4
     
-    basicMove.targetMove(robotData, (48,49))
+    basicMove.targetMove(robotData, (48,48))
 
     basicMove.turnToHeading(robotData, 0)
 
-    basicMove.targetMove(robotData, (28,48), True)
+    basicMove.targetMove(robotData, (26,46), True)
 
     robotData[com.label.CLAMP.value] = 1
     time.sleep(0.2)

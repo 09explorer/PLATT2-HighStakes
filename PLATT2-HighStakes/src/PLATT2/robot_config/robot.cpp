@@ -1,9 +1,11 @@
 #include "PLATT2/robot_config/robot.h"
 
 Robot::Robot():
+brain(),
+pi(),
 wallstakeControl(),
-driveControl(pi, ringSort, wallstakeControl)
-
+ringSort(brain),
+driveControl(pi, ringSort, wallstakeControl, brain)
 {
     // Set default config
     robotID = NO_ROBOT;
@@ -48,6 +50,7 @@ void Robot::runDriveControl()
     {
         case NO_ROBOT:
         {
+
             driveControl.TestControl();
         }
         case PINK:

@@ -17,13 +17,14 @@ enum RingColor
 class RingSort
 {
     private:
+    vex::triport ThreeWirePort = vex::triport(vex::PORT22);
     vex::motor hook1;
     vex::motor hook2;
     vex::motor_group hooks;
 
     vex::optical colorSensor;
     vex::digital_out sortPiston;
-    vex::brain brain;
+    vex::brain& brain;
 
 
 
@@ -55,7 +56,7 @@ class RingSort
     /// @param l2 Refrence to lift motor #2.
     /// @param o Refrence to optical sensor.
     /// @param sp Refrence to the solenoid for the sorting piston.
-    RingSort();
+    RingSort(vex::brain& brain);
 
     /// @brief The algorighim for color sorting.
     void colorSort();

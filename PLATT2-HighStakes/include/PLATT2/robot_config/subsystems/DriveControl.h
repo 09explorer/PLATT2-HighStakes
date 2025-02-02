@@ -10,6 +10,7 @@
 class DriveControl
 {
     private:
+    vex::triport ThreeWirePort = vex::triport(vex::PORT22);
     HelperFunctions helper;
 
     vex::motor leftDrive1;
@@ -23,7 +24,7 @@ class DriveControl
     vex::motor rightDrive4;
 
 
-
+    vex::brain& Brain;
      /**
      * @brief Motor group for the left drive motors
      */
@@ -52,7 +53,7 @@ class DriveControl
 
 
     public:
-    DriveControl(piCom& picom, RingSort& ring, wallStakeController& w);
+    DriveControl(piCom& picom, RingSort& ring, wallStakeController& w, vex::brain& b);
 
     void PinkDriveControl();
 

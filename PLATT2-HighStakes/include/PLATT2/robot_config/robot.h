@@ -80,12 +80,12 @@ class Robot
 
     piCom pi;    
 
-    vex::brain brain;
+    
 
     public:
     
     Robot();
-
+    vex::brain brain;
 
     /**
      * @brief Sets the current alliance ID.
