@@ -16,6 +16,17 @@ Position wallStakeController::getPosition(){
     return this->position;
 }
 
+double wallStakeController::getMotor1Position(){
+    return wallStake1.position(vex::rev);
+}
+double wallStakeController::getMotor2Position(){
+    return wallStake2.position(vex::rev);
+}
+double wallStakeController::getMotor3Position(){
+    return wallStake3.position(vex::rev);
+}
+
+
 void wallStakeController::moveToPosition(){
     
     //wallStake3.spin(vex::forward, 0, vex::rpm);

@@ -74,6 +74,9 @@ public:
 
     void setPosition(Position position);
 
+    double getMotor1Position();
+    double getMotor2Position();
+    double getMotor3Position();
     Position getPosition();
 
 };
