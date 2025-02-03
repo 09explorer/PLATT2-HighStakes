@@ -19,7 +19,6 @@ void RingSort::colorSort()
     hooks.spin(vex::forward, 0, vex::rpm);
     colorSensor.setLight(vex::ledState::on);
     colorSensor.setLightPower(25);
-
     while(true){
     sortPiston.set(false);
 

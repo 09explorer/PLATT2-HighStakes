@@ -17,51 +17,81 @@ enum RingColor
 class RingSort
 {
     private:
+    /// @brief Three-wire port for connecting sensors and other devices.
     vex::triport ThreeWirePort = vex::triport(vex::PORT22);
+    
+    /// @brief Motor for hook 1.
     vex::motor hook1;
+    
+    /// @brief Motor for hook 2.
     vex::motor hook2;
+    
+    /// @brief Group of hook motors.
     vex::motor_group hooks;
 
+    /// @brief Optical sensor for detecting ring colors.
     vex::optical colorSensor;
+    
+    /// @brief Digital output for controlling the sorting piston.
     vex::digital_out sortPiston;
+    
+    /// @brief Reference to the brain object.
     vex::brain& brain;
 
-
-
+    /// @brief Maximum speed for the chain lift.
     const double CHAIN_LIFT_MAX_SPEED {600};
+    
+    /// @brief Normal speed for the chain lift.
     const double CHAIN_LIFT_NORMAL_SPEED {600};
+    
+    /// @brief Encoder ticks for the chain lift.
     const double CHAIN_LIFT_ENCODER_TICKS {5};
+    
+    /// @brief Hue value for detecting red rings.
     const double RED_RING_HUE {12};
+    
+    /// @brief Hue value for detecting blue rings.
     const double BLUE_RING_HUE {200};
 
+    /// @brief Atomic boolean for toggle state.
     std::atomic<bool> isToggle;
 
+    /// @brief Atomic boolean for current chain state.
     std::atomic<bool> chainCurrent;
+    
+    /// @brief Atomic boolean for old chain state.
     std::atomic<bool> chainOld;
+    
+    /// @brief Atomic boolean for new chain state.
     std::atomic<bool> chainNew;
 
+    /// @brief Atomic boolean for new color state.
     std::atomic<bool> colorNew;
+    
+    /// @brief Atomic boolean for old color state.
     std::atomic<bool> colorOld;
+    
+    /// @brief Atomic boolean for current color state.
     std::atomic<bool> colorCurrent;
 
+    /// @brief Atomic boolean for new toggle state.
     std::atomic<bool> toggleNew;
+    
+    /// @brief Atomic boolean for old toggle state.
     std::atomic<bool> toggleOld;
+    
+    /// @brief Atomic boolean for current toggle state.
     std::atomic<bool> toggleCurrent;
-
-
 
     public:
     /// @brief Constructs the RingSort class.
-    /// @param l1 Refrence to lift motor #1.
-    /// @param l2 Refrence to lift motor #2.
-    /// @param o Refrence to optical sensor.
-    /// @param sp Refrence to the solenoid for the sorting piston.
+    /// @param brain Reference to a brain object.
     RingSort(vex::brain& brain);
 
-    /// @brief The algorighim for color sorting.
+    /// @brief The algorithm for color sorting.
     void colorSort();
 
-    /// @brief Method that runs as a seperate thread. Takes input from the controller and calls the desired method based on the input.
+    /// @brief Method that runs as a separate thread. Takes input from the controller and calls the desired method based on the input.
     void controlWatcher();
 
     /// @brief Helper method to toggle the chain lift on and off.
@@ -70,11 +100,16 @@ class RingSort
     /// @brief Helper method to increment through the ring colors to sort.
     void incrementColor();
 
+    /// @brief Moves the hooks at a specified velocity.
+    /// @param velocity The velocity to move the hooks.
     void moveHooks(double velocity);
 
+    /// @brief Sets the desired ring color to sort.
+    /// @param desiredColor The desired ring color.
     void setRing(RingColor desiredColor);
 
-        RingColor desiredRing;
+    /// @brief The desired ring color to sort.
+    RingColor desiredRing;
 };
 
 #endif

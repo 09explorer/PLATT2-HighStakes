@@ -84,7 +84,14 @@ class Robot
 
     public:
     
+    /**
+     * @brief Constructs the Robot class.
+     */
     Robot();
+    
+    /**
+     * @brief The robot brain.
+     */
     vex::brain brain;
 
     /**
@@ -123,16 +130,37 @@ class Robot
      */
     AutonConfig getAutonID();
     
+    /**
+     * @brief Runs the autonomous control.
+     */
     void runAutonControl();
 
+    /**
+     * @brief Runs the drive control.
+     */
     void runDriveControl();
 
+    /**
+     * @brief Gets the Pi communication object.
+     * @return Reference to the Pi communication object.
+     */
     piCom& getPi();
 
+    /**
+     * @brief Gets the wall stake controller object.
+     * @return Reference to the wall stake controller object.
+     */
     wallStakeController& getWall();
 
+    /**
+     * @brief Gets the ring sort object.
+     * @return Reference to the ring sort object.
+     */
     RingSort& getRings();
 
+    /**
+     * @brief Initializes the robot.
+     */
     void initalizeRobot();
 };
 
