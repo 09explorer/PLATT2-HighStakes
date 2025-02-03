@@ -35,10 +35,7 @@ enum nameLabel{
 
 };
 
-
-
 class piCom { 
-    
     private:
         /// @brief Current status of the Pi.
         double flag;
@@ -49,45 +46,54 @@ class piCom {
         /// @brief Left drivetrain velocity.
         double leftVel;
 
-        /// @brief Wether or not the clamp is enabled or disabled.
+        /// @brief Whether or not the clamp is enabled or disabled.
         double clamp;
 
-        ///@brief desired wall stake mech position
+        /// @brief Desired wall stake mech position.
         double wallStake;
 
         double colorSort;
-
         double intake;
-
         double hooks;
-
         double name;
-
         double auton;
-
         double alliance;
 
         double intakePiston;
 
         std::string writeString;
         
+        /// @brief Raw read string.
         std::string rawRead;
 
+        /// @brief Converts a double to a string.
+        /// @param input The double to convert.
+        /// @return The converted string.
         std::string toString(double input);
 
+        /// @brief Adds data to the write string.
+        /// @param label The label for the data.
+        /// @param data The data to add.
         void addToWriteString(std::string label, double data);
         
+        /// @brief Gets a substring from the raw read string.
+        /// @param rawRead The raw read string.
+        /// @return The extracted substring.
         double getSubString(std::string rawRead);
     
     public: 
-
         /// @brief Starts the communication link between the V5 brain and the Pi.
         void startPiCom();
  
-        double getValue(dataLabel);
-        void   setValue(dataLabel, double);
-       
-     
+        /// @brief Gets the value of a specific data label.
+        /// @param label The data label.
+        /// @return The value of the data label.
+        double getValue(dataLabel label);
+        
+        /// @brief Sets the value of a specific data label.
+        /// @param label The data label.
+        /// @param value The value to set.
+        void setValue(dataLabel label, double value);
 };
 
 #endif

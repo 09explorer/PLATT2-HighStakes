@@ -18,7 +18,8 @@ void RingSort::colorSort()
     
     hooks.spin(vex::forward, 0, vex::rpm);
     colorSensor.setLight(vex::ledState::on);
-    colorSensor.setLightPower(25);
+    colorSensor.setLightPower(100);
+    colorSensor.objectDetectThreshold(100);
     while(true){
     sortPiston.set(false);
 
@@ -32,13 +33,13 @@ void RingSort::colorSort()
     brain.Screen.print("current blue %f", currentB);
     brain.Screen.setCursor(9,1);
     brain.Screen.print("Current ring: %d", desiredRing);
-
+    if(colorSensor.isNearObject()){
     switch(desiredRing)
     {
         case RED_RING:
         {
 
-         if(currentR > 250)
+         if(currentR > currentB)
          {
             hook1.resetPosition();
             hook2.resetPosition();
@@ -47,6 +48,10 @@ void RingSort::colorSort()
 
             while(currentPos < CHAIN_LIFT_ENCODER_TICKS)
             {
+            if(currentPos < 2)
+            {
+                
+            }
             sortPiston.set(true);
 
             currentPos = hook1.position(vex::rev);
@@ -57,7 +62,7 @@ void RingSort::colorSort()
         }
         case BLUE_RING:
         {
-            if(currentB > 200)
+            if(currentB > currentR)
             {
             hook1.resetPosition();
             hook2.resetPosition();
@@ -74,6 +79,7 @@ void RingSort::colorSort()
         {
             break;
         }
+    }
     }
     vex::wait(10, vex::msec);
 }

@@ -74,10 +74,19 @@ class Robot
      */
     //vex::brain brain;
 
+    /**
+     * @brief The wall stake subsystem object.
+     */
     wallStakeController wallstakeControl;
 
+    /**
+     * @brief The drive control subsystem object.
+     */
     DriveControl driveControl;
 
+    /**
+     * @brief The Pi communication object.
+     */
     piCom pi;    
 
     

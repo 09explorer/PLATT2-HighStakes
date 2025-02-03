@@ -43,6 +43,7 @@ void DriveControl::TestControl(){
     
     leftDrive.spin(vex::forward, 0, vex::rpm);
     rightDrive.spin(vex::forward, 0, vex::rpm);
+    intake.spin(vex::forward, 0, vex::rpm);
 
     wallStake.setPosition(SCORE);
     ringSort.setRing(RED_RING);
