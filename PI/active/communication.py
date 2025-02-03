@@ -25,6 +25,7 @@ class label(Enum):
     HEADINGOFFSET = 15
     XPOSOFFSET = 16
     YPOSOFFSET = 17
+    INTAKEPISTON = 18
 
 def getSubString(rawRead, prefix):
     
@@ -112,6 +113,7 @@ def startLink(robotData):
         writeString = addToWriteString(robotData, writeString, 's', label.COLORSORT.value)
         writeString = addToWriteString(robotData, writeString, 'i', label.INTAKE.value)
         writeString = addToWriteString(robotData, writeString, 'o', label.HOOKS.value)
+        writeString = addToWriteString(robotData, writeString, 'p', label.INTAKEPISTON.value)
     
         
         #wait needed for stability 

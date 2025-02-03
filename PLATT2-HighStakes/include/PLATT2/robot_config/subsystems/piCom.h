@@ -19,7 +19,8 @@ enum dataLabel
     HOOKS = 7,
     NAME = 8,
     AUTON = 9, 
-    ALLIANCE = 10
+    ALLIANCE = 10,
+    INTAKEPISTON = 11
     
 };
 
@@ -65,6 +66,8 @@ class piCom {
         double auton;
 
         double alliance;
+
+        double intakePiston;
 
         std::string writeString;
         

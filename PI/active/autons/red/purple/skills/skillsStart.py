@@ -1,56 +1,29 @@
 import time
+import autons.red.purple.skills.blueSide
+import autons.red.purple.skills.wallStake
 import communication as com
 import functions.basicMove as basicMove
+import autons.red.purple.skills.redSide
 
 def skillsStart(robotData):
+
+    startTime = time.time()
 
     robotData[com.label.HEADINGOFFSET.value] = 90
     robotData[com.label.XPOSOFFSET.value] = 48
     robotData[com.label.YPOSOFFSET.value] = 18
-    robotData[com.label.COLORSORT.value] = 0
-
+    robotData[com.label.COLORSORT.value] = 2
     robotData[com.label.INTAKE.value] = 100
-    robotData[com.label.WALLSTAKE.value] = 4
+    robotData[com.label.WALLSTAKE.value] = 1
+    robotData[com.label.INTAKEPISTON.value] = 1
     
-    basicMove.targetMove(robotData, (48,48))
+    autons.red.purple.skills.redSide.redSide(robotData)
+    autons.red.purple.skills.wallStake.wallStake(robotData)
+    #autons.red.purple.skills.blueSide.blueSide(robotData)
 
-    basicMove.turnToHeading(robotData, 0)
-
-    basicMove.targetMove(robotData, (26,46), True)
-
-    robotData[com.label.CLAMP.value] = 1
-    time.sleep(0.2)
-    
-    robotData[com.label.HOOKS.value] = 100
-    basicMove.turnToHeading(robotData, 270)
-
-    basicMove.targetMove(robotData, (22,24))
-
-    time.sleep(1)
-   
-    basicMove.turnToHeading(robotData, 225)
-
-    time.sleep(1)
-
-    basicMove.targetMove(robotData, (6,6))
-
-    time.sleep(1)
-
-    basicMove.targetMove(robotData, (18,18), True)
-    time.sleep(1)
-
-    basicMove.relitiveTurn(robotData, 180)
-    time.sleep(1)
-
-    basicMove.targetMove(robotData, (10,10), True)
-    time.sleep(1)
-
-    robotData[com.label.CLAMP.value] = 0
+    endTime = time.time()
+    print(endTime - startTime)
     time.sleep(1)
 
 
-    basicMove.targetMove(robotData, (18,18))
-
-    time.sleep(1)
-    
-    pass
+    #pass

@@ -5,7 +5,7 @@ wallStake1(vex::PORT20, vex::gearSetting::ratio6_1, true),
 wallStake2(vex::PORT9, vex::gearSetting::ratio6_1, false), 
 wallStake3(vex::PORT5, vex::gearSetting::ratio6_1, true)
 {
-    this->position = HOME;
+    this->position = STOW;
     this->oldPosition = SCORE;
 }
 
@@ -63,14 +63,9 @@ void wallStakeController::moveToPosition(){
 
                 case LOAD:{
                     
-                    wallStake3.spinToPosition(STAGE_2_LOAD, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
-                    vex::wait(100, vex::msec);
-                    while (std::abs(wallStake3.velocity(vex::percent))>0.1){
-                        vex::wait(10, vex::msec);
-                    }
-
-                    wallStake1.spinToPosition(STAGE_1_LOAD, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
-                    wallStake2.spinToPosition(STAGE_1_LOAD, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
+                    wallStake3.spinToPosition(STAGE_2_LOAD, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, true);
+                    wallStake1.spinToPosition(STAGE_1_LOAD, vex::rotationUnits::rev, moveVelocity/2, vex::velocityUnits::pct, false);
+                    wallStake2.spinToPosition(STAGE_1_LOAD, vex::rotationUnits::rev, moveVelocity/2, vex::velocityUnits::pct, false);
 
                     break;
                 }

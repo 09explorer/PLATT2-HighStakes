@@ -3,7 +3,7 @@ import time
 import communication as com
 
 
-def targetMove(robotData, targetPoint, reverse = False, linVel = 40, lookAheadDis = 6):
+def targetMove(robotData, targetPoint, reverse = False, linVel = 40, lookAheadDis = 6, turnVel = 0.4):
 
     while (hypot(robotData[com.label.XPOS.value]-targetPoint[0], robotData[com.label.YPOS.value]-targetPoint[1])>lookAheadDis):
       
@@ -25,8 +25,8 @@ def targetMove(robotData, targetPoint, reverse = False, linVel = 40, lookAheadDi
             turnError = -1 * copysign(1, turnError) * (360 - abs(turnError))
 
         #print(turnError, flush= True)
-        robotData[com.label.LEFTVEL.value] =  (scale * linVel) - (turnError*0.3)
-        robotData[com.label.RIGHTVEL.value] = (scale * linVel) + (turnError*0.3)
+        robotData[com.label.LEFTVEL.value] =  (scale * linVel) - (turnError*turnVel)
+        robotData[com.label.RIGHTVEL.value] = (scale * linVel) + (turnError*turnVel)
         time.sleep(0.01)
 
         #print(robotData[com.label.HEADING.value], flush= True)
@@ -68,7 +68,7 @@ def relitiveTurn(robotData, offset):
 
             target = -1 * copysign(1, target) * (360 - abs(target))
     
-    print(target, flush=True)
+    #print(target, flush=True)
 
     turnToHeading(robotData, target)
 

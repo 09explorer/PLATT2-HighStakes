@@ -27,14 +27,14 @@ private:
     /**
      *  @brief Ready position encoder location for 
      */
-    const double STAGE_1_LOAD = -0.776;
-    const double STAGE_2_LOAD = -0.234;
+    const double STAGE_1_LOAD = -0.8;
+    const double STAGE_2_LOAD = -0.15;
 
     const double STAGE_1_HOME = 0;
     const double STAGE_2_HOME = 0;
 
-    const double STAGE_1_SCORE = -4.51;
-    const double STAGE_2_SCORE = -1.53;
+    const double STAGE_1_SCORE = -4;
+    const double STAGE_2_SCORE = -1.4;
 
     const double STAGE_1_SCORE2 = -4.51;
     const double STAGE_2_SCORE2 = -2;

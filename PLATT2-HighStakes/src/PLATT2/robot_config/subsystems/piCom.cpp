@@ -102,6 +102,7 @@ void piCom::startPiCom(){
         this->colorSort = getSubString("s");
         this->intake    = getSubString("i");
         this->hooks     = getSubString("o");
+        this->intakePiston = getSubString("p");
 
         //delay to alow other threads to run 
         //has to be located at this point in the program in order to prevent missing incoming data strings       
@@ -161,6 +162,10 @@ double piCom::getValue(dataLabel dataType){
             return this->alliance;
             break;
         }
+        case INTAKEPISTON:{
+            return this->intakePiston;
+            break;
+        }
     }
 }
 void piCom::setValue(dataLabel dataType, double value){
@@ -209,6 +214,10 @@ void piCom::setValue(dataLabel dataType, double value){
         }
         case ALLIANCE:{
             this->alliance = value;
+            break;
+        }
+        case INTAKEPISTON:{
+            this->intakePiston = value;
             break;
         }
     }

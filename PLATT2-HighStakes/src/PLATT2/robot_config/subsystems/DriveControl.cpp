@@ -141,13 +141,10 @@ void DriveControl::autonControl(){
   intake.spin(vex::forward, 0, vex::rpm);
   hooks.spin(vex::forward, 0, vex::rpm);
 
-  intakePiston.set(true);
-  wallStake.setPosition(HOME);
-
-
   while (true){
         
     mogo.set((int)pi.getValue(CLAMP));
+    intakePiston.set((int)pi.getValue(INTAKEPISTON));
     intake.setVelocity(pi.getValue(INTAKE), vex::percent);
     ringSort.setRing((RingColor)pi.getValue(COLORSORT));
     wallStake.setPosition((Position)pi.getValue(WALLSTAKE));
