@@ -4,9 +4,7 @@
 #include <atomic>
 #include <string>
 
-/// @brief A class to communicate and control the peripheral raspberry pi.
-/// @author Logan Wolf
-
+/// @brief Enumerations for each section of data in the data link.
 enum dataLabel
 {
     FLAG = 0,
@@ -24,6 +22,7 @@ enum dataLabel
     
 };
 
+/// @brief Enumerations for robot configuration.
 enum nameLabel{
 
     PI_PINK = 1,
@@ -35,6 +34,8 @@ enum nameLabel{
 
 };
 
+/// @brief A class to communicate and control the peripheral raspberry pi.
+/// @author Logan Wolf
 class piCom { 
     private:
         /// @brief Current status of the Pi.
@@ -52,15 +53,28 @@ class piCom {
         /// @brief Desired wall stake mech position.
         double wallStake;
 
+        /// @brief Current color sort position.
         double colorSort;
+
+        /// @brief Current intake status.
         double intake;
+
+        /// @brief Current hook status.
         double hooks;
+
+        /// @brief Current robot name.
         double name;
+
+        /// @brief Current autonomous routine.
         double auton;
+
+        /// @brief Current alliance.
         double alliance;
 
+        /// @brief Current intake piston status.
         double intakePiston;
 
+        /// @brief String to send to the robot
         std::string writeString;
         
         /// @brief Raw read string.
