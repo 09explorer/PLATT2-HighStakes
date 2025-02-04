@@ -89,8 +89,6 @@ class Robot
      */
     piCom pi;    
 
-    
-
     public:
     
     /**

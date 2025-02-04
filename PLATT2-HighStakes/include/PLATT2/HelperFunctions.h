@@ -55,7 +55,4 @@ class HelperFunctions {
         bool booleanToggle(std::atomic<bool> &oldState, std::atomic<bool> &newState, std::atomic<bool> &current);
 };
 
-/// @brief Extern of global instance of helperFunctions class.
-extern HelperFunctions helper;
-
 #endif
