@@ -51,7 +51,7 @@ def startLink(robotData):
     writeName = '/dev/ttyACM1'
 
     readPort  = serial.Serial(readName, timeout=0)
-    writePort = serial.Serial(writeName)
+    writePort = serial.Serial(writeName, timeout=0)
 
     rawRead = ''
 

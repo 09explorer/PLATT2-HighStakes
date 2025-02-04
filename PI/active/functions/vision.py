@@ -17,8 +17,8 @@ class vision:
 
     def __init__(self):
         
-        self.xsize = 1536
-        self.ysize =  864
+        self.xsize = 640
+        self.ysize =  480
         
         self.cam = Picamera2()
         config = self.cam.create_still_configuration({'format': 'RGB888', "size":(self.xsize, self.ysize)}) 
@@ -124,7 +124,7 @@ class vision:
 
         if target is None:
             return
-        print (target, flush=True)
+
         while target is not None and abs(target[1]) > 10:
 
             robotData[com.label.LEFTVEL.value] =   target[1]*0.3
@@ -139,7 +139,6 @@ class vision:
             return
 
         robotData[com.label.INTAKE.value] = 100
-        robotData[com.label.HOOKS.value] = 100
 
         while target is not None:
 

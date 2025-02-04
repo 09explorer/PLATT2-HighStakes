@@ -5,60 +5,58 @@ from functions import basicMove
 def blueSide(robotData):
 
     
-    basicMove.turnToHeading(robotData, 225)
-
-    time.sleep(0.1)
-    
-    basicMove.targetMove(robotData, (48,96), True)
-
-    robotData[com.label.HOOKS.value] = 100
-
-    time.sleep(0.1)
-
+    basicMove.turnToHeading(robotData, 245)
+ 
+    basicMove.targetMove(robotData, (48,94), True)
     
     robotData[com.label.CLAMP.value] = 1
 
-    time.sleep(1)
+    time.sleep(0.5)
     robotData[com.label.HOOKS.value] = 100
 
     basicMove.turnToHeading(robotData, 180)
 
-    time.sleep(0.1)
+
 
 
     basicMove.targetMove(robotData, (24,96))
 
-    time.sleep(0.1)
+
 
     basicMove.turnToHeading(robotData, 90)
 
-    time.sleep(0.1)
+
 
     basicMove.targetMove(robotData, (24,120))
 
-    time.sleep(0.1)
+
 
     basicMove.turnToHeading(robotData, 135)
 
     robotData[com.label.INTAKEPISTON.value] = 0
-    time.sleep(0.1)
 
-    basicMove.targetMove(robotData, (10,136))
+
+    basicMove.targetMove(robotData, (12, 144-12))
     robotData[com.label.INTAKEPISTON.value] = 1
+    
     time.sleep(1)
 
     basicMove.targetMove(robotData, (24, 120), True)
-    time.sleep(0.1)
+    
+    time.sleep(1)
 
-    basicMove.targetMove(robotData, (10, 136))
-    time.sleep(0.1)
+    basicMove.targetMove(robotData, (12, 144 - 12))
+ 
     basicMove.targetMove(robotData, (24, 120), True)
 
-    time.sleep(0.1)
-    basicMove.relitiveTurn(robotData, 135)
+    time.sleep(1)
 
-    basicMove.targetMove(robotData, (10, 136), True)
+    basicMove.relitiveTurn(robotData, 180)
 
-    robotData[com.label.HOOKS.value] = 100
+    basicMove.targetMove(robotData, (12, 144-12), True)
+
+    robotData[com.label.HOOKS.value] = 0
     robotData[com.label.CLAMP.value] = 0
+
+    basicMove.targetMove(robotData, (24, 120))
 

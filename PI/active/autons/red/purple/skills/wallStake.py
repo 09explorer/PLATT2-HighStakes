@@ -2,9 +2,10 @@
 import time
 import communication as com
 from functions import basicMove
+import functions.vision as vision
 
 
-def wallStake(robotData):
+def wallStake(robotData, cam):
 
     robotData[com.label.HOOKS.value] = 100
 
@@ -18,20 +19,25 @@ def wallStake(robotData):
     robotData[com.label.INTAKEPISTON.value] = 0
     basicMove.turnToHeading(robotData, 180)
 
-
-
     robotData[com.label.WALLSTAKE.value] = 1
-    
 
-    time.sleep(1.5)
+    time.sleep(0.5)
+
     robotData[com.label.HOOKS.value] = 0
     robotData[com.label.WALLSTAKE.value] = 4
 
+    time.sleep(0.5)
+
+    basicMove.targetMove(robotData, (22, 66), True)
+
     basicMove.turnToHeading(robotData, 0)
 
+    robotData[com.label.HOOKS.value] = 0
     robotData[com.label.INTAKEPISTON.value] = 1
 
-    basicMove.targetMove(robotData, (36, 78))
+    cam.chase(robotData, vision.color.RED)
+
+    
 
 
 

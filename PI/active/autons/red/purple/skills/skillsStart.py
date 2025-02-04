@@ -1,13 +1,17 @@
 import time
 import autons.red.purple.skills.blueSide
 import autons.red.purple.skills.wallStake
+import autons.red.purple.skills.blueGoal
 import communication as com
 import functions.basicMove as basicMove
 import autons.red.purple.skills.redSide
+import functions.vision as vision
 
 def skillsStart(robotData):
 
     startTime = time.time()
+
+    cam = vision.vision()
 
     robotData[com.label.HEADINGOFFSET.value] = 90
     robotData[com.label.XPOSOFFSET.value] = 48
@@ -18,8 +22,10 @@ def skillsStart(robotData):
     robotData[com.label.INTAKEPISTON.value] = 1
     
     autons.red.purple.skills.redSide.redSide(robotData)
-    autons.red.purple.skills.wallStake.wallStake(robotData)
-    #autons.red.purple.skills.blueSide.blueSide(robotData)
+    autons.red.purple.skills.wallStake.wallStake(robotData, cam)
+    autons.red.purple.skills.blueSide.blueSide(robotData)
+    autons.red.purple.skills.blueGoal.blueGoal(robotData)
+
 
     endTime = time.time()
     print(endTime - startTime)

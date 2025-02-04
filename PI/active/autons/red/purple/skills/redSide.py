@@ -31,7 +31,7 @@ def redSide(robotData):
 
     basicMove.targetMove(robotData, (18,18), True)
     
-    time.sleep(0.5)
+    time.sleep(1)
 
     basicMove.relitiveTurn(robotData, 180)    
 
