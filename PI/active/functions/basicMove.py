@@ -1,6 +1,7 @@
 from math import atan2, copysign, hypot, pi
 import time
 import communication as com
+from functions.pid import *
 
 
 def targetMove(robotData, targetPoint, reverse = False, linVel = 40, lookAheadDis = 6, turnVel = 0.4):
@@ -30,18 +31,18 @@ def targetMove(robotData, targetPoint, reverse = False, linVel = 40, lookAheadDi
         time.sleep(0.01)
 
         #print(robotData[com.label.HEADING.value], flush= True)
-
-        
     
     robotData[com.label.LEFTVEL.value]  = 0
     robotData[com.label.RIGHTVEL.value] = 0
 
-def turnToHeading(robotData, target, kpTurn = 0.3):
+def turnToHeading(robotData, target, ):
 
     turnError = 180
-    avg = [180] * 20
+    avg = [180] * 10
+
+    pid = PID(0.52,0,2.5,0)
     
-    while abs(turnError) > 2 or sum(avg)/len(avg) > 2:
+    while abs(turnError) > 1 or sum(avg)/len(avg) > 1:
 
         turnError = target - robotData[com.label.HEADING.value]
     
@@ -49,8 +50,12 @@ def turnToHeading(robotData, target, kpTurn = 0.3):
 
             turnError = -1 * copysign(1, turnError) * (360 - abs(turnError))
 
-        robotData[com.label.LEFTVEL.value] =  -turnError *kpTurn
-        robotData[com.label.RIGHTVEL.value] =  turnError *kpTurn
+        turnVel = pid.update(turnError)
+        print(turnError, flush=True)
+        robotData[com.label.LEFTVEL.value] =    turnVel
+        robotData[com.label.RIGHTVEL.value] =  -turnVel
+
+        
         avg.pop(0)
         avg.append(abs(turnError))
         
