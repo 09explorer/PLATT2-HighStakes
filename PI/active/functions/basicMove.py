@@ -35,14 +35,14 @@ def targetMove(robotData, targetPoint, reverse = False, linVel = 40, lookAheadDi
     robotData[com.label.LEFTVEL.value]  = 0
     robotData[com.label.RIGHTVEL.value] = 0
 
-def turnToHeading(robotData, target, ):
+def turnToHeading(robotData, target):
 
     turnError = 180
     avg = [180] * 10
 
     pid = PID(0.52,0,2.5,0)
     
-    while abs(turnError) > 1 or sum(avg)/len(avg) > 1:
+    while abs(turnError) > 4 or sum(avg)/len(avg) > 4:
 
         turnError = target - robotData[com.label.HEADING.value]
     
@@ -51,9 +51,13 @@ def turnToHeading(robotData, target, ):
             turnError = -1 * copysign(1, turnError) * (360 - abs(turnError))
 
         turnVel = pid.update(turnError)
-        print(turnError, flush=True)
+        #print(turnError, flush=True)
         robotData[com.label.LEFTVEL.value] =    turnVel
         robotData[com.label.RIGHTVEL.value] =  -turnVel
+
+        #robotData[com.label.LEFTVEL.value] =   -turnError*0.2
+        #robotData[com.label.RIGHTVEL.value] =   turnError*0.2
+
 
         
         avg.pop(0)
@@ -63,6 +67,8 @@ def turnToHeading(robotData, target, ):
          
     robotData [com.label.LEFTVEL.value] = 0
     robotData [com.label.RIGHTVEL.value] = 0
+
+    del pid
 
 
 def relitiveTurn(robotData, offset):

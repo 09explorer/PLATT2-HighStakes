@@ -91,5 +91,6 @@ RingSort& Robot::getRings(){
 }
 
 void Robot::initalizeRobot(){
+
     
 }

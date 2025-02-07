@@ -5,14 +5,15 @@ import time
 
 def redSide(robotData):
 
-    basicMove.targetMove(robotData, (48,47))
+    basicMove.targetMove(robotData, (48,46))
     
     basicMove.turnToHeading(robotData, 0)
 
     basicMove.targetMove(robotData, (26,45), True)
 
-    robotData[com.label.CLAMP.value] = 1
     
+    robotData[com.label.CLAMP.value] = 1
+    time.sleep(0.1)
     basicMove.turnToHeading(robotData, 270)
 
     robotData[com.label.HOOKS.value] = 100

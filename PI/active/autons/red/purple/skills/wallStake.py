@@ -17,7 +17,7 @@ def wallStake(robotData, cam):
 
     time.sleep(1)
     robotData[com.label.INTAKEPISTON.value] = 0
-    basicMove.turnToHeading(robotData, 180)
+    basicMove.turnToHeading(robotData, 183)
 
     robotData[com.label.WALLSTAKE.value] = 1
 
@@ -30,12 +30,16 @@ def wallStake(robotData, cam):
 
     basicMove.targetMove(robotData, (22, 66), True)
 
-    basicMove.turnToHeading(robotData, 0)
+    basicMove.turnToHeading(robotData,45)
 
     robotData[com.label.HOOKS.value] = 0
     robotData[com.label.INTAKEPISTON.value] = 1
 
-    cam.chase(robotData, vision.color.RED)
+    
+    basicMove.targetMove(robotData, (33, 75))# jank needs fixing
+
+    basicMove.turnToHeading(robotData, 210)
+
 
     
 

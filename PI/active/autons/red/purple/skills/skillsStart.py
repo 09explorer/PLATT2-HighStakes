@@ -24,7 +24,7 @@ def skillsStart(robotData):
     autons.red.purple.skills.redSide.redSide(robotData)
     autons.red.purple.skills.wallStake.wallStake(robotData, cam)
     autons.red.purple.skills.blueSide.blueSide(robotData)
-    autons.red.purple.skills.blueGoal.blueGoal(robotData)
+    autons.red.purple.skills.blueGoal.blueGoal(robotData, cam)
 
 
     endTime = time.time()

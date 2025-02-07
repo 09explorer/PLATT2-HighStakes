@@ -17,8 +17,8 @@ class vision:
 
     def __init__(self):
         
-        self.xsize = 640
-        self.ysize =  480
+        self.xsize = 1536
+        self.ysize = 864
         
         self.cam = Picamera2()
         config = self.cam.create_still_configuration({'format': 'RGB888', "size":(self.xsize, self.ysize)}) 
