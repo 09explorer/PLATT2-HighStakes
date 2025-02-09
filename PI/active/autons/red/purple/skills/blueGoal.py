@@ -40,6 +40,8 @@ def blueGoal(robotData, cam):
 
     basicMove.relitiveTurn(robotData, 180)
 
+    basicMove.targetMove(robotData, (80,52), True)
+
     cam.chase(robotData, vision.color.RED)
 
 

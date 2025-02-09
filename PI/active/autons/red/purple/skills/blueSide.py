@@ -39,20 +39,20 @@ def blueSide(robotData):
     basicMove.targetMove(robotData, (10, 142-10))
     robotData[com.label.INTAKEPISTON.value] = 1
     
-    time.sleep(1)
+    time.sleep(0.5)
 
 
     basicMove.targetMove(robotData, (24, 118), True)
     
-    time.sleep(1)
+    time.sleep(0.5)
 
     basicMove.targetMove(robotData, (10, 142 - 10))
 
-    time.sleep(1)
+    time.sleep(0.5)
 
     basicMove.targetMove(robotData, (24, 118), True)
 
-    time.sleep(1)
+    time.sleep(0.5)
 
     basicMove.relitiveTurn(robotData, 180)
 

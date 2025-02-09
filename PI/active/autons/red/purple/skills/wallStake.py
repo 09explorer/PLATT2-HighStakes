@@ -17,7 +17,7 @@ def wallStake(robotData, cam):
 
     time.sleep(1)
     robotData[com.label.INTAKEPISTON.value] = 0
-    basicMove.turnToHeading(robotData, 183)
+    basicMove.turnToHeading(robotData, 180)
 
     robotData[com.label.WALLSTAKE.value] = 1
 

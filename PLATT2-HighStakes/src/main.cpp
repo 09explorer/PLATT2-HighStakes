@@ -37,14 +37,14 @@ void pre_auton(void) {
   // Example: clearing encoders, setting servo positions, ...
   robot.initalizeRobot();
   //auton selector 
-  pi.setValue(NAME, PI_PURPLE);
+  pi.setValue(NAME, PI_PINK);
   pi.setValue(ALLIANCE, PI_RED);
   pi.setValue(AUTON, SKILLS_1);
 
   auto wallRun = [](void) {wallstakeControl.moveToPosition();};
   thread wallThread = thread(wallRun);
 
-  //picom
+  //picom 
   auto comRun = [](void) {pi.startPiCom();};
   thread comThread = thread(comRun);
 

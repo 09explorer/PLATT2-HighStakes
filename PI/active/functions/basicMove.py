@@ -38,11 +38,11 @@ def targetMove(robotData, targetPoint, reverse = False, linVel = 40, lookAheadDi
 def turnToHeading(robotData, target):
 
     turnError = 180
-    avg = [180] * 10
+    avg = [180] * 20
 
     pid = PID(0.52,0,2.5,0)
     
-    while abs(turnError) > 4 or sum(avg)/len(avg) > 4:
+    while abs(turnError) > 1.5 or sum(avg)/len(avg) > 1.5:
 
         turnError = target - robotData[com.label.HEADING.value]
     
