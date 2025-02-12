@@ -4,7 +4,7 @@
 RingSort::RingSort(vex::brain& b) : 
 brain{b},
 hook1(vex::PORT4, vex::gearSetting::ratio6_1, false),
-hook2(vex::PORT13, vex::gearSetting::ratio6_1, false),
+hook2(vex::PORT10, vex::gearSetting::ratio6_1, true),
 hooks(hook1, hook2),
 colorSensor(vex::PORT8),
 sortPiston(ThreeWirePort.C)

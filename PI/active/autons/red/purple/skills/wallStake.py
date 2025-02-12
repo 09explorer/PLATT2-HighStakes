@@ -13,7 +13,7 @@ def wallStake(robotData, cam):
 
     basicMove.targetMove(robotData, (15, 48), turnVel=0.6)
 
-    basicMove.targetMove(robotData, (15, 66))
+    basicMove.targetMove(robotData, (15, 66.5))
 
     time.sleep(1)
     robotData[com.label.INTAKEPISTON.value] = 0
@@ -37,9 +37,6 @@ def wallStake(robotData, cam):
 
     
     basicMove.targetMove(robotData, (33, 75))# jank needs fixing
-
-    basicMove.turnToHeading(robotData, 210)
-
 
     
 

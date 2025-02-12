@@ -37,7 +37,7 @@ void pre_auton(void) {
   // Example: clearing encoders, setting servo positions, ...
   robot.initalizeRobot();
   //auton selector 
-  pi.setValue(NAME, PI_PINK);
+  pi.setValue(NAME, PI_PURPLE);
   pi.setValue(ALLIANCE, PI_RED);
   pi.setValue(AUTON, SKILLS_1);
 

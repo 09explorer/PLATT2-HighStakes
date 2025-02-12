@@ -36,11 +36,13 @@ def blueGoal(robotData, cam):
     robotData[com.label.WALLSTAKE.value] = 6
     basicMove.turnToHeading(robotData, 315)
     
-    basicMove.targetMove(robotData, (95,35))
+    basicMove.targetMove(robotData, (96,48))
+
+    time.sleep(1)
 
     basicMove.relitiveTurn(robotData, 180)
 
-    basicMove.targetMove(robotData, (80,52), True)
+    basicMove.targetMove(robotData, (80,60))
 
     cam.chase(robotData, vision.color.RED)
 

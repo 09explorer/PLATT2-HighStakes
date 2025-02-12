@@ -3,7 +3,7 @@
 wallStakeController::wallStakeController() :
 wallStake1(vex::PORT20, vex::gearSetting::ratio6_1, true), 
 wallStake2(vex::PORT9, vex::gearSetting::ratio6_1, false), 
-wallStake3(vex::PORT5, vex::gearSetting::ratio6_1, true)
+wallStake3(vex::PORT6, vex::gearSetting::ratio6_1, true)
 {
     this->position = STOW;
     this->oldPosition = SCORE;

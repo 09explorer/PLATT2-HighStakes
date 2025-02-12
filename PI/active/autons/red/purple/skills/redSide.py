@@ -9,7 +9,7 @@ def redSide(robotData):
     
     basicMove.turnToHeading(robotData, 0)
 
-    basicMove.targetMove(robotData, (26,45), True)
+    basicMove.targetMove(robotData, (25.5,45), True)
 
     
     robotData[com.label.CLAMP.value] = 1
@@ -36,7 +36,7 @@ def redSide(robotData):
 
     basicMove.relitiveTurn(robotData, 180)    
 
-    basicMove.targetMove(robotData, (10,10), True)
+    basicMove.targetMove(robotData, (12,12), True)
 
 
     robotData[com.label.CLAMP.value] = 0
