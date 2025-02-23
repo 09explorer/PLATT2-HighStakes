@@ -10,6 +10,7 @@
 #include "vex.h"
 #include "PLATT2/robot_config/robot.h"
 #include "PLATT2/robot_config/subsystems/piCom.h"
+#include "PLATT2\robot_config\Autonselector.h"
 
 using namespace vex;
 
@@ -19,7 +20,7 @@ Robot robot;
 piCom& pi = robot.getPi();
 wallStakeController& wallstakeControl = robot.getWall();
 RingSort& ringSort = robot.getRings();
-
+AutonSelector& menu = robot.getMenu();
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -41,6 +42,7 @@ void pre_auton(void) {
   pi.setValue(ALLIANCE, PI_RED);
   pi.setValue(AUTON, SKILLS_1);
 
+  //wall stake
   auto wallRun = [](void) {wallstakeControl.moveToPosition();};
   thread wallThread = thread(wallRun);
 
@@ -48,8 +50,15 @@ void pre_auton(void) {
   auto comRun = [](void) {pi.startPiCom();};
   thread comThread = thread(comRun);
 
+  //ring sort
   auto ringRun = [](void) {ringSort.colorSort();};
   thread ringThread = thread(ringRun);
+
+  //ring sort
+  auto menuRun = [](void) {menu.buttonListener();};
+thread menuThread = thread(menuRun);
+
+
 }
 
 /*---------------------------------------------------------------------------*/
@@ -65,12 +74,9 @@ void pre_auton(void) {
 void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
-  // ..........................................................................
-  
+  // ...........................................................................
   
   robot.runAutonControl();
-
-
 }
 
 /*---------------------------------------------------------------------------*/
@@ -84,6 +90,7 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
+  robot.buildRobotConfig();
   robot.runDriveControl();
   //robot.runAutonControl();
 }
