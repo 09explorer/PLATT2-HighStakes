@@ -53,6 +53,11 @@ class Robot
     private:
 
     /**
+     * @brief The competition object.
+     */
+    vex::competition& m_Competition;
+
+    /**
      * @brief The ID of the robot.
      */
     RobotConfig robotID;
@@ -102,7 +107,7 @@ class Robot
     /**
      * @brief Constructs the Robot class.
      */
-    Robot();
+    Robot(vex::competition& comp);
     
     /**
      * @brief The robot brain.

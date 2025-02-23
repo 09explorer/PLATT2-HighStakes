@@ -1,12 +1,13 @@
 #include "PLATT2/robot_config/robot.h"
 
-Robot::Robot():
+Robot::Robot(vex::competition& comp):
+m_Competition{comp},
 brain(),
 pi(),
 wallstakeControl(),
 ringSort(brain),
 driveControl(pi, ringSort, wallstakeControl, brain),
-menu(brain)
+menu(brain, m_Competition)
 {
     // Set default config
     robotID = NO_ROBOT;
@@ -108,7 +109,7 @@ AutonSelector& Robot::getMenu(){
 }
 
 void Robot::initalizeRobot(){
-    menu.drawMenu();
+    //menu.drawMenu();
 }
 
 void Robot::buildRobotConfig(){

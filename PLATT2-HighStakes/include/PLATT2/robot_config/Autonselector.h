@@ -11,6 +11,8 @@ class AutonSelector{
     /// @brief Reference to the robot brain object
     vex::brain& Brain;
 
+    vex::competition& m_Competition;
+
     /// @brief Constant to set the standard width of a button.
     const int BUTTON_WIDTH = 200;
 
@@ -29,6 +31,9 @@ class AutonSelector{
     /// @brief Constant to set the y position of the alliance color buttons
     const int ALLIANCE_STARTING_Y = 80;
 
+    /// @brief Constant to set the y position of the skills mode button
+    const int SKILLS_STARTING_Y = 20;
+
     /// @brief The Auton mode selected by the user.
     int m_selectedAuton = 0;
 
@@ -42,7 +47,7 @@ class AutonSelector{
     public:
     /// @brief Constructs a new auton selector object with the robot brain object
     /// @param b Robot brain object to pass in
-    AutonSelector(vex::brain& b);
+    AutonSelector(vex::brain& b, vex::competition& comp);
 
     void drawMenu();
 

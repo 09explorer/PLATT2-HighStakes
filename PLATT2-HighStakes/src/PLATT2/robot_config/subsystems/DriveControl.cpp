@@ -42,7 +42,10 @@ void DriveControl::TestControl(){
     int leftDrivePower = 0;
     int rightDrivePower = 0;
     
-    
+
+    leftDrive.setStopping(vex::hold);
+    rightDrive.setStopping(vex::hold);
+
     leftDrive.spin(vex::forward, 0, vex::rpm);
     rightDrive.spin(vex::forward, 0, vex::rpm);
     intake.spin(vex::forward, 0, vex::rpm);
@@ -153,7 +156,7 @@ void DriveControl::TestControl(){
 }
 void DriveControl::PinkDriveControl()
 {
-    
+
 }
 
 void DriveControl::PurpleDriveControl()

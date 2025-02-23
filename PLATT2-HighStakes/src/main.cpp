@@ -16,7 +16,7 @@ using namespace vex;
 
 // A global instance of competition
 competition Competition;
-Robot robot;
+Robot robot(Competition);
 piCom& pi = robot.getPi();
 wallStakeController& wallstakeControl = robot.getWall();
 RingSort& ringSort = robot.getRings();
@@ -37,6 +37,7 @@ void pre_auton(void) {
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
   robot.initalizeRobot();
+  menu.drawMenu();
   //auton selector 
   pi.setValue(NAME, PI_PURPLE);
   pi.setValue(ALLIANCE, PI_RED);
