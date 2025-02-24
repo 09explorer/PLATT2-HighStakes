@@ -5,7 +5,7 @@ from subsystems.label import label
 from subsystems.piCom import piCom
 from subsystems.odom import odom
 from subsystems.indicator import indicator
-
+from subsystems.autonSelector import autonSelect
 
 if __name__ == "__main__":
     
@@ -25,21 +25,21 @@ if __name__ == "__main__":
     indicate.daemon = True
     indicate.start()
 
-    
+    auton = mp.Process(target=autonSelect, args=(robotData))
+    auton.daemon = True
+    auton.start()
     
     while True:
 
         if robotData[label.RESET.value] == 1:
             
-            com.terminate()
             otos.terminate()
-            indicate.terminate()
+            auton.terminate()
 
             for i in range(len(robotData)):
                 robotData[i] = 0
         
-            com.start()
             otos.start()
-            indicate.start()
+            auton.start()
 
         time.sleep(0.01)

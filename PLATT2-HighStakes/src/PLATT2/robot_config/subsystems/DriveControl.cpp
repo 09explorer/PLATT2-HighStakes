@@ -168,6 +168,12 @@ void DriveControl::autonControl(){
 
   leftDrive.setStopping(vex::brake);
   rightDrive.setStopping(vex::brake);
+
+  pi.setValue(NAME, 1);
+  pi.setValue(AUTON, 1);
+  pi.setValue(ALLIANCE, 1);
+
+
   
   //leftDrive.spin(vex::forward, 0, vex::rpm);
   //rightDrive.spin(vex::forward, 0, vex::rpm);

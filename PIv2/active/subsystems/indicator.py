@@ -8,6 +8,7 @@ class status(Enum):
     LINKWAIT = 0
     STANDBY = 1
     ERROR = 2
+    RUNNING = 3
 
 def indicator(robotData):
     
