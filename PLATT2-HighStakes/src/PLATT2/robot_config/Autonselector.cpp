@@ -4,9 +4,9 @@ AutonSelector::AutonSelector(vex::brain& b, vex::competition& comp):
 Brain{b},
 m_Competition{comp}
 {
-this->m_selectedAlliance = 0;
-this->m_selectedAuton = 0;
-this->m_selectedRobot = 0;
+  this->m_selectedAlliance = 0; // no alliance
+  this->m_selectedAuton = 1; // competition auton
+  this->m_selectedRobot = 0; // no robot
 }
 
 std::vector<int> AutonSelector::getSelectedValues()
@@ -66,10 +66,10 @@ void AutonSelector::buttonListener()
     Brain.Screen.setCursor(2,1);
     Brain.Screen.setPenColor(vex::color::orange);
     Brain.Screen.print("No Alliance");
-    Brain.Screen.setCursor(3,1);
+    Brain.Screen.setCursor(1,1);
     Brain.Screen.setPenColor(vex::color::orange);
     Brain.Screen.print("No Robot");
-
+    Brain.Screen.render();
 
 
   while(!m_Competition.isEnabled()){
@@ -81,7 +81,8 @@ void AutonSelector::buttonListener()
       Brain.Screen.setCursor(2,1);
       Brain.Screen.clearLine(2);
       Brain.Screen.setPenColor(vex::color::purple);
-      Brain.Screen.print("Monica");
+      Brain.Screen.print("Pink");
+      m_selectedRobot = 1;
     }
     else if((Brain.Screen.xPosition() >= leftBillX && Brain.Screen.xPosition() < rightBillX) && (Brain.Screen.yPosition() >= highBillY && Brain.Screen.yPosition() <= lowBillY))
     {
@@ -89,7 +90,8 @@ void AutonSelector::buttonListener()
       Brain.Screen.setCursor(2,1);
       Brain.Screen.clearLine(2);
       Brain.Screen.setPenColor(vex::color(119, 88, 179));
-      Brain.Screen.print("Bill");
+      Brain.Screen.print("Purple");
+      m_selectedRobot = 2;
     }
     else if (Brain.Screen.xPosition() >= LEFT_STARTING_X && Brain.Screen.xPosition() <= (LEFT_STARTING_X + BUTTON_WIDTH) && Brain.Screen.yPosition() >= ALLIANCE_STARTING_Y && Brain.Screen.yPosition() <= ALLIANCE_STARTING_Y + BUTTON_HEIGHT)
     {
@@ -97,6 +99,7 @@ void AutonSelector::buttonListener()
      Brain.Screen.clearLine(1);
      Brain.Screen.setPenColor(vex::color::red);
      Brain.Screen.print("Red");
+     m_selectedAlliance = 1;
     }
     else if (Brain.Screen.xPosition() >= RIGHT_STARTING_X && Brain.Screen.xPosition() <= (RIGHT_STARTING_X + BUTTON_WIDTH) && Brain.Screen.yPosition() >= ALLIANCE_STARTING_Y && Brain.Screen.yPosition() <= ALLIANCE_STARTING_Y + BUTTON_HEIGHT)
     {
@@ -104,6 +107,7 @@ void AutonSelector::buttonListener()
      Brain.Screen.clearLine(1);
      Brain.Screen.setPenColor(vex::color::blue);
      Brain.Screen.print("Blue");
+     m_selectedAlliance = 2;
     }
     else if (Brain.Screen.xPosition() >= RIGHT_STARTING_X && Brain.Screen.xPosition() <= (RIGHT_STARTING_X + BUTTON_WIDTH) && Brain.Screen.yPosition() >= SKILLS_STARTING_Y && Brain.Screen.yPosition() <= SKILLS_STARTING_Y + BUTTON_HEIGHT)
     {
@@ -111,6 +115,7 @@ void AutonSelector::buttonListener()
       Brain.Screen.clearLine(3);
       Brain.Screen.setPenColor(vex::color::cyan);
       Brain.Screen.print("Skills");
+      m_selectedAuton = 2;
     }
   Brain.Screen.render();
   vex::this_thread::sleep_for(20);
