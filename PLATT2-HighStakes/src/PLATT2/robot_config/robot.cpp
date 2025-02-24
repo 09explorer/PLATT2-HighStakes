@@ -1,11 +1,13 @@
 #include "PLATT2/robot_config/robot.h"
 
-Robot::Robot():
+Robot::Robot(vex::competition& comp):
+m_Competition{comp},
 brain(),
 pi(),
 wallstakeControl(),
 ringSort(brain),
-driveControl(pi, ringSort, wallstakeControl, brain)
+driveControl(pi, ringSort, wallstakeControl, brain),
+menu(brain, m_Competition)
 {
     // Set default config
     robotID = NO_ROBOT;
@@ -50,7 +52,6 @@ void Robot::runDriveControl()
     {
         case NO_ROBOT:
         {
-
             driveControl.TestControl();
         }
         case PINK:
@@ -70,7 +71,20 @@ void Robot::runAutonControl(){
 //
    //     brain.Screen.printAt(1, 20, "in loop, we are at %f",wallstake1.position(vex::rev));
    // }
-    
+    switch(autonID){
+        case NO_AUTON:
+        {
+            driveControl.TestControl();
+        }
+        case RED:
+        {
+         //   driveControl.RedAutonControl();
+        }
+        case BLUE:
+        {
+           // driveControl.BlueAutonControl();
+        }
+    }
 
     driveControl.autonControl();
 
@@ -90,7 +104,17 @@ RingSort& Robot::getRings(){
 
 }
 
-void Robot::initalizeRobot(){
+AutonSelector& Robot::getMenu(){
+    return menu;
+}
 
-    
+void Robot::initalizeRobot(){
+    //menu.drawMenu();
+}
+
+void Robot::buildRobotConfig(){
+    std::vector<int> selectedValues = menu.getSelectedValues();
+    autonID = static_cast<AutonConfig>(selectedValues[0]);
+    allianceID = static_cast <AllianceConfig>(selectedValues[1]);
+    robotID = static_cast<RobotConfig>(selectedValues[2]);
 }

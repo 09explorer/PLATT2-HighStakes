@@ -26,13 +26,13 @@ void RingSort::colorSort()
     vex::optical::rgbc currentRGB = colorSensor.getRgb();
     double currentR = currentRGB.red;
     double currentB = currentRGB.blue;
-
+/*
     brain.Screen.setCursor(7,1);
     brain.Screen.print("current red %f", currentR);
     brain.Screen.setCursor(8,1);
     brain.Screen.print("current blue %f", currentB);
     brain.Screen.setCursor(9,1);
-    brain.Screen.print("Current ring: %d", desiredRing);
+    brain.Screen.print("Current ring: %d", desiredRing);*/
     if(colorSensor.isNearObject()){
     switch(desiredRing)
     {

@@ -1,11 +1,14 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+#include <vector>
+
 #include "vex.h"
 #include "PLATT2\robot_config\subsystems\ringsort.h"
 #include "PLATT2\robot_config\subsystems\DriveControl.h"
 #include "PLATT2\robot_config\subsystems\piCom.h"
 #include "PLATT2\robot_config\subsystems\WallStake.h"
+#include "PLATT2\robot_config\Autonselector.h"
 
 /**
  * @brief Enumeration to represent the 2 different robot configurations with a default option.
@@ -50,6 +53,11 @@ class Robot
     private:
 
     /**
+     * @brief The competition object.
+     */
+    vex::competition& m_Competition;
+
+    /**
      * @brief The ID of the robot.
      */
     RobotConfig robotID;
@@ -89,12 +97,17 @@ class Robot
      */
     piCom pi;    
 
+    /**
+     * @brief The brain menu object.
+     */
+    AutonSelector menu;
+
     public:
     
     /**
      * @brief Constructs the Robot class.
      */
-    Robot();
+    Robot(vex::competition& comp);
     
     /**
      * @brief The robot brain.
@@ -169,6 +182,10 @@ class Robot
      * @brief Initializes the robot.
      */
     void initalizeRobot();
+
+    void buildRobotConfig();
+
+    AutonSelector& getMenu();
 };
 
 #endif

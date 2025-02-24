@@ -36,11 +36,16 @@ void DriveControl::TestControl(){
 	  bool RNewState;
     bool rightWingPos = false;
     bool wasButtonPressed = false;
+    bool oldPress1 = false;
+    bool oldPress2 = false;
 
     int leftDrivePower = 0;
     int rightDrivePower = 0;
     
-    
+
+    leftDrive.setStopping(vex::hold);
+    rightDrive.setStopping(vex::hold);
+
     leftDrive.spin(vex::forward, 0, vex::rpm);
     rightDrive.spin(vex::forward, 0, vex::rpm);
     intake.spin(vex::forward, 0, vex::rpm);
@@ -118,6 +123,32 @@ void DriveControl::TestControl(){
 
         // Update the state for the next iteration
         wasButtonPressed = isButtonPressed;
+
+        if(controller1.ButtonB.pressing())
+    {
+      if (oldPress1 == false){
+      wallStake.incrementPosHigh();
+
+      }
+      oldPress1 = true;
+    }else{
+
+      oldPress1 = false;
+
+    }
+
+    if(controller1.ButtonY.pressing())
+    {
+      if (oldPress2 == false){
+      wallStake.incrementPosLow();
+
+      }
+      oldPress2 = true;
+    }else{
+
+      oldPress2 = false;
+
+    }
 
      vex::this_thread::sleep_for(20); // Sleep the task for a short amount of time
 
