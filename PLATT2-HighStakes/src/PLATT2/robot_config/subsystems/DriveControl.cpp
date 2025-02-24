@@ -17,7 +17,7 @@ ringSort{ring},
 controller1(vex::primary),
 pi{picom},
 mogo{ThreeWirePort.A},
-intake(vex::PORT3, vex::gearSetting::ratio6_1, true), 
+intake(vex::PORT3, vex::gearSetting::ratio6_1, false), 
 intakePiston{ThreeWirePort.B},
 wallStake{w}
 {
