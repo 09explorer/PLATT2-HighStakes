@@ -93,6 +93,9 @@ class DriveControl
 
     /// @brief Controls the drive system during autonomous mode.
     void autonControl();
+
+    /// @brief Initializes the drivetrain.
+    void initDrivetrain();
 };
 
 #endif

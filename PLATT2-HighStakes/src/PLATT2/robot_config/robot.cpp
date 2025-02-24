@@ -65,29 +65,19 @@ void Robot::runDriveControl()
     }
 }
 void Robot::runAutonControl(){
+    // get the vector
+    std::vector<int> selectedValues = menu.getSelectedValues();
+    autonID = static_cast<AutonConfig>(selectedValues[0]);
+    allianceID = static_cast <AllianceConfig>(selectedValues[1]);
+    robotID = static_cast<RobotConfig>(selectedValues[2]);
 
-   // while (true)
-   // {
-//
-   //     brain.Screen.printAt(1, 20, "in loop, we are at %f",wallstake1.position(vex::rev));
-   // }
-    switch(autonID){
-        case NO_AUTON:
-        {
-            driveControl.TestControl();
-        }
-        case RED:
-        {
-         //   driveControl.RedAutonControl();
-        }
-        case BLUE:
-        {
-           // driveControl.BlueAutonControl();
-        }
-    }
+    // set the pi
+    pi.setValue(NAME, robotID);
+    pi.setValue(AUTON, autonID);
+    pi.setValue(ALLIANCE, allianceID); 
 
+    // run auto
     driveControl.autonControl();
-
 }
 
 piCom& Robot::getPi(){
@@ -109,12 +99,9 @@ AutonSelector& Robot::getMenu(){
 }
 
 void Robot::initalizeRobot(){
-    //menu.drawMenu();
+    menu.drawMenu();
 }
 
 void Robot::buildRobotConfig(){
-    std::vector<int> selectedValues = menu.getSelectedValues();
-    autonID = static_cast<AutonConfig>(selectedValues[0]);
-    allianceID = static_cast <AllianceConfig>(selectedValues[1]);
-    robotID = static_cast<RobotConfig>(selectedValues[2]);
+
 }

@@ -33,23 +33,15 @@ AutonSelector& menu = robot.getMenu();
 /*---------------------------------------------------------------------------*/
 
 void pre_auton(void) {
+  //picom 
+  auto comRun = [](void) {pi.startPiCom();};
+  thread comThread = thread(comRun);
 
-  // All activities that occur before the competition starts
-  // Example: clearing encoders, setting servo positions, ...
   robot.initalizeRobot();
-  menu.drawMenu();
-  //auton selector 
-  pi.setValue(NAME, PI_PINK);
-  pi.setValue(ALLIANCE, PI_RED);
-  pi.setValue(AUTON, SKILLS_1);
 
   //wall stake
   auto wallRun = [](void) {wallstakeControl.moveToPosition();};
   thread wallThread = thread(wallRun);
-
-  //picom 
-  auto comRun = [](void) {pi.startPiCom();};
-  thread comThread = thread(comRun);
 
   //ring sort
   auto ringRun = [](void) {ringSort.colorSort();};
