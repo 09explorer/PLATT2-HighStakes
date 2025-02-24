@@ -34,6 +34,8 @@ def blueSide(robotData):
 
     # Intake piston action remains the same
     robotData[com.label.INTAKEPISTON.value] = 0
+    robotData[com.label.HOOKS.value] = 0
+
 
     # Mirror the fourth target move (12, 132) -> (132, 132)
     basicMove.targetMove(robotData, (134, 134), turnVel=0.6)
@@ -41,6 +43,7 @@ def blueSide(robotData):
 
     # Intake piston action remains the same
     robotData[com.label.INTAKEPISTON.value] = 1
+    robotData[com.label.HOOKS.value] = 100
     
     time.sleep(1)
 

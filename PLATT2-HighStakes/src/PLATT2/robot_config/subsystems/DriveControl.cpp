@@ -50,8 +50,8 @@ void DriveControl::TestControl(){
     
     while(true){
       int foo = wallStake.getPosition();
-    Brain.Screen.setCursor(5,1);
-    Brain.Screen.print("current wall steak: %d", foo);
+      Brain.Screen.setCursor(5,1);
+       Brain.Screen.print("current wall steak: %d", foo);
       // Drive velocities
 
 
@@ -69,7 +69,7 @@ void DriveControl::TestControl(){
       helper.solenoidToggle(intakeOldState,intakeNewState,intakeCurrentState, intakePiston);
 
       RNewState = controller1.ButtonR1.pressing();
-		
+      
 		if ( RNewState == true and ROldState == false) {
 			
 			rightWingPos = !rightWingPos;
@@ -135,13 +135,11 @@ void DriveControl::PurpleDriveControl()
 
 void DriveControl::autonControl(){
 
-  pi.setValue(FLAG, 1);
-
-  //leftDrive.setStopping(vex::brake);
-  //rightDrive.setStopping(vex::brake);
+  leftDrive.setStopping(vex::brake);
+  rightDrive.setStopping(vex::brake);
   
-  leftDrive.spin(vex::forward, 0, vex::rpm);
-  rightDrive.spin(vex::forward, 0, vex::rpm);
+  //leftDrive.spin(vex::forward, 0, vex::rpm);
+  //rightDrive.spin(vex::forward, 0, vex::rpm);
   intake.spin(vex::forward, 0, vex::rpm);
   hooks.spin(vex::forward, 0, vex::rpm);
 
@@ -154,8 +152,11 @@ void DriveControl::autonControl(){
     wallStake.setPosition((Position)pi.getValue(WALLSTAKE));
     ringSort.moveHooks(pi.getValue(HOOKS));
   
-    leftDrive.setVelocity(pi.getValue(LEFTVEL), vex::percent);
-    rightDrive.setVelocity(pi.getValue(RIGHTVEL), vex::percent);
+    leftDrive.spin(vex::forward, (pi.getValue(LEFTVEL)/100)*12, vex::volt);
+    rightDrive.spin(vex::forward, (pi.getValue(RIGHTVEL)/100)*12, vex::volt);
+
+    //leftDrive.setVelocity(pi.getValue(LEFTVEL), vex::percent);
+    //rightDrive.setVelocity(pi.getValue(RIGHTVEL), vex::percent);
 
     vex::this_thread::sleep_for(1);
   } 

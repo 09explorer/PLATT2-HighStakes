@@ -23,7 +23,7 @@ std::string piCom::toString(double input){
 
 void piCom::addToWriteString(std::string label, double data){
 
-    writeString = writeString + label + ":" + toString(data) + ";";
+    writeString = writeString + label + toString(data) + ";";
 
 }
 
@@ -35,7 +35,7 @@ double piCom::getSubString(std::string label){
 
     index = rawRead.find(label+":");
     endIndex = rawRead.find(";", index+1);
-    subStr = rawRead.substr(index+2, endIndex-(index+2));
+    subStr = rawRead.substr(index+1, endIndex-(index+1));
     
     return strtod(subStr.c_str(), NULL);
 
@@ -49,36 +49,25 @@ void piCom::startPiCom(){
     int byteRead = 0;
     char buf[1];
 
-    writeString = "";
-    addToWriteString("n", this->name);
-    addToWriteString("u", this->auton);
-    addToWriteString("a", this->alliance);
-    writeString = writeString + "/";
-    
-    //send the string to the pi
-    write(writePort, writeString.c_str(), writeString.size());
-    vex::this_thread::sleep_for(100);
+    reset = 1;
 
     while (true){
-        
-        
+          
         //create string of data to be sent
         //each data point has a single letter prefix for id and is ended by a semicolin
         //the entire write string is ended by a back slash 
 
-
         writeString = "";
-        addToWriteString("f", this->flag);
-        //addToWriteString("h", this->heading);
-        //addToWriteString("x", this->xPos);
-        //addToWriteString("y", this->yPos);
+        addToWriteString("x", this->reset);
+        addToWriteString("n", this->name);
+        addToWriteString("u", this->auton);
+        addToWriteString("a", this->alliance);
         writeString = writeString + "/";
         
         //send the string to the pi
         write(writePort, writeString.c_str(), writeString.size());
         
         //Read section 
-
         rawRead = "";
 
         //waits for a bite and appends it to a string 
@@ -95,31 +84,31 @@ void piCom::startPiCom(){
         
         //picks apart the read string to find the id characters and the data that they indicate
 
-        this->rightVel  = getSubString("r");
-        this->leftVel   = getSubString("l");
-        this->clamp     = getSubString("c");
-        this->wallStake = getSubString("w");
-        this->colorSort = getSubString("s");
-        this->intake    = getSubString("i");
-        this->hooks     = getSubString("o");
+        this->rightVel     = getSubString("r");
+        this->leftVel      = getSubString("l");
+        this->clamp        = getSubString("c");
+        this->wallStake    = getSubString("w");
+        this->colorSort    = getSubString("s");
+        this->intake       = getSubString("i");
+        this->hooks        = getSubString("o");
         this->intakePiston = getSubString("p");
 
         //delay to alow other threads to run 
         //has to be located at this point in the program in order to prevent missing incoming data strings       
         vex::this_thread::sleep_for(1);
 
+        reset = 0;
+
     }
 
 }
-
-
 
 double piCom::getValue(dataLabel dataType){
 
     switch(dataType){
         
-        case FLAG:{
-            return this->flag;
+        case RESET:{
+            return this->reset;
             break;
         }
         case RIGHTVEL:{
@@ -172,8 +161,8 @@ void piCom::setValue(dataLabel dataType, double value){
 
     switch(dataType){
         
-        case FLAG:{
-            this->flag = value;
+        case RESET:{
+            this->reset = value;
             break;
         }
         case RIGHTVEL:{

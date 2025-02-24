@@ -33,13 +33,13 @@ def redSide(robotData):
     robotData[com.label.CLAMP.value] = 1
 
     time.sleep(0.5)
-#    
+    robotData[com.label.HOOKS.value] = 100 
 #    # Turn to heading 270 remains the same
     basicMove.turnToHeading(robotData, 270)
 
 #
 #    # Hooks action remains the same
-    robotData[com.label.HOOKS.value] = 100
+    
 #
 #    # Mirror the third target move (22,24) -> (122,24)
     basicMove.targetMove(robotData, (122, 24))
