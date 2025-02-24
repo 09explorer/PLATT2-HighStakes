@@ -42,7 +42,7 @@ class RingSort
     const double CHAIN_LIFT_MAX_SPEED {600};
     
     /// @brief Normal speed for the chain lift.
-    const double CHAIN_LIFT_NORMAL_SPEED {600};
+    const double CHAIN_LIFT_NORMAL_SPEED {70};
     
     /// @brief Encoder ticks for the chain lift.
     const double CHAIN_LIFT_ENCODER_TICKS {5};

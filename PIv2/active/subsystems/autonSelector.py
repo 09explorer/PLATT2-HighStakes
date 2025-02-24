@@ -13,6 +13,25 @@ def autonSelect(robotData):
     if robotData[label.ALLIANCE.value] == 1:
         if robotData[label.NAME.value] == 1:
             if robotData[label.AUTON.value] ==1:
+                pass
+            else:
+                pass
+        else:
+            if robotData[label.AUTON.value] ==1:
+                pass
+            else:
+                pass
+    else: 
+        if robotData[label.NAME.value] == 1:
+            if robotData[label.AUTON.value] ==1:
+                pass
+            else:
+                pass
+        else:
+            if robotData[label.AUTON.value] ==1:
+                pass
+            else:
+                pass
                 
     
         
