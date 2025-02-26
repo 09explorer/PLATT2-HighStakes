@@ -1,6 +1,6 @@
 import time
 import qwiic_otos # type: ignore
-from label import label
+from subsystems.label import label
 
 def odom(robotData):
 

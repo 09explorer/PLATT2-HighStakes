@@ -13,19 +13,19 @@ if __name__ == "__main__":
     
     robotData = mp.Array('f', 30)
     
-    com = mp.Process(target=piCom, args=(robotData))
+    com = mp.Process(target=piCom, args=(robotData,))
     com.daemon = True
     com.start()
     
-    otos = mp.Process(target=odom, args=(robotData))
+    otos = mp.Process(target=odom, args=(robotData,))
     otos.daemon = True
     otos.start()
 
-    indicate = mp.Process(target=indicator, args=(robotData))
+    indicate = mp.Process(target=indicator, args=(robotData,))
     indicate.daemon = True
     indicate.start()
 
-    auton = mp.Process(target=autonSelect, args=(robotData))
+    auton = mp.Process(target=autonSelect, args=(robotData,))
     auton.daemon = True
     auton.start()
     
@@ -36,10 +36,20 @@ if __name__ == "__main__":
             otos.terminate()
             auton.terminate()
 
+            otos.join()
+            auton.join() 
+
             for i in range(len(robotData)):
+                if i == label.STATUSLIGHT.value:
+                    continue
                 robotData[i] = 0
-        
+
+            otos = mp.Process(target=odom, args=(robotData,))
+            otos.daemon = True
             otos.start()
+
+            auton = mp.Process(target=autonSelect, args=(robotData,))
+            auton.daemon = True
             auton.start()
 
         time.sleep(0.01)

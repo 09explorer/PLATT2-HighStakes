@@ -1,9 +1,20 @@
-from label import label
-from indicator import status
+from subsystems.label import label
+from subsystems.indicator import status
 import time
+
+import autons.blue.pink.comp1.start
+import autons.blue.pink.test1.start
+import autons.blue.purple.comp1.start
+import autons.blue.purple.test2.start
+import autons.red.pink.comp1.start
+import autons.red.pink.skills.start
+import autons.red.purple.comp1.start
+import autons.red.purple.skills.start
 
 
 def autonSelect(robotData):
+    
+    robotData[label.STATUSLIGHT.value] = status.STANDBY.value
 
     while robotData[label.ALLIANCE.value] == 0:
         time.sleep(0.01)
@@ -12,26 +23,26 @@ def autonSelect(robotData):
 
     if robotData[label.ALLIANCE.value] == 1:
         if robotData[label.NAME.value] == 1:
-            if robotData[label.AUTON.value] ==1:
-                pass
+            if robotData[label.AUTON.value] == 1:
+                autons.blue.pink.comp1.start.start()
             else:
-                pass
+                autons.blue.pink.test1.start.start()
         else:
-            if robotData[label.AUTON.value] ==1:
-                pass
+            if robotData[label.AUTON.value] == 1:
+                autons.blue.purple.comp1.start.start()
             else:
-                pass
+                autons.blue.purple.test2.start.start()
     else: 
         if robotData[label.NAME.value] == 1:
-            if robotData[label.AUTON.value] ==1:
-                pass
+            if robotData[label.AUTON.value] == 1:
+                autons.red.pink.comp1.start.start()
             else:
-                pass
+                autons.red.pink.skills.start.start()
         else:
-            if robotData[label.AUTON.value] ==1:
-                pass
+            if robotData[label.AUTON.value] == 1:
+                autons.red.purple.comp1.start.start()
             else:
-                pass
+                autons.red.purple.skills.start.start()
                 
     
         

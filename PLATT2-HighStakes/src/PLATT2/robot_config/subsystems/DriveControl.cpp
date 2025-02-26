@@ -90,7 +90,7 @@ void DriveControl::TestControl(){
 			ROldState = true;
 			
 			if (rightWingPos == false){
-				ringSort.moveHooks(70);
+				ringSort.moveHooks(90);
 				rightWingPos = false;
 				
 			}
