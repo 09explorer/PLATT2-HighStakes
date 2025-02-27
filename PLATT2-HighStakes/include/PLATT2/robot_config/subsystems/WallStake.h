@@ -125,6 +125,15 @@ public:
     /// @brief Gets the current position.
     /// @return The current position.
     Position getPosition();
+
+    /// @brief Moves the first stage of the wall stake.
+    void moveFirstStage(double velocity);
+
+    void stopFirstStage();
+
+    void stopSecondStage();
+    /// @brief Moves the second stage of the wall stake.
+    void moveSecondStage(double velocity);
 };
 
 #endif

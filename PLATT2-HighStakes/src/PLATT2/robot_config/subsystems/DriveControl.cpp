@@ -158,10 +158,32 @@ void DriveControl::TestControl(){
 
     }
 
+    if(controller1.ButtonL1.pressing()) {
+      wallStake.moveFirstStage(50);
+    }
+    else if(controller1.ButtonL2.pressing()){
+      wallStake.moveFirstStage(-50);
+    }
+    else{
+      wallStake.stopFirstStage();
+    }
+
+    if(controller1.ButtonLeft.pressing()) {
+      wallStake.moveSecondStage(100);
+    }
+    else if(controller1.ButtonUp.pressing()){
+      wallStake.moveSecondStage(-100);
+    }
+    else{
+      wallStake.stopSecondStage();
+    }
+
+
      vex::this_thread::sleep_for(20); // Sleep the task for a short amount of time
 
     }
 }
+
 void DriveControl::PinkDriveControl()
 {
 

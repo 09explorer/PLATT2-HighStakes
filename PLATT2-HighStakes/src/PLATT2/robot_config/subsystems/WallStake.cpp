@@ -7,6 +7,11 @@ wallStake3(vex::PORT6, vex::gearSetting::ratio6_1, true)
 {
     this->position = STOW;
     this->oldPosition = SCORE;
+    wallStake1.setStopping(vex::hold);
+    wallStake3.setStopping(vex::hold);
+    wallStake1.spin(vex::forward, 0, vex::rpm);
+    wallStake2.spin(vex::forward, 0, vex::rpm);
+    wallStake3.spin(vex::forward, 0, vex::rpm);
 }
 
 void wallStakeController::setPosition(Position position){
@@ -244,3 +249,26 @@ void wallStakeController::incrementPosLow()
         }
     }
 }
+
+void wallStakeController::moveFirstStage(double velocity)
+{
+    wallStake1.spin(vex::forward, velocity, vex::percent);
+    wallStake2.spin(vex::forward, velocity, vex::percent);
+
+}
+
+void wallStakeController::moveSecondStage(double velocity)
+{
+    wallStake3.spin(vex::forward, velocity, vex::percent);
+}
+
+void wallStakeController::stopFirstStage()
+{
+    wallStake1.stop();
+    wallStake2.stop();;
+}
+
+void wallStakeController::stopSecondStage()
+{
+    wallStake3.stop();
+}   
