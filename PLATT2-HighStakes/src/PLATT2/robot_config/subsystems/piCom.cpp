@@ -33,7 +33,7 @@ double piCom::getSubString(std::string label){
     int endIndex = 0;
     std::string subStr;
 
-    index = rawRead.find(label+":");
+    index = rawRead.find(label);
     endIndex = rawRead.find(";", index+1);
     subStr = rawRead.substr(index+1, endIndex-(index+1));
     

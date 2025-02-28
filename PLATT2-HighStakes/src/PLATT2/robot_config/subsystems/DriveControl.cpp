@@ -196,8 +196,11 @@ void DriveControl::PurpleDriveControl()
 
 void DriveControl::autonControl(){
   
-  //leftDrive.spin(vex::forward, 0, vex::rpm);
-  //rightDrive.spin(vex::forward, 0, vex::rpm);
+  leftDrive.setStopping(vex::brake);
+  rightDrive.setStopping(vex::brake);
+
+  leftDrive.spin(vex::forward, 0, vex::rpm);
+  rightDrive.spin(vex::forward, 0, vex::rpm);
   intake.spin(vex::forward, 0, vex::rpm);
   hooks.spin(vex::forward, 0, vex::rpm);
 
@@ -210,11 +213,11 @@ void DriveControl::autonControl(){
     wallStake.setPosition((Position)pi.getValue(WALLSTAKE));
     ringSort.moveHooks(pi.getValue(HOOKS));
   
-    leftDrive.spin(vex::forward, (pi.getValue(LEFTVEL)/100)*12, vex::volt);
-    rightDrive.spin(vex::forward, (pi.getValue(RIGHTVEL)/100)*12, vex::volt);
+    //leftDrive.spin(vex::forward, (pi.getValue(LEFTVEL)/100)*12, vex::volt);
+    //rightDrive.spin(vex::forward, (pi.getValue(RIGHTVEL)/100)*12, vex::volt);
 
-    //leftDrive.setVelocity(pi.getValue(LEFTVEL), vex::percent);
-    //rightDrive.setVelocity(pi.getValue(RIGHTVEL), vex::percent);
+    leftDrive.setVelocity(pi.getValue(LEFTVEL), vex::percent);
+    rightDrive.setVelocity(pi.getValue(RIGHTVEL), vex::percent);
 
     vex::this_thread::sleep_for(1);
   } 

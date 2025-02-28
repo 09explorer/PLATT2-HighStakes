@@ -26,7 +26,7 @@ if __name__ == "__main__":
     indicate.start()
 
     auton = mp.Process(target=autonSelect, args=(robotData,))
-    auton.daemon = True
+    auton.daemon = False
     auton.start()
     
     while True:
@@ -49,7 +49,7 @@ if __name__ == "__main__":
             otos.start()
 
             auton = mp.Process(target=autonSelect, args=(robotData,))
-            auton.daemon = True
+            auton.daemon = False
             auton.start()
 
         time.sleep(0.01)

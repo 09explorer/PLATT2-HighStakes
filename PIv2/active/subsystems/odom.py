@@ -10,7 +10,7 @@ def odom(robotData):
     odom.setLinearScalar(1.0)
     odom.setAngularScalar(1.0)
     odom.resetTracking()
-    offset = qwiic_otos.Pose2D(0, 0, 90)
+    offset = qwiic_otos.Pose2D(0, 0, 270)
     odom.setOffset(offset)
 
     while True:

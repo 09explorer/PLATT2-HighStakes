@@ -12,6 +12,7 @@ class status(Enum):
     STANDBY = 3
     ERROR = 4
     RUNNING = 5
+    FINNISHED = 6
 
 def indicator(robotData):
     
@@ -47,17 +48,24 @@ def indicator(robotData):
 
         if robotData[label.STATUSLIGHT.value] == status.RUNNING.value:
             
-            if int((time.time()*5-startTime)) % 2 == 0:
+            if int((time.time()*10-startTime)) % 2 == 0:
                 green.on()
             else:
                 green.off()
 
         if robotData[label.STATUSLIGHT.value] == status.ERROR.value:
             
-            if int((time.time()*5-startTime)) % 2 == 0:
+            if int((time.time()*10-startTime)) % 2 == 0:
                 red.on()
             else:
                 red.off()
+
+        if robotData[label.STATUSLIGHT.value] == status.FINNISHED.value:
+            
+            green.on()
+            red.on()
+
+
         
         oldStatus = robotData[label.STATUSLIGHT.value]
         time.sleep(0.01)
