@@ -3,10 +3,8 @@
 
 RingSort::RingSort(vex::brain& b) : 
 brain{b},
-hook1(vex::PORT4, vex::gearSetting::ratio6_1, false),
-hook2(vex::PORT10, vex::gearSetting::ratio6_1, true),
-hooks(hook1, hook2),
-colorSensor(vex::PORT8),
+hook1(vex::PORT17, vex::gearSetting::ratio6_1, true),
+colorSensor(vex::PORT20),
 sortPiston(ThreeWirePort.C)
 {
     this->isToggle = false;
@@ -16,7 +14,7 @@ sortPiston(ThreeWirePort.C)
 void RingSort::colorSort()
 {
     
-    hooks.spin(vex::forward, 0, vex::rpm);
+    hook1.spin(vex::forward, 0, vex::rpm);
     colorSensor.setLight(vex::ledState::on);
     colorSensor.setLightPower(100);
     colorSensor.objectDetectThreshold(100);
@@ -42,7 +40,6 @@ void RingSort::colorSort()
          if(currentR > currentB)
          {
             hook1.resetPosition();
-            hook2.resetPosition();
 
             double currentPos = hook1.position(vex::rev);
 
@@ -65,7 +62,6 @@ void RingSort::colorSort()
             if(currentB > currentR)
             {
             hook1.resetPosition();
-            hook2.resetPosition();
 
             while(hook1.position(vex::rev) < CHAIN_LIFT_ENCODER_TICKS) {
                 sortPiston.set(true);
@@ -92,13 +88,11 @@ void RingSort::liftToggle()
     if(chainCurrent)
     {
         hook1.spin(vex::forward, CHAIN_LIFT_NORMAL_SPEED, vex::percent);
-        hook2.spin(vex::forward, CHAIN_LIFT_NORMAL_SPEED, vex::percent);
     
     }
     else
     {
         hook1.spin(vex::forward, 0, vex::percent);
-        hook2.spin(vex::forward, 0, vex::percent);
     }
 }
  
@@ -130,5 +124,5 @@ void RingSort::setRing(RingColor desiredColor)
 }
 
 void RingSort::moveHooks(double velocity){
-    hooks.setVelocity(velocity, vex::percent);
+    hook1.setVelocity(velocity, vex::percent);
 }

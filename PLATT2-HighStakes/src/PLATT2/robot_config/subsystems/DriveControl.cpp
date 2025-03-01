@@ -3,25 +3,25 @@
 
 DriveControl::DriveControl(piCom& picom, RingSort& ring, wallStakeController& w, vex::brain& b):
 Brain{b},
-leftDrive1(vex::PORT1, vex::gearSetting::ratio6_1, false),
-leftDrive2(vex::PORT2, vex::gearSetting::ratio6_1, true),
-leftDrive3(vex::PORT11, vex::gearSetting::ratio6_1, true),
-leftDrive4(vex::PORT13, vex::gearSetting::ratio6_1, false),
-rightDrive1(vex::PORT16, vex::gearSetting::ratio6_1, true),
-rightDrive2(vex::PORT17, vex::gearSetting::ratio6_1, false),
-rightDrive3(vex::PORT18, vex::gearSetting::ratio6_1, false),
-rightDrive4(vex::PORT19, vex::gearSetting::ratio6_1, true),
+leftDrive1(vex::PORT2, vex::gearSetting::ratio6_1, false),
+leftDrive2(vex::PORT1, vex::gearSetting::ratio6_1, true),
+leftDrive3(vex::PORT4, vex::gearSetting::ratio6_1, true),
+leftDrive4(vex::PORT3, vex::gearSetting::ratio6_1, false),
+rightDrive1(vex::PORT11, vex::gearSetting::ratio6_1, true),
+rightDrive2(vex::PORT12, vex::gearSetting::ratio6_1, false),
+rightDrive3(vex::PORT13, vex::gearSetting::ratio6_1, false),
+rightDrive4(vex::PORT14, vex::gearSetting::ratio6_1, true),
 leftDrive(leftDrive1, leftDrive2, leftDrive3, leftDrive4),
 rightDrive(rightDrive1, rightDrive2, rightDrive3, rightDrive4),
 ringSort{ring},
-controller1(vex::primary),
 pi{picom},
 mogo{ThreeWirePort.A},
-intake(vex::PORT3, vex::gearSetting::ratio6_1, false), 
+intake(vex::PORT15, vex::gearSetting::ratio6_1, false), 
 intakePiston{ThreeWirePort.B},
-wallStake{w}
+wallStake{w},
+jonProfile{controller1}
 {
-
+  
 }
 
 void DriveControl::initDrivetrain(){
@@ -30,10 +30,49 @@ void DriveControl::initDrivetrain(){
   leftDrive.spin(vex::forward, 0, vex::rpm);
   rightDrive.spin(vex::forward, 0, vex::rpm);
   intake.spin(vex::forward, 0, vex::rpm);
-}
 
+  jonProfile.intakeButton = controller1.ButtonR2;
+/*{
+      controller1.ButtonR2, // intake
+      controller1.ButtonL2, // mogo
+      controller1.ButtonB, // wallstake upper
+      controller1.ButtonX, // wallstake alliance
+      controller1.ButtonDown, // ringsort
+      controller1.ButtonLeft, // intake piston
+      controller1.ButtonR1, // hooks
+      controller1.ButtonY // hang hooks
+  };*/
+  }
+/*
+  defaultProfile = 
+  {
+    controller1.ButtonR2, // intake
+    controller1.ButtonL2, // mogo
+    controller1.ButtonB, // wallstake upper
+    controller1.ButtonX, // wallstake alliance
+    controller1.ButtonDown, // ringsort
+    controller1.ButtonLeft, // intake piston
+    controller1.ButtonR1, // hooks
+    controller1.ButtonY // hang hooks
+  };
+*/
+  
+/*
+  quinnProfile = 
+  {
+    controller1.ButtonR1, // intake
+    controller1.ButtonR2, // mogo
+    controller1.ButtonUp, // wallstake upper
+    controller1.ButtonDown, // wallstake lower
+    controller1.ButtonL1, // ringsort
+    controller1.ButtonRight, // intake piston
+    controller1.ButtonA, // hooks
+    controller1.ButtonY // hang hooks
+  };
+
+  currentProfile = defaultProfile;
+*/
 void DriveControl::TestControl(){
-
     bool mogoOldState = true;
     bool mogoNewState = true;
     bool mogoCurrentState = false;
@@ -49,18 +88,7 @@ void DriveControl::TestControl(){
 
     int leftDrivePower = 0;
     int rightDrivePower = 0;
-    
 
-    leftDrive.setStopping(vex::hold);
-    rightDrive.setStopping(vex::hold);
-
-    leftDrive.spin(vex::forward, 0, vex::rpm);
-    rightDrive.spin(vex::forward, 0, vex::rpm);
-    intake.spin(vex::forward, 0, vex::rpm);
-
-    wallStake.setPosition(SCORE);
-    ringSort.setRing(RED_RING);
-    
     while(true){
       int foo = wallStake.getPosition();
       Brain.Screen.setCursor(5,1);
@@ -78,9 +106,11 @@ void DriveControl::TestControl(){
       mogoNewState = controller1.ButtonL2.pressing();
       helper.solenoidToggle(mogoCurrentState, mogoNewState, mogoOldState, mogo);
 
-      intakeNewState = controller1.ButtonRight.pressing();
+      // Intake toggle
+      intakeNewState = controller1.ButtonLeft.pressing();
       helper.solenoidToggle(intakeOldState,intakeNewState,intakeCurrentState, intakePiston);
 
+      // Hook toggle
       RNewState = controller1.ButtonR1.pressing();
       
 		if ( RNewState == true and ROldState == false) {
@@ -103,7 +133,8 @@ void DriveControl::TestControl(){
 		}
 		ROldState = RNewState;
 
-      double wallpos = wallStake.getMotor2Position();
+    // wall steak
+      double wallpos = wallStake.getMotor1Position();
       double wall2pos = wallStake.getMotor3Position();
       Brain.Screen.setCursor(1,1);
       Brain.Screen.print("Wall pos: %f", wallpos);
@@ -111,7 +142,7 @@ void DriveControl::TestControl(){
       Brain.Screen.print("2nd Wall pos: %f", wall2pos);
 
     // Intake Control
-    if (controller1.ButtonL1.pressing())
+    if (controller1.ButtonR2.pressing())
     {
       intake.setVelocity(100, vex::pct);
     }
@@ -132,7 +163,7 @@ void DriveControl::TestControl(){
         // Update the state for the next iteration
         wasButtonPressed = isButtonPressed;
 
-        if(controller1.ButtonB.pressing())
+        if(controller1.ButtonX.pressing())
     {
       if (oldPress1 == false){
       wallStake.incrementPosHigh();
@@ -145,7 +176,7 @@ void DriveControl::TestControl(){
 
     }
 
-    if(controller1.ButtonY.pressing())
+    if(controller1.ButtonX.pressing())
     {
       if (oldPress2 == false){
       wallStake.incrementPosLow();
@@ -155,43 +186,28 @@ void DriveControl::TestControl(){
     }else{
 
       oldPress2 = false;
-
     }
 
-    if(controller1.ButtonL1.pressing()) {
-      wallStake.moveFirstStage(50);
-    }
-    else if(controller1.ButtonL2.pressing()){
-      wallStake.moveFirstStage(-50);
-    }
-    else{
-      wallStake.stopFirstStage();
-    }
+   vex::this_thread::sleep_for(20); // Sleep the task for a short amount of time
 
-    if(controller1.ButtonLeft.pressing()) {
-      wallStake.moveSecondStage(100);
-    }
-    else if(controller1.ButtonUp.pressing()){
-      wallStake.moveSecondStage(-100);
-    }
-    else{
-      wallStake.stopSecondStage();
-    }
-
-
-     vex::this_thread::sleep_for(20); // Sleep the task for a short amount of time
-
-    }
+  }
 }
 
 void DriveControl::PinkDriveControl()
 {
-
+//  currentProfile = jonProfile;
+  TestControl();
 }
 
 void DriveControl::PurpleDriveControl()
 {
-  
+ // currentProfile = quinnProfile;
+  TestControl();
+}
+
+void DriveControl::defaultControl(){
+ // currentProfile = defaultProfile;
+  TestControl();
 }
 
 void DriveControl::autonControl(){
@@ -201,6 +217,7 @@ void DriveControl::autonControl(){
 
   leftDrive.spin(vex::forward, 0, vex::rpm);
   rightDrive.spin(vex::forward, 0, vex::rpm);
+
   intake.spin(vex::forward, 0, vex::rpm);
   hooks.spin(vex::forward, 0, vex::rpm);
 

@@ -1,16 +1,14 @@
 #include "PLATT2/robot_config/subsystems/WallStake.h"
 
 wallStakeController::wallStakeController() :
-wallStake1(vex::PORT20, vex::gearSetting::ratio6_1, true), 
-wallStake2(vex::PORT9, vex::gearSetting::ratio6_1, false), 
-wallStake3(vex::PORT6, vex::gearSetting::ratio6_1, true)
+wallStake1(vex::PORT18, vex::gearSetting::ratio6_1, true), 
+wallStake3(vex::PORT19, vex::gearSetting::ratio6_1, true)
 {
     this->position = STOW;
     this->oldPosition = SCORE;
     wallStake1.setStopping(vex::hold);
     wallStake3.setStopping(vex::hold);
     wallStake1.spin(vex::forward, 0, vex::rpm);
-    wallStake2.spin(vex::forward, 0, vex::rpm);
     wallStake3.spin(vex::forward, 0, vex::rpm);
 }
 
@@ -25,9 +23,6 @@ Position wallStakeController::getPosition(){
 double wallStakeController::getMotor1Position(){
     return wallStake1.position(vex::rev);
 }
-double wallStakeController::getMotor2Position(){
-    return wallStake2.position(vex::rev);
-}
 double wallStakeController::getMotor3Position(){
     return wallStake3.position(vex::rev);
 }
@@ -36,7 +31,6 @@ double wallStakeController::getMotor3Position(){
 void wallStakeController::moveToPosition(){
     
     wallStake3.spin(vex::forward, 0, vex::rpm);
-    wallStake2.spin(vex::forward, 0, vex::rpm);
     wallStake1.spin(vex::forward, 0, vex::rpm);
 
 
@@ -53,7 +47,6 @@ void wallStakeController::moveToPosition(){
                    
                     wallStake3.spinToPosition(STAGE_2_SCORE, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
                     wallStake1.spinToPosition(STAGE_1_SCORE, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
-                    wallStake2.spinToPosition(STAGE_1_SCORE, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
                     
                     break;
                 }
@@ -61,7 +54,6 @@ void wallStakeController::moveToPosition(){
                    
                     wallStake3.spinToPosition(STAGE_2_HOME, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
                     wallStake1.spinToPosition(STAGE_1_HOME, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
-                    wallStake2.spinToPosition(STAGE_1_HOME, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
                     
                     break;
                 }
@@ -70,7 +62,6 @@ void wallStakeController::moveToPosition(){
                     
                     wallStake3.spinToPosition(STAGE_2_LOAD, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, true);
                     wallStake1.spinToPosition(STAGE_1_LOAD, vex::rotationUnits::rev, moveVelocity/2, vex::velocityUnits::pct, false);
-                    wallStake2.spinToPosition(STAGE_1_LOAD, vex::rotationUnits::rev, moveVelocity/2, vex::velocityUnits::pct, false);
 
                     break;
                 }
@@ -79,7 +70,6 @@ void wallStakeController::moveToPosition(){
 
                     wallStake3.spinToPosition(STAGE_2_SCORE2, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
                     wallStake1.spinToPosition(STAGE_1_SCORE2, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
-                    wallStake2.spinToPosition(STAGE_1_SCORE2, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
 
                     break;
 
@@ -89,7 +79,6 @@ void wallStakeController::moveToPosition(){
 
                     wallStake3.spinToPosition(STAGE_2_SCORELOW, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
                     wallStake1.spinToPosition(STAGE_1_SCORELOW, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
-                    wallStake2.spinToPosition(STAGE_1_SCORELOW, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
 
                     break;
 
@@ -99,7 +88,6 @@ void wallStakeController::moveToPosition(){
 
                     wallStake3.spinToPosition(STAGE_2_SCORELOW2, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
                     wallStake1.spinToPosition(STAGE_1_SCORELOW2, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct,false);
-                    wallStake2.spinToPosition(STAGE_1_SCORELOW2, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
 
                     break;
 
@@ -121,7 +109,6 @@ void wallStakeController::moveToPosition(){
                     //    pros::delay(10);
                     //}
                     wallStake1.spinToPosition(STAGE_1_HANGLOCK, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
-                    wallStake2.spinToPosition(STAGE_1_HANGLOCK, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
                     wallStake3.spinToPosition(STAGE_2_HANGLOCK, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);   
 
                     break;
@@ -132,7 +119,6 @@ void wallStakeController::moveToPosition(){
 
                     wallStake3.spinToPosition(STAGE_2_CORNER, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct,false);
                     wallStake1.spinToPosition(STAGE_1_CORNER, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct,false);
-                    wallStake2.spinToPosition(STAGE_1_CORNER, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct,false);
 
                     break;
 
@@ -141,7 +127,6 @@ void wallStakeController::moveToPosition(){
                 case STOW:{
                     wallStake3.spinToPosition(STAGE_2_CORNER, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
                     wallStake1.spinToPosition(STAGE_1_CORNER, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
-                    wallStake2.spinToPosition(STAGE_1_CORNER, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
 
                     break;
                 }
@@ -253,7 +238,6 @@ void wallStakeController::incrementPosLow()
 void wallStakeController::moveFirstStage(double velocity)
 {
     wallStake1.spin(vex::forward, velocity, vex::percent);
-    wallStake2.spin(vex::forward, velocity, vex::percent);
 
 }
 
@@ -265,7 +249,6 @@ void wallStakeController::moveSecondStage(double velocity)
 void wallStakeController::stopFirstStage()
 {
     wallStake1.stop();
-    wallStake2.stop();;
 }
 
 void wallStakeController::stopSecondStage()
