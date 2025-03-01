@@ -81,9 +81,6 @@ private:
     /// @brief Motor for wall stake 1.
     vex::motor wallStake1;
     
-    /// @brief Motor for wall stake 2.
-    vex::motor wallStake2;
-    
     /// @brief Motor for wall stake 3.
     vex::motor wallStake3;
 

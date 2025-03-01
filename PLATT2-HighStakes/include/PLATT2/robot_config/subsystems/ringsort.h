@@ -22,12 +22,6 @@ class RingSort
     
     /// @brief Motor for hook 1.
     vex::motor hook1;
-    
-    /// @brief Motor for hook 2.
-    vex::motor hook2;
-    
-    /// @brief Group of hook motors.
-    vex::motor_group hooks;
 
     /// @brief Optical sensor for detecting ring colors.
     vex::optical colorSensor;

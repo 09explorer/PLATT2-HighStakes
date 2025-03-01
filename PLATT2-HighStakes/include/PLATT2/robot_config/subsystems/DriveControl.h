@@ -7,6 +7,34 @@
 #include "PLATT2\robot_config\subsystems\wallStake.h"
 #include "PLATT2\HelperFunctions.h"
 
+/// @brief A struct to represent the driver profile.
+struct DriverProfile {
+    vex::controller& controller;  // Reference to the controller
+
+    vex::controller::button intakeButton;
+    vex::controller::button mogoButton;
+    vex::controller::button wallStakeUpperButton;
+    vex::controller::button wallStakeLowerButton;
+    vex::controller::button ringSortButton;
+    vex::controller::button intakePistonButton;
+    vex::controller::button hookButton;
+    vex::controller::button hangHooksButton;
+
+    // Constructor taking a controller reference
+    DriverProfile(vex::controller& ctrl)
+        : controller(ctrl),
+          intakeButton(ctrl.ButtonR2),
+          mogoButton(ctrl.ButtonL2),
+          wallStakeUpperButton(ctrl.ButtonB),
+          wallStakeLowerButton(ctrl.ButtonX),
+          ringSortButton(ctrl.ButtonDown),
+          intakePistonButton(ctrl.ButtonLeft),
+          hookButton(ctrl.ButtonR1),
+          hangHooksButton(ctrl.ButtonY)
+    {}
+};
+
+
 /// @brief A class to control the drive system of the robot.
 class DriveControl
 {
@@ -57,7 +85,7 @@ class DriveControl
     piCom& pi;
 
     /// @brief Controller object.
-    vex::controller controller1;
+    vex::controller controller1 = vex::controller(vex::primary);
 
     /// @brief Digital output for controlling the mogo.
     vex::digital_out mogo;
@@ -73,6 +101,8 @@ class DriveControl
 
     /// @brief Reference to the wall stake controller object.
     wallStakeController& wallStake;
+
+    DriverProfile jonProfile;
 
     public:
     /// @brief Constructs the DriveControl class.
@@ -96,6 +126,9 @@ class DriveControl
 
     /// @brief Initializes the drivetrain.
     void initDrivetrain();
+
+    /// @brief Controls the drive system for the default robot configuration.
+    void defaultControl();
 };
 
 #endif
