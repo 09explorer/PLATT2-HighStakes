@@ -1,5 +1,4 @@
-from cmath import atan, sqrt, pi
-from math import atan2, copysign
+from math import atan2, copysign, sqrt, pi, atan
 import time
 from subsystems.label import label
 import multiprocessing as mp
@@ -20,7 +19,7 @@ def timeout(robotData, duration):
     robotData[label.RIGHTVEL.value] = 0
 
 def toPointMath(robotData, target, reverse):
-
+    
     offset = sqrt(((robotData[label.XPOS.value]-target[0])**2)+((robotData[label.YPOS.value]-target[1])**2))
     startOffset = offset
     if reverse:
@@ -31,9 +30,9 @@ def toPointMath(robotData, target, reverse):
     if offset <= 10:
         
         while offset >= 1:
-              
-            linVel = (4/-pow(startOffset, 1.75))(offset-startOffset)(0.5*offset)
                       
+            linVel = (4/(-1*(startOffset**1.75)))*(((offset-(startOffset/20))-startOffset)*(0.5*(offset-(startOffset/20))))*100
+        
             absTargetAngle = atan2(target[1] - robotData[label.YPOS.value], target[0] - robotData[label.XPOS.value]) * (180/pi)
 
             if reverse:
@@ -50,22 +49,25 @@ def toPointMath(robotData, target, reverse):
 
             turnvel = turnError*0.4
 
-            robotData[label.LEFTVEL.value]  = scale*linVel + turnvel
-            robotData[label.RIGHTVEL.value] = scale*linVel - turnvel
+            robotData[label.LEFTVEL.value]  = scale*linVel - turnvel
+            robotData[label.RIGHTVEL.value] = scale*linVel + turnvel
 
             offset = sqrt(((robotData[label.XPOS.value]-target[0])**2)+((robotData[label.YPOS.value]-target[1])**2))
+            
+            time.sleep(0.01)
        
     else:
-        
+        print(offset, flush=True)
         while offset >=1:
+            ramp = 0.1
 
             if offset < startOffset/2:
 
-                linVel = 1.15*((atan(0.5*(offset)))/0.5*pi)
+                linVel = 1.15*((atan((ramp/2)*(offset-1)))/(0.5*pi))*100
 
             else:
 
-                linVel = 1.15*((-atan(0.5*(offset-startOffset)))/0.5*pi)
+                linVel = 1.15*((-atan(ramp*2*((offset-1)-startOffset)))/(0.5*pi))*100
 
             absTargetAngle = atan2(target[1] - robotData[label.YPOS.value], target[0] - robotData[label.XPOS.value]) * (180/pi)
 
@@ -81,10 +83,10 @@ def toPointMath(robotData, target, reverse):
 
                 turnError = -1 * copysign(1, turnError) * (360 - abs(turnError))
 
-            turnvel = turnError*0.4
+            turnvel = turnError
 
-            robotData[label.LEFTVEL.value]  = linVel + turnvel
-            robotData[label.RIGHTVEL.value] = linVel - turnvel
+            robotData[label.LEFTVEL.value]  = linVel - turnvel
+            robotData[label.RIGHTVEL.value] = linVel + turnvel
 
             offset = sqrt(((robotData[label.XPOS.value]-target[0])**2)+((robotData[label.YPOS.value]-target[1])**2))
 
@@ -92,7 +94,7 @@ def toPointMath(robotData, target, reverse):
     robotData[label.RIGHTVEL.value] = 0
 
 
-def toPoint(robotData, target, reverse, duration = 0):
+def toPoint(robotData, target, reverse = False, duration = 0):
 
     math = mp.Process(target=toPointMath, args=(robotData,target,reverse,))
     math.daemon = True

@@ -36,7 +36,7 @@ def piCom(robotData):
             iteration = 1
         
         else:
-            print("link established", flush=True)
+
             break
 
     robotData[label.STATUSLIGHT.value] = status.LINKESTABLISH.value
