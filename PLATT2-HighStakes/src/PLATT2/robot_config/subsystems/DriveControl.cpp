@@ -18,11 +18,11 @@ pi{picom},
 mogo{ThreeWirePort.A},
 intake(vex::PORT15, vex::gearSetting::ratio6_1, false), 
 intakePiston{ThreeWirePort.B},
-wallStake{w},
-jonProfile{controller1}
+wallStake{w}
 {
-  
+
 }
+
 
 void DriveControl::initDrivetrain(){
   leftDrive.setStopping(vex::brake);
@@ -30,18 +30,25 @@ void DriveControl::initDrivetrain(){
   leftDrive.spin(vex::forward, 0, vex::rpm);
   rightDrive.spin(vex::forward, 0, vex::rpm);
   intake.spin(vex::forward, 0, vex::rpm);
-
+/*
   jonProfile.intakeButton = controller1.ButtonR2;
-/*{
-      controller1.ButtonR2, // intake
-      controller1.ButtonL2, // mogo
-      controller1.ButtonB, // wallstake upper
-      controller1.ButtonX, // wallstake alliance
-      controller1.ButtonDown, // ringsort
-      controller1.ButtonLeft, // intake piston
-      controller1.ButtonR1, // hooks
-      controller1.ButtonY // hang hooks
-  };*/
+  jonProfile.mogoButton = controller1.ButtonL2;
+  jonProfile.wallStakeUpperButton = controller1.ButtonB;
+  jonProfile.wallStakeLowerButton = controller1.ButtonX;
+  jonProfile.ringSortButton = controller1.ButtonDown;
+  jonProfile.intakePistonButton = controller1.ButtonLeft;
+  jonProfile.hookButton = controller1.ButtonR1;
+  jonProfile.hangHooksButton = controller1.ButtonY;
+
+  quinnProfile.intakeButton = controller1.ButtonR1; // intake
+  quinnProfile.mogoButton = controller1.ButtonR2; // mogo
+  quinnProfile.wallStakeUpperButton = controller1.ButtonUp; // wallstake upper
+  quinnProfile.wallStakeLowerButton = controller1.ButtonDown; // wallstake lower
+  quinnProfile.ringSortButton = controller1.ButtonL1; // ringsort
+  quinnProfile.intakePistonButton = controller1.ButtonRight; // intake piston
+  quinnProfile.hookButton = controller1.ButtonA; // hooks
+  quinnProfile.hangHooksButton = controller1.ButtonY; // hang hooks*/
+
   }
 /*
   defaultProfile = 
@@ -88,7 +95,8 @@ void DriveControl::TestControl(){
 
     int leftDrivePower = 0;
     int rightDrivePower = 0;
-
+    wallStake.setPosition(SCORE);
+    Brain.Screen.clearScreen();
     while(true){
       int foo = wallStake.getPosition();
       Brain.Screen.setCursor(5,1);
@@ -157,13 +165,14 @@ void DriveControl::TestControl(){
 
         // Detect a new press (button transitioning from not pressed to pressed)
         if (isButtonPressed && !wasButtonPressed) {
-           ringSort.incrementColor();
+           //ringSort.incrementColor();
+           wallStake.incrementPosHigh();
         }
 
         // Update the state for the next iteration
         wasButtonPressed = isButtonPressed;
 
-        if(controller1.ButtonX.pressing())
+    if(controller1.ButtonX.pressing())
     {
       if (oldPress1 == false){
       wallStake.incrementPosHigh();
@@ -176,7 +185,7 @@ void DriveControl::TestControl(){
 
     }
 
-    if(controller1.ButtonX.pressing())
+    if(controller1.ButtonY.pressing())
     {
       if (oldPress2 == false){
       wallStake.incrementPosLow();
@@ -195,18 +204,15 @@ void DriveControl::TestControl(){
 
 void DriveControl::PinkDriveControl()
 {
-//  currentProfile = jonProfile;
   TestControl();
 }
 
 void DriveControl::PurpleDriveControl()
 {
- // currentProfile = quinnProfile;
   TestControl();
 }
 
 void DriveControl::defaultControl(){
- // currentProfile = defaultProfile;
   TestControl();
 }
 

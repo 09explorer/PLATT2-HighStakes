@@ -73,7 +73,7 @@ private:
     const double STAGE_2_CORNER = -1.65;
 
     /// @brief Ready position encoder location for stage 1 stow.
-    const double STAGE_1_STOW = -1.3;
+    const double STAGE_1_STOW = 0;
     
     /// @brief Ready position encoder location for stage 2 stow.
     const double STAGE_2_STOW = 0;

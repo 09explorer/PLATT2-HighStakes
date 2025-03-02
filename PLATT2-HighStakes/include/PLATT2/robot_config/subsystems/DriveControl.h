@@ -22,15 +22,7 @@ struct DriverProfile {
 
     // Constructor taking a controller reference
     DriverProfile(vex::controller& ctrl)
-        : controller(ctrl),
-          intakeButton(ctrl.ButtonR2),
-          mogoButton(ctrl.ButtonL2),
-          wallStakeUpperButton(ctrl.ButtonB),
-          wallStakeLowerButton(ctrl.ButtonX),
-          ringSortButton(ctrl.ButtonDown),
-          intakePistonButton(ctrl.ButtonLeft),
-          hookButton(ctrl.ButtonR1),
-          hangHooksButton(ctrl.ButtonY)
+        : controller(ctrl)
     {}
 };
 
@@ -101,9 +93,7 @@ class DriveControl
 
     /// @brief Reference to the wall stake controller object.
     wallStakeController& wallStake;
-
-    DriverProfile jonProfile;
-
+    
     public:
     /// @brief Constructs the DriveControl class.
     /// @param picom Reference to the Pi communication object.

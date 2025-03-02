@@ -121,4 +121,6 @@ void AutonSelector::buttonListener()
   vex::this_thread::sleep_for(20);
   }
 }
+Brain.Screen.clearScreen();
+Brain.Screen.render();
 }

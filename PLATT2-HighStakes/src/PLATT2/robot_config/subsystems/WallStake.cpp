@@ -5,7 +5,9 @@ wallStake1(vex::PORT18, vex::gearSetting::ratio6_1, true),
 wallStake3(vex::PORT19, vex::gearSetting::ratio6_1, true)
 {
     this->position = STOW;
-    this->oldPosition = SCORE;
+    this->oldPosition = STOW;
+    wallStake1.resetPosition();
+    wallStake3.resetPosition();
     wallStake1.setStopping(vex::hold);
     wallStake3.setStopping(vex::hold);
     wallStake1.spin(vex::forward, 0, vex::rpm);
@@ -34,7 +36,7 @@ void wallStakeController::moveToPosition(){
     wallStake1.spin(vex::forward, 0, vex::rpm);
 
 
-    double moveVelocity = 100; // initial value
+    double moveVelocity = 75; // initial value
     
     while(true){
         
@@ -159,7 +161,7 @@ void wallStakeController::incrementPosHigh()
         }
         case HOME:
         { 
-            position = LOAD;
+            position = SCORE2;
             break;
         }
         case SCORELOW:
