@@ -1,8 +1,9 @@
 #include "PLATT2\robot_config\Autonselector.h"
 
-AutonSelector::AutonSelector(vex::brain& b, vex::competition& comp):
+AutonSelector::AutonSelector(vex::brain& b, vex::competition& comp, piCom& pi):
 Brain{b},
-m_Competition{comp}
+m_Competition{comp},
+m_pi{pi}
 {
   this->m_selectedAlliance = 0; // no alliance
   this->m_selectedAuton = 1; // competition auton
@@ -114,8 +115,9 @@ void AutonSelector::buttonListener()
       Brain.Screen.setCursor(3,1);
       Brain.Screen.clearLine(3);
       Brain.Screen.setPenColor(vex::color::cyan);
-      Brain.Screen.print("Skills");
-      m_selectedAuton = 2;
+      m_pi.setValue(AUTON, m_selectedAuton);
+      m_pi.setValue(ALLIANCE, m_selectedAlliance);
+      m_pi.setValue(NAME, m_selectedRobot);
     }
   Brain.Screen.render();
   vex::this_thread::sleep_for(20);

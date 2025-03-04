@@ -2,6 +2,7 @@
 #define AUTONSELECTOR_H
 
 #include "vex.h"
+#include "PLATT2/robot_config/subsystems/piCom.h"
 #include <vector>
 
 /// @brief A class to create and manage the brain screen menu to configure the robot
@@ -12,6 +13,8 @@ class AutonSelector{
     vex::brain& Brain;
 
     vex::competition& m_Competition;
+
+    piCom& m_pi;
 
     /// @brief Constant to set the standard width of a button.
     const int BUTTON_WIDTH = 200;
@@ -47,7 +50,7 @@ class AutonSelector{
     public:
     /// @brief Constructs a new auton selector object with the robot brain object
     /// @param b Robot brain object to pass in
-    AutonSelector(vex::brain& b, vex::competition& comp);
+    AutonSelector(vex::brain& b, vex::competition& comp, piCom& pi);
 
     void drawMenu();
 

@@ -7,7 +7,7 @@ pi(),
 wallstakeControl(),
 ringSort(brain),
 driveControl(pi, ringSort, wallstakeControl, brain),
-menu(brain, m_Competition)
+menu(brain, m_Competition, pi)
 {
     // Set default config
     robotID = NO_ROBOT;
@@ -66,17 +66,6 @@ void Robot::runDriveControl()
     }
 }
 void Robot::runAutonControl(){
-    // get the vector
-    std::vector<int> selectedValues = menu.getSelectedValues();
-    autonID = static_cast<AutonConfig>(selectedValues[0]);
-    allianceID = static_cast <AllianceConfig>(selectedValues[1]);
-    robotID = static_cast<RobotConfig>(selectedValues[2]);
-
-    // set the pi
-    pi.setValue(NAME, robotID);
-    pi.setValue(AUTON, autonID);
-    pi.setValue(ALLIANCE, allianceID); 
-
     // run auto
     driveControl.autonControl();
 }
