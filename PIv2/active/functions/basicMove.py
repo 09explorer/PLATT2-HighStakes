@@ -18,7 +18,7 @@ def timeout(robotData, duration):
     robotData[label.LEFTVEL.value] = 0
     robotData[label.RIGHTVEL.value] = 0
 
-def toPointMath(robotData, target, reverse):
+def toPointMath(robotData, target, reverse, linVel):
     
     offset = sqrt(((robotData[label.XPOS.value]-target[0])**2)+((robotData[label.YPOS.value]-target[1])**2))
     startOffset = offset
@@ -32,7 +32,7 @@ def toPointMath(robotData, target, reverse):
     while offset>3:
             
         #linVel = 1.15*((atan((ramp)*(offset-1)))/(0.5*pi))*100
-        linVel = 50
+    
 
         if linVel > 100:
             linVel = 100
@@ -84,9 +84,9 @@ def toPointMath(robotData, target, reverse):
     robotData[label.RIGHTVEL.value] = 0
 
 
-def toPoint(robotData, target, reverse = False, duration = 0):
+def toPoint(robotData, target, linVel, reverse = False, duration = 0, ):
 
-    math = mp.Process(target=toPointMath, args=(robotData,target,reverse,))
+    math = mp.Process(target=toPointMath, args=(robotData,target,reverse,linVel,))
     math.daemon = True
     math.start()
 
