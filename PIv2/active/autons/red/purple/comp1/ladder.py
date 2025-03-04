@@ -1,0 +1,4 @@
+
+def ladder(robotData):
+
+    pass

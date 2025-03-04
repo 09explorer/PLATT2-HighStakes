@@ -50,12 +50,18 @@ def piCom(robotData):
             
             if iteration == 1:
                 robotData[label.STATUSLIGHT.value] = status.LINKESTABLISH.value
-
-            if readPort.in_waiting:
-                rawRead = rawRead + readPort.readall().decode()
+            try:
+                if readPort.in_waiting:
+                    rawRead = rawRead + readPort.readall().decode()
                
-                if '/' in rawRead:
-                    break
+                    if '/' in rawRead:
+                        break
+            except:
+                del readPort
+                readPort  = serial.Serial(readName, timeout=0)
+                break
+
+
                     
         robotData[label.RESET.value]    = getSubString(rawRead, 'x')
         robotData[label.NAME.value]     = getSubString(rawRead, 'n')
@@ -74,7 +80,17 @@ def piCom(robotData):
         writeString = writeString + '/'
 
         time.sleep(0.001)
-        writePort.write(writeString.encode())
+        while True:
+            try:
+                writePort.write(writeString.encode())
+
+            except:
+                del writePort
+                writePort = serial.Serial(writeName, timeout=0)
+
+            else:
+                break
+
 
         iteration = 2
 

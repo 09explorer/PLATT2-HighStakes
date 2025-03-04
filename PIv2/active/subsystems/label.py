@@ -28,3 +28,4 @@ class label(Enum):
     INTAKEPISTON    = 18
 
     STATUSLIGHT     = 19
+    ODOMREADY       = 20
