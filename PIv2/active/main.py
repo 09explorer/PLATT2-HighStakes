@@ -5,10 +5,13 @@ from subsystems.label import label
 from subsystems.piCom import piCom
 from subsystems.odom import odom
 from subsystems.indicator import indicator
+from subsystems.indicator import status
 from subsystems.autonSelector import autonSelect
 from subsystems import display
 
 if __name__ == "__main__":
+
+    time.sleep(1)
     
     setproctitle.setproctitle("plattCode")
     
@@ -30,31 +33,12 @@ if __name__ == "__main__":
     auton.daemon = False
     auton.start()
 
-    dis = mp.Process(target=display.main, args=(robotData,))
-    dis.daemon = False
-    dis.start()
+    #dis = mp.Process(target=display.main, args=(robotData,))
+    #dis.daemon = True
+    #dis.start()
     
+    robotData[label.STATUSLIGHT.value] = status.PION.value
+
     while True:
-
-        if robotData[label.RESET.value] == 1:
-            
-            otos.terminate()
-            auton.terminate()
-
-            otos.join()
-            auton.join() 
-
-            for i in range(len(robotData)):
-                if i == label.STATUSLIGHT.value:
-                    continue
-                robotData[i] = 0
-
-            otos = mp.Process(target=odom, args=(robotData,))
-            otos.daemon = True
-            otos.start()
-
-            auton = mp.Process(target=autonSelect, args=(robotData,))
-            auton.daemon = False
-            auton.start()
 
         time.sleep(0.01)

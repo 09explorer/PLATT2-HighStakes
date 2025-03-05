@@ -48,7 +48,6 @@ AutonConfig Robot::getAutonID()
 void Robot::runDriveControl()
 {
     driveControl.initDrivetrain();
-    robotID = NO_ROBOT;
     switch(robotID)
     {
         case NO_ROBOT:

@@ -49,8 +49,6 @@ void piCom::startPiCom(){
     int byteRead = 0;
     char buf[1];
 
-    reset = 1;
-
     while (true){
           
         //create string of data to be sent
@@ -58,7 +56,7 @@ void piCom::startPiCom(){
         //the entire write string is ended by a back slash 
 
         writeString = "";
-        addToWriteString("x", this->reset);
+        addToWriteString("x", this->run);
         addToWriteString("n", this->name);
         addToWriteString("u", this->auton);
         addToWriteString("a", this->alliance);
@@ -97,8 +95,6 @@ void piCom::startPiCom(){
         //has to be located at this point in the program in order to prevent missing incoming data strings       
         vex::this_thread::sleep_for(1);
 
-        reset = 0;
-
     }
 
 }
@@ -107,8 +103,8 @@ double piCom::getValue(dataLabel dataType){
 
     switch(dataType){
         
-        case RESET:{
-            return this->reset;
+        case RUN:{
+            return this->run;
             break;
         }
         case RIGHTVEL:{
@@ -161,8 +157,8 @@ void piCom::setValue(dataLabel dataType, double value){
 
     switch(dataType){
         
-        case RESET:{
-            this->reset = value;
+        case RUN:{
+            this->run = value;
             break;
         }
         case RIGHTVEL:{

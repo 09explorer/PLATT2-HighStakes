@@ -18,7 +18,7 @@ def timeout(robotData, duration):
     robotData[label.LEFTVEL.value] = 0
     robotData[label.RIGHTVEL.value] = 0
 
-def toPointMath(robotData, target, reverse, linVel):
+def toPointMath(robotData, target, reverse, linVel, lookAhead, kpTurn):
     
     offset = sqrt(((robotData[label.XPOS.value]-target[0])**2)+((robotData[label.YPOS.value]-target[1])**2))
     startOffset = offset
@@ -29,9 +29,9 @@ def toPointMath(robotData, target, reverse, linVel):
         scale = 1 
     
     turnError = 0
-    while offset>3:
+    while offset>lookAhead:
             
-        #linVel = 1.15*((atan((ramp)*(offset-1)))/(0.5*pi))*100
+        #linVel = 1.15*((atan((0.2)*(offset-1)))/(0.5*pi))*linVel
     
 
         if linVel > 100:
@@ -51,7 +51,7 @@ def toPointMath(robotData, target, reverse, linVel):
 
             turnError = -1 * copysign(1, turnError) * (360 - abs(turnError))
 
-        turnvel = turnError*0.5
+        turnvel = turnError*kpTurn
                     
         leftvel = scale*linVel - turnvel
         rightvel = scale*linVel + turnvel
@@ -84,9 +84,9 @@ def toPointMath(robotData, target, reverse, linVel):
     robotData[label.RIGHTVEL.value] = 0
 
 
-def toPoint(robotData, target, linVel, reverse = False, duration = 0, ):
+def toPoint(robotData, target, linVel = 55, reverse = False, duration = 0, lookAhead = 3, kpTurn = 0.5):
 
-    math = mp.Process(target=toPointMath, args=(robotData,target,reverse,linVel,))
+    math = mp.Process(target=toPointMath, args=(robotData,target,reverse,linVel,lookAhead, kpTurn))
     math.daemon = True
     math.start()
 
@@ -106,7 +106,7 @@ def toPoint(robotData, target, linVel, reverse = False, duration = 0, ):
 def toHeadingMath(robotData, target):
     
     turnError = 180
-    avg = [180] * 20
+    avg = [180] * 30
     
     while abs(turnError) > 1.5 or sum(avg)/len(avg) > 1.5:
 
@@ -116,10 +116,10 @@ def toHeadingMath(robotData, target):
 
             turnError = -1 * copysign(1, turnError) * (360 - abs(turnError))
 
-        turnVel = turnError*0.2
+        turnVel = turnError*0.5
         
-        robotData[label.LEFTVEL.value] =    turnVel
-        robotData[label.RIGHTVEL.value] =  -turnVel
+        robotData[label.LEFTVEL.value] =   -turnVel
+        robotData[label.RIGHTVEL.value] =  +turnVel
  
         avg.pop(0)
         avg.append(abs(turnError))

@@ -7,7 +7,7 @@
 /// @brief Enumerations for each section of data in the data link.
 enum dataLabel
 {
-    RESET = 0,
+    RUN = 0,
     RIGHTVEL = 1,
     LEFTVEL = 2,
     CLAMP = 3, 
@@ -39,7 +39,7 @@ enum nameLabel{
 class piCom { 
     private:
         /// @brief Reset flag.
-        double reset;
+        double run;
 
         /// @brief Right drivetrain velocity.
         double rightVel;

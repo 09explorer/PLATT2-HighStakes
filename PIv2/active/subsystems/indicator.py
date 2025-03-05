@@ -7,12 +7,13 @@ class status(Enum):
 
 
     OFF = 0
-    LINKWAIT = 1
-    LINKESTABLISH = 2
-    STANDBY = 3
+    DISCONNECTED = 1
+    PION = 2
+    CONNECTED = 3
     ERROR = 4
     RUNNING = 5
     FINNISHED = 6
+    STANDBY = 7
 
 def indicator(robotData):
     
@@ -28,14 +29,14 @@ def indicator(robotData):
             green.off()
             red.off()
         
-        if robotData[label.STATUSLIGHT.value] == status.LINKWAIT.value:
+        if robotData[label.STATUSLIGHT.value] == status.DISCONNECTED.value:
             
             if int((time.time()*2-startTime)) % 2 == 0:
                 red.on()
             else:
                 red.off()
         
-        if robotData[label.STATUSLIGHT.value] == status.LINKESTABLISH.value:
+        if robotData[label.STATUSLIGHT.value] == status.CONNECTED.value:
             
             if int((time.time()*2-startTime)) % 2 == 0:
                 green.on()
@@ -64,6 +65,15 @@ def indicator(robotData):
             
             green.on()
             red.on()
+
+        if robotData[label.STATUSLIGHT.value] == status.PION.value:
+            
+            if int((time.time()*10-startTime)) % 2 == 0:
+                red.on()
+                green.on()
+            else:
+                red.off()
+                green.off()
 
 
         

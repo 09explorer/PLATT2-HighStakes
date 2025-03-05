@@ -10,6 +10,11 @@ ps aux | grep plattCode | grep -v grep
 command to kill running project:
 sudo pkill -9 plattCode
 
+PI on Brain off --> PION
+Brain and pi comunicating --> CONNECTED
+name/profile recived --> STANDBY
+running --> RUNNING
+
 
 needed pip moduals to install on both PIs
 

@@ -1,15 +1,12 @@
 import time
 import qwiic_otos # type: ignore
 from subsystems.label import label
+from subsystems.indicator import status
 
 def odom(robotData):
     
     while robotData[label.ALLIANCE.value] == 0:
         time.sleep(0.001)
-
-
-
-
 
     odom = qwiic_otos.QwiicOTOS()
     odom.begin()
@@ -20,14 +17,14 @@ def odom(robotData):
     if robotData[label.ALLIANCE.value] == 1:
         if robotData[label.NAME.value] == 2:
             offset = qwiic_otos.Pose2D(0, 0, 180)
-            #startingPosition = qwiic_otos.Pose2D(0, 0, 0)
-            startingPosition = qwiic_otos.Pose2D(93, 22, 240)
-    
-    
+            startingPosition = qwiic_otos.Pose2D(0, 0, 0)
+            startingPosition = qwiic_otos.Pose2D(93, 22, 249)
+     
     odom.resetTracking()
-    
     odom.setOffset(offset)
     odom.setPosition(startingPosition)
+
+    robotData[label.STATUSLIGHT.value] = status.STANDBY.value
 
     while True:
 
@@ -42,5 +39,4 @@ def odom(robotData):
         
         robotData[label.XPOS.value]    =  cPos.x          
         robotData[label.YPOS.value]    =  cPos.y   
-        robotData[label.ODOMREADY.value] = 1
-        time.sleep(0.005)
+        time.sleep(0.001)

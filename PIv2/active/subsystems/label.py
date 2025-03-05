@@ -3,7 +3,7 @@ from enum import Enum
 
 class label(Enum):
     
-    RESET           = 0
+    RUN             = 0
     
     ALLIANCE        = 1
     NAME            = 2
@@ -28,4 +28,3 @@ class label(Enum):
     INTAKEPISTON    = 18
 
     STATUSLIGHT     = 19
-    ODOMREADY       = 20

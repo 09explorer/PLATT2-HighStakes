@@ -3,6 +3,9 @@ import serial
 from subsystems.label import label
 from subsystems.indicator import status
 
+readPort  = 0
+writePort = 0
+
 def getSubString(rawRead, prefix):
     
     index = rawRead.find(prefix)
@@ -10,16 +13,17 @@ def getSubString(rawRead, prefix):
 
     return float(rawRead[index+1:endIndex])
 
+
 def addToWriteString(writeString, prefix, data):
 
     newString = writeString + prefix + str(data) + ';'
 
     return newString
 
-def piCom(robotData):
 
-    robotData[label.STATUSLIGHT.value] = status.LINKWAIT.value
-    iteration = 0
+def connect(robotData):
+   
+
     while True:
         try:
             readName = '/dev/ttyACM0'
@@ -28,42 +32,67 @@ def piCom(robotData):
             readPort  = serial.Serial(readName, timeout=0)
             writePort = serial.Serial(writeName, timeout=0)
 
+            robotData[label.STATUSLIGHT.value] = status.CONNECTED.value
+
+            print("connected", flush=True)
+
         except:
-            time.sleep(1)
-            if iteration == 0:
-                print("link fail: waiting for link", flush=True)
-            robotData[label.STATUSLIGHT.value] = status.LINKWAIT.value
-            iteration = 1
+            time.sleep(0.05)
+            robotData[label.STATUSLIGHT.value] = status.DISCONNECTED.value
         
         else:
+            return readPort, writePort
+            
+        
+def recvData(robotData):
+    
+    global readPort
+    global writePort
 
-            break
+    rawRead = ''
+    while True:
+        try:
+            if readPort.in_waiting:
+                rawRead = rawRead + readPort.readall().decode()
+           
+                if '/' in rawRead:
+                    return rawRead
+        except:
+            _ = connect(robotData) 
+            readPort  = _[0]
+            writePort = _[1]
+            return recvData(robotData)
+        
+        
+def writeData(robotData, writeString):
 
-    robotData[label.STATUSLIGHT.value] = status.LINKESTABLISH.value
-    iteration = 1
+    global readPort
+    global writePort
+
+    try:
+        writePort.write(writeString.encode())
+    
+    except:
+        _ = connect(robotData) 
+        readPort  = _[0]
+        writePort = _[1]
+        writeData(robotData, writeString)
+
+            
+def piCom(robotData):
+    
+    global readPort
+    global writePort
+
+    _ = connect(robotData) 
+    readPort  = _[0]
+    writePort = _[1]
 
     while True:
         
-        rawRead = ''
-
-        while True:
-            
-            if iteration == 1:
-                robotData[label.STATUSLIGHT.value] = status.LINKESTABLISH.value
-            try:
-                if readPort.in_waiting:
-                    rawRead = rawRead + readPort.readall().decode()
-               
-                    if '/' in rawRead:
-                        break
-            except:
-                del readPort
-                readPort  = serial.Serial(readName, timeout=0)
-                break
-
-
-                    
-        robotData[label.RESET.value]    = getSubString(rawRead, 'x')
+        rawRead = recvData(robotData)
+       
+        robotData[label.RUN.value]      = getSubString(rawRead, 'x')
         robotData[label.NAME.value]     = getSubString(rawRead, 'n')
         robotData[label.AUTON.value]    = getSubString(rawRead, 'u')
         robotData[label.ALLIANCE.value] = getSubString(rawRead, 'a')
@@ -80,19 +109,12 @@ def piCom(robotData):
         writeString = writeString + '/'
 
         time.sleep(0.001)
-        while True:
-            try:
-                writePort.write(writeString.encode())
 
-            except:
-                del writePort
-                writePort = serial.Serial(writeName, timeout=0)
+        writeData(robotData, writeString)
 
-            else:
-                break
+           
 
 
-        iteration = 2
 
 
 

@@ -13,11 +13,10 @@ import autons.red.purple.skills.start
 
 
 def autonSelect(robotData):
-    time.sleep(0.5)
 
-    robotData[label.STATUSLIGHT.value] = status.STANDBY.value
+    while robotData[label.RUN.value] == 0: 
 
-    while robotData[label.ODOMREADY.value] == 0: 
+        #print(robotData[label.RUN.value], flush=True)
         
         time.sleep(0.001)
     
