@@ -80,8 +80,6 @@ def toPointMath(robotData, target, reverse, linVel, lookAhead, kpTurn):
 
         time.sleep(0.005)
 
-    robotData[label.LEFTVEL.value]  = 0
-    robotData[label.RIGHTVEL.value] = 0
 
 
 def toPoint(robotData, target, linVel = 55, reverse = False, duration = 0, lookAhead = 3, kpTurn = 0.5):
@@ -102,8 +100,9 @@ def toPoint(robotData, target, linVel = 55, reverse = False, duration = 0, lookA
     
     if timeOut.is_alive():
         timeOut.terminate()
+    
 
-def toHeadingMath(robotData, target):
+def toHeadingMath(robotData, target, kplin):
     
     turnError = 180
     avg = [180] * 30
@@ -116,7 +115,7 @@ def toHeadingMath(robotData, target):
 
             turnError = -1 * copysign(1, turnError) * (360 - abs(turnError))
 
-        turnVel = turnError*0.5
+        turnVel = turnError*kplin
         
         robotData[label.LEFTVEL.value] =   -turnVel
         robotData[label.RIGHTVEL.value] =  +turnVel
@@ -131,9 +130,9 @@ def toHeadingMath(robotData, target):
 
 
 
-def toHeading(robotData, target, duration = 0):
+def toHeading(robotData, target, duration = 0, kplin=0.5):
 
-    math = mp.Process(target=toHeadingMath, args=(robotData,target))
+    math = mp.Process(target=toHeadingMath, args=(robotData,target, kplin))
     math.daemon = True
     math.start()
 
@@ -149,6 +148,9 @@ def toHeading(robotData, target, duration = 0):
     
     if timeOut.is_alive():
         timeOut.terminate()
+
+    robotData [label.LEFTVEL.value] = 0
+    robotData [label.RIGHTVEL.value] = 0
 
 
 

@@ -7,7 +7,6 @@ from subsystems.odom import odom
 from subsystems.indicator import indicator
 from subsystems.indicator import status
 from subsystems.autonSelector import autonSelect
-from subsystems import display
 
 if __name__ == "__main__":
 
@@ -32,10 +31,6 @@ if __name__ == "__main__":
     auton = mp.Process(target=autonSelect, args=(robotData,))
     auton.daemon = False
     auton.start()
-
-    #dis = mp.Process(target=display.main, args=(robotData,))
-    #dis.daemon = True
-    #dis.start()
     
     robotData[label.STATUSLIGHT.value] = status.PION.value
 

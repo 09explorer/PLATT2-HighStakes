@@ -28,3 +28,15 @@ class label(Enum):
     INTAKEPISTON    = 18
 
     STATUSLIGHT     = 19
+
+class position(Enum):
+
+    SCORE = 1
+    HOME = 2
+    LOAD = 3
+    SCORE2 = 4
+    SCORELOW = 5
+    SCORELOW2 = 6
+    HANGLOCK = 7
+    CORNER = 8
+    STOW = 9

@@ -17,8 +17,15 @@ def odom(robotData):
     if robotData[label.ALLIANCE.value] == 1:
         if robotData[label.NAME.value] == 2:
             offset = qwiic_otos.Pose2D(0, 0, 180)
-            startingPosition = qwiic_otos.Pose2D(0, 0, 0)
+            #startingPosition = qwiic_otos.Pose2D(0, 0, 0)
             startingPosition = qwiic_otos.Pose2D(93, 22, 249)
+        else:
+            offset = qwiic_otos.Pose2D(0, 0, 180)
+            #startingPosition = qwiic_otos.Pose2D(0, 0, 0)
+            startingPosition = qwiic_otos.Pose2D(39, 25.5, 270)
+            
+
+    
      
     odom.resetTracking()
     odom.setOffset(offset)

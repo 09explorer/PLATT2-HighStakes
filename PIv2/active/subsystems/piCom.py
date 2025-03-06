@@ -37,7 +37,7 @@ def connect(robotData):
             print("connected", flush=True)
 
         except:
-            time.sleep(0.05)
+            time.sleep(0.1)
             robotData[label.STATUSLIGHT.value] = status.DISCONNECTED.value
         
         else:
