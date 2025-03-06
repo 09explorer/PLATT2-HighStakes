@@ -25,7 +25,7 @@ class wallStakeController
 {
 private:
     /// @brief Ready position encoder location for stage 1 load.
-    const double STAGE_1_LOAD = -0.73;
+    const double STAGE_1_LOAD = -0.79;
     
     /// @brief Ready position encoder location for stage 2 load.
     const double STAGE_2_LOAD = -0.2;
@@ -37,25 +37,25 @@ private:
     const double STAGE_2_HOME = 0;
 
     /// @brief Ready position encoder location for stage 1 score.
-    const double STAGE_1_SCORE = -4.51;
+    const double STAGE_1_SCORE = -2.51;
     
     /// @brief Ready position encoder location for stage 2 score.
     const double STAGE_2_SCORE = -1.53;
 
     /// @brief Ready position encoder location for stage 1 score2.
-    const double STAGE_1_SCORE2 = -4.51;
+    const double STAGE_1_SCORE2 = -2.51;
     
     /// @brief Ready position encoder location for stage 2 score2.
     const double STAGE_2_SCORE2 = -2.1;
 
     /// @brief Ready position encoder location for stage 1 score low.
-    const double STAGE_1_SCORELOW = -6.7;
+    const double STAGE_1_SCORELOW = -4.35;
     
     /// @brief Ready position encoder location for stage 2 score low.
     const double STAGE_2_SCORELOW = -1.16;
 
     /// @brief Ready position encoder location for stage 1 score low2.
-    const double STAGE_1_SCORELOW2 = -7;
+    const double STAGE_1_SCORELOW2 = -4.5;
     
     /// @brief Ready position encoder location for stage 2 score low2.
     const double STAGE_2_SCORELOW2 = -1.42;

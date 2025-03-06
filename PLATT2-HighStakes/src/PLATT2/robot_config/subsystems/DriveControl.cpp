@@ -20,7 +20,6 @@ intake(vex::PORT15, vex::gearSetting::ratio6_1, false),
 intakePiston{ThreeWirePort.B},
 wallStake{w}
 {
-
 }
 
 
@@ -79,128 +78,118 @@ void DriveControl::initDrivetrain(){
 
   currentProfile = defaultProfile;
 */
-void DriveControl::TestControl(){
-    bool mogoOldState = true;
-    bool mogoNewState = true;
-    bool mogoCurrentState = false;
-    bool intakeCurrentState = false;
-    bool intakeOldState = true;
-    bool intakeNewState = true;
-    bool ROldState;
-	  bool RNewState;
-    bool rightWingPos = false;
-    bool wasButtonPressed = false;
-    bool oldPress1 = false;
-    bool oldPress2 = false;
-
-    int leftDrivePower = 0;
-    int rightDrivePower = 0;
-    wallStake.setPosition(SCORE);
-    Brain.Screen.clearScreen();
-    while(true){
-      int foo = wallStake.getPosition();
-      Brain.Screen.setCursor(5,1);
-       Brain.Screen.print("current wall steak: %d", foo);
-      // Drive velocities
+void DriveControl::TestControl() {
+  // State variables
+  bool mogoPreviousState = true;
+  bool mogoNewState;
+  bool mogoCurrentState = false;
+  bool intakePreviousState = true;
+  bool intakeCurrentState = false;
+  bool intakeNewState;
+  bool hookPreviousState = false;
+  bool hookCurrentState = false;
+  bool rightHookEngaged = false;
+  bool buttonPreviouslyPressed = false;
+  bool xButtonPreviouslyPressed = false;
+  bool yButtonPreviouslyPressed = false;
+  bool ringSortButtonPreviouslyPressed = false;
 
 
-      leftDrivePower = (controller1.Axis3.position(vex::percent) + controller1.Axis1.position(vex::percent));
-      rightDrivePower = (controller1.Axis3.position(vex::percent) - controller1.Axis1.position(vex::percent));
+  // Drive power variables
+  int leftDrivePower = 0;
+  int rightDrivePower = 0;
+  
+  wallStake.setPosition(SCORE);
+  Brain.Screen.clearScreen();
+  
+  while (true) {
+      int wallStakePosition = wallStake.getPosition();
+      Brain.Screen.setCursor(5, 1);
+      Brain.Screen.print("Current wall stake: %d", wallStakePosition);
+
+      // Drive control
+      leftDrivePower = controller1.Axis3.position(vex::percent) + controller1.Axis1.position(vex::percent);
+      rightDrivePower = controller1.Axis3.position(vex::percent) - controller1.Axis1.position(vex::percent);
 
       leftDrive.setVelocity(leftDrivePower, vex::percent);
       rightDrive.setVelocity(rightDrivePower, vex::percent);
 
       // Mogo toggle
-      mogoNewState = controller1.ButtonL2.pressing();
-      helper.solenoidToggle(mogoCurrentState, mogoNewState, mogoOldState, mogo);
+      mogoCurrentState = controller1.ButtonL2.pressing();
+      helper.solenoidToggle(mogoPreviousState, mogoCurrentState, mogoNewState, mogo);
 
       // Intake toggle
-      intakeNewState = controller1.ButtonLeft.pressing();
-      helper.solenoidToggle(intakeOldState,intakeNewState,intakeCurrentState, intakePiston);
+      intakeCurrentState = controller1.ButtonLeft.pressing();
+      helper.solenoidToggle(intakePreviousState, intakeCurrentState, intakeNewState, intakePiston);
 
       // Hook toggle
-      RNewState = controller1.ButtonR1.pressing();
-      
-		if ( RNewState == true and ROldState == false) {
-			
-			rightWingPos = !rightWingPos;
-		
-			ROldState = true;
-			
-			if (rightWingPos == false){
-				ringSort.moveHooks(90);
-				rightWingPos = false;
-				
-			}
-			else{
-				ringSort.moveHooks(0);
-				rightWingPos = true;
-		
-			}
-		   
-		}
-		ROldState = RNewState;
+      hookCurrentState = controller1.ButtonR1.pressing();
+      if (hookCurrentState && !hookPreviousState) {
+          rightHookEngaged = !rightHookEngaged;
+          
+          if (rightHookEngaged) {
+              ringSort.moveHooks(0);
+          } else {
+              ringSort.moveHooks(90);
+          }
+      }
+      hookPreviousState = hookCurrentState;
 
-    // wall steak
-      double wallpos = wallStake.getMotor1Position();
-      double wall2pos = wallStake.getMotor3Position();
-      Brain.Screen.setCursor(1,1);
-      Brain.Screen.print("Wall pos: %f", wallpos);
-      Brain.Screen.setCursor(2,1);
-      Brain.Screen.print("2nd Wall pos: %f", wall2pos);
+      // Wall stake positions
+      double primaryWallPosition = wallStake.getMotor1Position();
+      double secondaryWallPosition = wallStake.getMotor3Position();
+      Brain.Screen.setCursor(1, 1);
+      Brain.Screen.print("Wall pos: %f", primaryWallPosition);
+      Brain.Screen.setCursor(2, 1);
+      Brain.Screen.print("2nd Wall pos: %f", secondaryWallPosition);
 
-    // Intake Control
-    if (controller1.ButtonR2.pressing())
-    {
-      intake.setVelocity(100, vex::pct);
-    }
-    else
-    {
-      intake.setVelocity(0, vex::pct);
-    }
+      // Intake control
+      if (controller1.ButtonR2.pressing()) {
+          intake.setVelocity(100, vex::pct);
+      } else {
+          intake.setVelocity(0, vex::pct);
+      }
 
+      // Button press detection for wall stake increment
+      bool isButtonCurrentlyPressed = controller1.ButtonDown.pressing();
+      if (isButtonCurrentlyPressed && !buttonPreviouslyPressed) {
+          wallStake.incrementPosHigh();
+      }
+      buttonPreviouslyPressed = isButtonCurrentlyPressed;
 
-            // Check the current state of the button
-        bool isButtonPressed = controller1.ButtonDown.pressing();
+      // X Button - High Position Increment
+      if (controller1.ButtonX.pressing()) {
+          if (!xButtonPreviouslyPressed) {
+              wallStake.incrementPosHigh();
+          }
+          xButtonPreviouslyPressed = true;
+      } else {
+          xButtonPreviouslyPressed = false;
+      }
 
-        // Detect a new press (button transitioning from not pressed to pressed)
-        if (isButtonPressed && !wasButtonPressed) {
-           //ringSort.incrementColor();
-           wallStake.incrementPosHigh();
+      // Y Button - Low Position Increment
+      if (controller1.ButtonY.pressing()) {
+          if (!yButtonPreviouslyPressed) {
+              wallStake.incrementPosLow();
+          }
+          yButtonPreviouslyPressed = true;
+      } else {
+          yButtonPreviouslyPressed = false;
+      }
+
+      if (controller1.ButtonRight.pressing()) {
+        if (!ringSortButtonPreviouslyPressed) {
+            wallStake.incrementPosLow();
         }
-
-        // Update the state for the next iteration
-        wasButtonPressed = isButtonPressed;
-
-    if(controller1.ButtonX.pressing())
-    {
-      if (oldPress1 == false){
-      wallStake.incrementPosHigh();
-
-      }
-      oldPress1 = true;
-    }else{
-
-      oldPress1 = false;
-
+        ringSortButtonPreviouslyPressed = true;
+    } else {
+        ringSortButtonPreviouslyPressed = false;
     }
 
-    if(controller1.ButtonY.pressing())
-    {
-      if (oldPress2 == false){
-      wallStake.incrementPosLow();
-
-      }
-      oldPress2 = true;
-    }else{
-
-      oldPress2 = false;
-    }
-
-   vex::this_thread::sleep_for(20); // Sleep the task for a short amount of time
-
+      vex::this_thread::sleep_for(20); // Small delay to prevent CPU overuse
   }
 }
+
 
 void DriveControl::PinkDriveControl()
 {

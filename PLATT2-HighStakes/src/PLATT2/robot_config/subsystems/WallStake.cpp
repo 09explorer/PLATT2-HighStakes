@@ -46,10 +46,15 @@ void wallStakeController::moveToPosition(){
             switch ((Position)position){
 
                 case SCORE:{ 
-                   
+                    if(oldPosition == STOW){
+                        wallStake1.spinToPosition(STAGE_1_SCORE, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
+                        vex::this_thread::sleep_for(300);
+                        wallStake3.spinToPosition(STAGE_2_SCORE, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);        
+                    }
+                    else{
                     wallStake3.spinToPosition(STAGE_2_SCORE, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
                     wallStake1.spinToPosition(STAGE_1_SCORE, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
-                    
+                }
                     break;
                 }
                 case HOME:{
