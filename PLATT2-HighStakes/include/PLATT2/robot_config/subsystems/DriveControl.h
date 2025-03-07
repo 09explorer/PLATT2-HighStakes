@@ -88,7 +88,12 @@ class DriveControl
 
     /// @brief Reference to the wall stake controller object.
     wallStakeController& wallStake;
+
+    vex::digital_out hangHooks;
     
+    /// @brief Current ring being sorted.
+    RingColor currentRing;
+
     public:
     /// @brief Constructs the DriveControl class.
     /// @param picom Reference to the Pi communication object.

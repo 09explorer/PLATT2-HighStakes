@@ -47,6 +47,7 @@ AutonConfig Robot::getAutonID()
 
 void Robot::runDriveControl()
 {
+    buildRobotConfig();
     driveControl.initDrivetrain();
     switch(robotID)
     {
@@ -64,6 +65,7 @@ void Robot::runDriveControl()
         }
     }
 }
+
 void Robot::runAutonControl(){
     // run auto
     driveControl.autonControl();
@@ -92,5 +94,8 @@ void Robot::initalizeRobot(){
 }
 
 void Robot::buildRobotConfig(){
-
+    std::vector<int> configs = menu.getSelectedValues();
+    autonID = (AutonConfig)configs[0];
+    allianceID = (AllianceConfig)configs[1];
+    robotID = (RobotConfig)configs[2];
 }
