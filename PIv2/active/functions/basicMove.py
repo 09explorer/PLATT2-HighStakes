@@ -101,6 +101,11 @@ def toPoint(robotData, target, linVel = 55, reverse = False, duration = 0, lookA
     if timeOut.is_alive():
         timeOut.terminate()
     
+    robotData [label.LEFTVEL.value] = 0
+    robotData [label.RIGHTVEL.value] = 0
+
+    
+    
 
 def toHeadingMath(robotData, target, kplin):
     

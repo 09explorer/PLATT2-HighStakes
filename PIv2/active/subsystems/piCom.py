@@ -25,23 +25,23 @@ def connect(robotData):
    
 
     while True:
-        try:
-            readName = '/dev/ttyACM0'
-            writeName = '/dev/ttyACM1'
+        #try:
+        readName = '/dev/ttyACM0'
+        writeName = '/dev/ttyACM1'
 
-            readPort  = serial.Serial(readName, timeout=0)
-            writePort = serial.Serial(writeName, timeout=0)
+        readPort  = serial.Serial(readName, timeout=0)
+        writePort = serial.Serial(writeName, timeout=0)
 
-            robotData[label.STATUSLIGHT.value] = status.CONNECTED.value
+        robotData[label.STATUSLIGHT.value] = status.CONNECTED.value
+        print("connected", flush=True)
 
-            print("connected", flush=True)
-
-        except:
-            time.sleep(0.1)
-            robotData[label.STATUSLIGHT.value] = status.DISCONNECTED.value
+        #except:
+        #    robotData[label.STATUSLIGHT.value] = status.DISCONNECTED.value
+        #    time.sleep(0.1)
+            
         
-        else:
-            return readPort, writePort
+        #else:
+        return readPort, writePort
             
         
 def recvData(robotData):
@@ -51,17 +51,17 @@ def recvData(robotData):
 
     rawRead = ''
     while True:
-        try:
-            if readPort.in_waiting:
-                rawRead = rawRead + readPort.readall().decode()
-           
-                if '/' in rawRead:
-                    return rawRead
-        except:
-            _ = connect(robotData) 
-            readPort  = _[0]
-            writePort = _[1]
-            return recvData(robotData)
+        #try:
+        if readPort.in_waiting:
+            rawRead = rawRead + readPort.readall().decode()
+        
+            if '/' in rawRead:
+                return rawRead
+        #except:
+        #    _ = connect(robotData) 
+        #    readPort  = _[0]
+        #    writePort = _[1]
+        #    return recvData(robotData)
         
         
 def writeData(robotData, writeString):
@@ -69,15 +69,15 @@ def writeData(robotData, writeString):
     global readPort
     global writePort
 
-    try:
-        writePort.write(writeString.encode())
+    #try:
+    writePort.write(writeString.encode())
     
-    except:
-        _ = connect(robotData) 
-        readPort  = _[0]
-        writePort = _[1]
-        writeData(robotData, writeString)
-
+    #except:
+    #    _ = connect(robotData) 
+    #    readPort  = _[0]
+    #    writePort = _[1]
+    #    writeData(robotData, writeString)
+#
             
 def piCom(robotData):
     

@@ -57,6 +57,8 @@ def goalRush(robotData):
 
     basicMove.toPoint(robotData, (127.5, 64.5), linVel=30)
 
+    robotData[label.INTAKEPISTON.value] = 0
+
     basicMove.toPoint(robotData, (130, 12), reverse=True)
    
     basicMove.toHeading(robotData, 300)
