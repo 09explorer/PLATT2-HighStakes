@@ -126,3 +126,8 @@ void RingSort::setRing(RingColor desiredColor)
 void RingSort::moveHooks(double velocity){
     hook1.setVelocity(velocity, vex::percent);
 }
+
+RingColor RingSort::getRing()
+{
+    return desiredRing;
+}

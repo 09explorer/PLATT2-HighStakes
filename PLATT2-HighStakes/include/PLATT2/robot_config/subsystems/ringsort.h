@@ -102,6 +102,9 @@ class RingSort
     /// @param desiredColor The desired ring color.
     void setRing(RingColor desiredColor);
 
+    /// @brief Gets the current sorted ring.
+    RingColor getRing();
+
     /// @brief The desired ring color to sort.
     RingColor desiredRing;
 };

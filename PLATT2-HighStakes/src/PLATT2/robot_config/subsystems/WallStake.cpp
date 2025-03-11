@@ -36,7 +36,7 @@ void wallStakeController::moveToPosition(){
     wallStake1.spin(vex::forward, 0, vex::rpm);
 
 
-    double moveVelocity = 75; // initial value
+    double moveVelocity = 65; // initial value
     
     while(true){
         
@@ -68,7 +68,7 @@ void wallStakeController::moveToPosition(){
                 case LOAD:{
                     
                     wallStake3.spinToPosition(STAGE_2_LOAD, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, true);
-                    wallStake1.spinToPosition(STAGE_1_LOAD, vex::rotationUnits::rev, moveVelocity/2, vex::velocityUnits::pct, false);
+                    wallStake1.spinToPosition(STAGE_1_LOAD, vex::rotationUnits::rev, moveVelocity, vex::velocityUnits::pct, false);
 
                     break;
                 }
@@ -261,4 +261,27 @@ void wallStakeController::stopFirstStage()
 void wallStakeController::stopSecondStage()
 {
     wallStake3.stop();
-}   
+}
+
+void wallStakeController::resetPosition()
+{
+    const double zeroSpeed = 50;
+    // Zero 1st Stage
+    wallStake1.setVelocity(zeroSpeed, vex::pct);
+    while(wallStake1.velocity(vex::velocityUnits::rpm) !=0){
+        vex::this_thread::sleep_for(10);
+    }
+    wallStake1.stop();
+    wallStake1.setPosition(STAGE_1_HARDSTOP, vex::rotationUnits::rev);
+
+    // Zero 2nd Stage
+    wallStake3.setVelocity(-zeroSpeed, vex::pct);
+    while(wallStake3.velocity(vex::velocityUnits::rpm) !=0){
+        vex::this_thread::sleep_for(10);
+    }
+    wallStake3.stop();
+    wallStake3.resetPosition();
+
+    // Set position to second score postion
+    setPosition(SCORE2);
+}

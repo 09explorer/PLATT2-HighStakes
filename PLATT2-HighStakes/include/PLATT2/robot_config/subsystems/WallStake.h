@@ -25,10 +25,10 @@ class wallStakeController
 {
 private:
     /// @brief Ready position encoder location for stage 1 load.
-    const double STAGE_1_LOAD = -0.79;
+    const double STAGE_1_LOAD = -0.96;
     
     /// @brief Ready position encoder location for stage 2 load.
-    const double STAGE_2_LOAD = -0.2;
+    const double STAGE_2_LOAD = -0.23;
 
     /// @brief Ready position encoder location for stage 1 home.
     const double STAGE_1_HOME = 0;
@@ -37,13 +37,13 @@ private:
     const double STAGE_2_HOME = 0;
 
     /// @brief Ready position encoder location for stage 1 score.
-    const double STAGE_1_SCORE = -2.51;
+    const double STAGE_1_SCORE = -2.8;
     
     /// @brief Ready position encoder location for stage 2 score.
     const double STAGE_2_SCORE = -1.53;
 
     /// @brief Ready position encoder location for stage 1 score2.
-    const double STAGE_1_SCORE2 = -2.51;
+    const double STAGE_1_SCORE2 = -2.8;
     
     /// @brief Ready position encoder location for stage 2 score2.
     const double STAGE_2_SCORE2 = -2.1;
@@ -77,6 +77,8 @@ private:
     
     /// @brief Ready position encoder location for stage 2 stow.
     const double STAGE_2_STOW = 0;
+
+    const double STAGE_1_HARDSTOP = 1.828;
 
     /// @brief Motor for wall stake 1.
     vex::motor wallStake1;
@@ -131,6 +133,9 @@ public:
     void stopSecondStage();
     /// @brief Moves the second stage of the wall stake.
     void moveSecondStage(double velocity);
+
+    /// @brief Resets the postion of the wall stake.
+    void resetPosition();
 };
 
 #endif
