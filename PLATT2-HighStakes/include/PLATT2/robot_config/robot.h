@@ -9,6 +9,7 @@
 #include "PLATT2\robot_config\subsystems\piCom.h"
 #include "PLATT2\robot_config\subsystems\WallStake.h"
 #include "PLATT2\robot_config\Autonselector.h"
+#include "PLATT2\robot_config\subsystems\odometry.h"
 
 /**
  * @brief Enumeration to represent the 2 different robot configurations with a default option.
@@ -101,6 +102,8 @@ class Robot
      * @brief The brain menu object.
      */
     AutonSelector menu;
+
+    Odometry odom;
     
     public:
     
@@ -164,7 +167,7 @@ class Robot
      * @brief Gets the Pi communication object.
      * @return Reference to the Pi communication object.
      */
-    piCom& getPi();
+    Odometry& getOdom();
 
     /**
      * @brief Gets the wall stake controller object.

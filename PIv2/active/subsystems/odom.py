@@ -23,7 +23,15 @@ def odom(robotData):
             offset = qwiic_otos.Pose2D(0, 0, 180)
             #startingPosition = qwiic_otos.Pose2D(0, 0, 0)
             startingPosition = qwiic_otos.Pose2D(39, 25.5, 270)
-            
+    else:
+        if robotData[label.NAME.value] == 2:
+            offset = qwiic_otos.Pose2D(0, 0, 180)
+            #startingPosition = qwiic_otos.Pose2D(0, 0, 0)
+            startingPosition = qwiic_otos.Pose2D(93, 22, 249)
+        else:
+            offset = qwiic_otos.Pose2D(0, 0, 180)
+            #startingPosition = qwiic_otos.Pose2D(0, 0, 0)
+            startingPosition = qwiic_otos.Pose2D(39, 25.5, 270)
 
     
      

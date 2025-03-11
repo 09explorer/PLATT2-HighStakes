@@ -69,8 +69,6 @@ class DriveControl
     RingSort& ringSort;
 
     /// @brief Reference to the Pi communication object.
-    piCom& pi;
-
     /// @brief Controller object.
     vex::controller controller1 = vex::controller(vex::primary);
 
@@ -95,7 +93,7 @@ class DriveControl
     /// @param ring Reference to the ring sort subsystem.
     /// @param w Reference to the wall stake controller object.
     /// @param b Reference to the brain object.
-    DriveControl(piCom& picom, RingSort& ring, wallStakeController& w, vex::brain& b);
+    DriveControl(RingSort& ring, wallStakeController& w, vex::brain& b);
 
     /// @brief Controls the drive system for the pink robot configuration.
     void PinkDriveControl();

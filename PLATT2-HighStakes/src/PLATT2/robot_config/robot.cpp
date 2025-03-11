@@ -3,10 +3,9 @@
 Robot::Robot(vex::competition& comp):
 m_Competition{comp},
 brain(),
-pi(),
 wallstakeControl(),
 ringSort(brain),
-driveControl(pi, ringSort, wallstakeControl, brain),
+driveControl(ringSort, wallstakeControl, brain),
 menu(brain, m_Competition, pi)
 {
     // Set default config
@@ -67,10 +66,6 @@ void Robot::runDriveControl()
 void Robot::runAutonControl(){
     // run auto
     driveControl.autonControl();
-}
-
-piCom& Robot::getPi(){
-    return pi;
 }
 
 wallStakeController& Robot::getWall(){

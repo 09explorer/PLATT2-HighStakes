@@ -18,7 +18,7 @@ def start(robotData):
     
     basicMove.toHeading(robotData, 220)
 
-    basicMove.toPoint(robotData, (68,63), reverse=True, lookAhead=9)
+    basicMove.toPoint(robotData, (68,63), reverse=True, lookAhead=10)
     
     robotData[label.LEFTVEL.value] = 0
     robotData[label.RIGHTVEL.value] = 0

@@ -7,7 +7,7 @@ from subsystems.label import position
 def goalRush(robotData):
     
     robotData[label.WALLSTAKE.value] = position.LOAD.value
-    robotData[label.COLORSORT.value] = 2
+    robotData[label.COLORSORT.value] = 1
     
     
     basicMove.toPoint(robotData, (115,60), reverse=True,linVel=100, lookAhead=6, kpTurn=1, duration=1.5)

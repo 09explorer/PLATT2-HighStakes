@@ -17,7 +17,6 @@ using namespace vex;
 // A global instance of competition
 competition Competition;
 Robot robot(Competition);
-piCom& pi = robot.getPi();
 wallStakeController& wallstakeControl = robot.getWall();
 RingSort& ringSort = robot.getRings();
 AutonSelector& menu = robot.getMenu();
@@ -34,8 +33,8 @@ AutonSelector& menu = robot.getMenu();
 
 void pre_auton(void) {
   //picom 
-  auto comRun = [](void) {pi.startPiCom();};
-  thread comThread = thread(comRun);
+  auto odomRun = [](void) {odom.trackingAlg();};
+  thread odomThread = thread(odomRun);
 
   robot.initalizeRobot();
 
@@ -49,7 +48,7 @@ void pre_auton(void) {
 
   //ring sort
   auto menuRun = [](void) {menu.buttonListener();};
-thread menuThread = thread(menuRun);
+  thread menuThread = thread(menuRun);
 
 
 }
@@ -68,7 +67,6 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ...........................................................................
-  pi.setValue(RUN, 1);
   robot.runAutonControl();
 }
 

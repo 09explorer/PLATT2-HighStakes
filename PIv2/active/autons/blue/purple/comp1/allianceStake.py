@@ -1,0 +1,5 @@
+
+
+def allianceStake(robotData):
+
+    pass

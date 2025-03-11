@@ -1,7 +1,7 @@
 #include "PLATT2\robot_config\subsystems\DriveControl.h"
 //#include "vex.h"
 
-DriveControl::DriveControl(piCom& picom, RingSort& ring, wallStakeController& w, vex::brain& b):
+DriveControl::DriveControl(RingSort& ring, wallStakeController& w, vex::brain& b):
 Brain{b},
 leftDrive1(vex::PORT2, vex::gearSetting::ratio6_1, false),
 leftDrive2(vex::PORT1, vex::gearSetting::ratio6_1, true),
@@ -14,7 +14,6 @@ rightDrive4(vex::PORT14, vex::gearSetting::ratio6_1, true),
 leftDrive(leftDrive1, leftDrive2, leftDrive3, leftDrive4),
 rightDrive(rightDrive1, rightDrive2, rightDrive3, rightDrive4),
 ringSort{ring},
-pi{picom},
 mogo{ThreeWirePort.A},
 intake(vex::PORT15, vex::gearSetting::ratio6_1, false), 
 intakePiston{ThreeWirePort.B},
@@ -207,30 +206,5 @@ void DriveControl::defaultControl(){
 
 void DriveControl::autonControl(){
   
-  leftDrive.setStopping(vex::brake);
-  rightDrive.setStopping(vex::brake);
 
-  leftDrive.spin(vex::forward, 0, vex::rpm);
-  rightDrive.spin(vex::forward, 0, vex::rpm);
-
-  intake.spin(vex::forward, 0, vex::rpm);
-  hooks.spin(vex::forward, 0, vex::rpm);
-
-  while (true){
-        
-    mogo.set((int)pi.getValue(CLAMP));
-    intakePiston.set((int)pi.getValue(INTAKEPISTON));
-    intake.setVelocity(pi.getValue(INTAKE), vex::percent);
-    ringSort.setRing((RingColor)pi.getValue(COLORSORT));
-    wallStake.setPosition((Position)pi.getValue(WALLSTAKE));
-    ringSort.moveHooks(pi.getValue(HOOKS));
-  
-    //leftDrive.spin(vex::forward, (pi.getValue(LEFTVEL)/100)*12, vex::volt);
-    //rightDrive.spin(vex::forward, (pi.getValue(RIGHTVEL)/100)*12, vex::volt);
-
-    leftDrive.setVelocity(pi.getValue(LEFTVEL), vex::percent);
-    rightDrive.setVelocity(pi.getValue(RIGHTVEL), vex::percent);
-
-    vex::this_thread::sleep_for(1);
-  } 
 }
